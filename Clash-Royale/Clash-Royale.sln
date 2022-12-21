@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33110.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Clash-Royale.Game", "Clash-Royale.Game\Clash-Royale.Game.csproj", "{E0B43F58-AE92-4908-9ADB-033CB334B565}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Clash-Royale.AI", "Clash-Royale.AI\Clash-Royale.AI.csproj", "{E6349312-EEF5-4390-A3C3-5FE316BC6F11}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Clash-Royale.Graphics", "Clash-Royale.Graphics\Clash-Royale.Graphics.csproj", "{B1F2FE38-F3BC-426B-B2AF-73401FA0CD79}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Clash-Royale.CLI", "Clash-Royale.CLI\Clash-Royale.CLI.csproj", "{CACA1132-BC76-43D5-8B1A-B328CD73E75D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E0B43F58-AE92-4908-9ADB-033CB334B565}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0B43F58-AE92-4908-9ADB-033CB334B565}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0B43F58-AE92-4908-9ADB-033CB334B565}.Debug|x64.ActiveCfg = Debug|x64
+		{E0B43F58-AE92-4908-9ADB-033CB334B565}.Debug|x64.Build.0 = Debug|x64
+		{E0B43F58-AE92-4908-9ADB-033CB334B565}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0B43F58-AE92-4908-9ADB-033CB334B565}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0B43F58-AE92-4908-9ADB-033CB334B565}.Release|x64.ActiveCfg = Release|x64
+		{E0B43F58-AE92-4908-9ADB-033CB334B565}.Release|x64.Build.0 = Release|x64
+		{E6349312-EEF5-4390-A3C3-5FE316BC6F11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6349312-EEF5-4390-A3C3-5FE316BC6F11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6349312-EEF5-4390-A3C3-5FE316BC6F11}.Debug|x64.ActiveCfg = Debug|x64
+		{E6349312-EEF5-4390-A3C3-5FE316BC6F11}.Debug|x64.Build.0 = Debug|x64
+		{E6349312-EEF5-4390-A3C3-5FE316BC6F11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6349312-EEF5-4390-A3C3-5FE316BC6F11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6349312-EEF5-4390-A3C3-5FE316BC6F11}.Release|x64.ActiveCfg = Release|x64
+		{E6349312-EEF5-4390-A3C3-5FE316BC6F11}.Release|x64.Build.0 = Release|x64
+		{B1F2FE38-F3BC-426B-B2AF-73401FA0CD79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1F2FE38-F3BC-426B-B2AF-73401FA0CD79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1F2FE38-F3BC-426B-B2AF-73401FA0CD79}.Debug|x64.ActiveCfg = Debug|x64
+		{B1F2FE38-F3BC-426B-B2AF-73401FA0CD79}.Debug|x64.Build.0 = Debug|x64
+		{B1F2FE38-F3BC-426B-B2AF-73401FA0CD79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1F2FE38-F3BC-426B-B2AF-73401FA0CD79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1F2FE38-F3BC-426B-B2AF-73401FA0CD79}.Release|x64.ActiveCfg = Release|x64
+		{B1F2FE38-F3BC-426B-B2AF-73401FA0CD79}.Release|x64.Build.0 = Release|x64
+		{CACA1132-BC76-43D5-8B1A-B328CD73E75D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CACA1132-BC76-43D5-8B1A-B328CD73E75D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CACA1132-BC76-43D5-8B1A-B328CD73E75D}.Debug|x64.ActiveCfg = Debug|x64
+		{CACA1132-BC76-43D5-8B1A-B328CD73E75D}.Debug|x64.Build.0 = Debug|x64
+		{CACA1132-BC76-43D5-8B1A-B328CD73E75D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CACA1132-BC76-43D5-8B1A-B328CD73E75D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CACA1132-BC76-43D5-8B1A-B328CD73E75D}.Release|x64.ActiveCfg = Release|x64
+		{CACA1132-BC76-43D5-8B1A-B328CD73E75D}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A6BEF302-2CA2-4101-AB7D-55714CECE896}
+	EndGlobalSection
+EndGlobal
