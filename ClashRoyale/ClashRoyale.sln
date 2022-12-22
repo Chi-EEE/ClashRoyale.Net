@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33205.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClashRoyale.Game", "ClashRoyale\ClashRoyale.Game.csproj", "{5A86818C-854B-45F1-BCEA-57AF1E0A904D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClashRoyale.AI", "ClashRoyale.AI\ClashRoyale.AI.csproj", "{E70C5B57-824B-40AF-A6C4-D7CD6CF170E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClashRoyale.Graphics", "ClashRoyale.Graphics\ClashRoyale.Graphics.csproj", "{86D72BAA-CF7B-4E11-9277-EA1A424EC0BC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClashRoyale.CLI", "ClashRoyale.CLI\ClashRoyale.CLI.csproj", "{7B3FC870-102F-4419-8CCE-C164412A6AE0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5A86818C-854B-45F1-BCEA-57AF1E0A904D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A86818C-854B-45F1-BCEA-57AF1E0A904D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A86818C-854B-45F1-BCEA-57AF1E0A904D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A86818C-854B-45F1-BCEA-57AF1E0A904D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E70C5B57-824B-40AF-A6C4-D7CD6CF170E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E70C5B57-824B-40AF-A6C4-D7CD6CF170E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E70C5B57-824B-40AF-A6C4-D7CD6CF170E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E70C5B57-824B-40AF-A6C4-D7CD6CF170E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86D72BAA-CF7B-4E11-9277-EA1A424EC0BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86D72BAA-CF7B-4E11-9277-EA1A424EC0BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86D72BAA-CF7B-4E11-9277-EA1A424EC0BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86D72BAA-CF7B-4E11-9277-EA1A424EC0BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B3FC870-102F-4419-8CCE-C164412A6AE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B3FC870-102F-4419-8CCE-C164412A6AE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B3FC870-102F-4419-8CCE-C164412A6AE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B3FC870-102F-4419-8CCE-C164412A6AE0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {664C4436-6F01-44D6-8485-447671C4DF4E}
+	EndGlobalSection
+EndGlobal
