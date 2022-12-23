@@ -51,6 +51,7 @@ namespace ClashRoyale.Files
         }
         public static Data Create(Files file, Row row, DataTable dataTable)
         {
+            // If an error occurs here, make sure to clean the solution and run it again otherwise update this class and generate new CSV class files in the Scripts folder [CSV_Definer.py]
             if (DataTypes.ContainsKey(file)) return Activator.CreateInstance(DataTypes[file], row, dataTable) as Data;
 
             return null;

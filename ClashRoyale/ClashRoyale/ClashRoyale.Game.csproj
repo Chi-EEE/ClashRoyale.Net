@@ -25,7 +25,6 @@
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json.Schema" Version="3.0.15-beta2" />
     <PackageReference Include="RavenSharp.Core" Version="1.0.0-beta-1" />
-    <PackageReference Include="SharpRaven.Log4Net" Version="1.5.2" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,4 +1,5 @@
 ﻿using ClashRoyale.Files;
+using ClashRoyale.Simulator;
 
 namespace ClashRoyale
 {
@@ -10,6 +11,10 @@ namespace ClashRoyale
         {
             Console.WriteLine("Hello, World!");
             Csv = new Csv();
+
+            Battle battle = new Battle();
+            battle.Start();
+            Console.WriteLine("Done!");
         }
         public static void Exit()
         {

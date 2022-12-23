@@ -1,0 +1,49 @@
+wallbreaker 12.25 seconds
+giant skeleton: 24.5
+skeleton barrle 16.27
+
+Touchdown Arena = 18 x 32 
+
+12.5 * 120 = 1500
+
+
+18 : 32
+x : 1500
+
+18 * 1500 = 32x
+
+27000 = 32x
+843.75
+
+tilemap (ALL ARE THE SAME):
+35 width
+63 height 
+
+Therefore we should double the numbers we got from the math
+
+3000 height
+1,687.5 width
+
+Lets double it once more to get rid of the decimal point
+
+6000
+3,375
+
+With the wallbreaker reddit post: https://www.reddit.com/r/ClashRoyale/comments/zp5hlb/this_game_bro_wtf/
+We can see that the wall breaker has a sight range of 7 tiles or 7000 sight range
+That means that each tile is 1000 sight range
+
+Finally the arena is 18000 x 32000
+and a tile on the tilemap is 500 px
+
+And it takes [32000 / 12.5] seconds
+
+D = S / T
+
+S = D / T
+
+S = 32000 / 12.5
+
+D = 2,560 = 120
+
+Multipler for Speed in CSV is 21.333333333333333333333333333333
