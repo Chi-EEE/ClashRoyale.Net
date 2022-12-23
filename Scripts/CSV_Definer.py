@@ -48,7 +48,9 @@ def make_csv_logic_class_file(filename, headers, datatypes):
     f.write("using ClashRoyale.Files.CsvReader;\n")
     f.write("\n")
     f.write("namespace ClashRoyale.Files.CsvLogic\n")
-    f.write("\t{\n")
+    f.write("{\n")
+    f.write(f"public class {capitalized_words} : Data\n")
+    f.write("{\n")
     f.write(f"\tpublic {capitalized_words}(Row row, DataTable datatable) : base(row, datatable)\n")
     f.write("\t{\n")
     f.write("\t\tLoadData(this, GetType(), row);\n")
@@ -58,6 +60,7 @@ def make_csv_logic_class_file(filename, headers, datatypes):
             datatype = csv_datatype_to_cs_datatype.get(datatype)
         datatype = datatype.lower()
         f.write(f"\tpublic {datatype} {header} {{ get; set; }}\n")
+    f.write("\t}\n")
     f.write("}\n")
 
 def make_csv_logic_class_files():

@@ -2,7 +2,9 @@ using ClashRoyale.Files.CsvHelpers;
 using ClashRoyale.Files.CsvReader;
 
 namespace ClashRoyale.Files.CsvLogic
-	{
+{
+public class GameModes : Data
+{
 	public GameModes(Row row, DataTable datatable) : base(row, datatable)
 	{
 		LoadData(this, GetType(), row);
@@ -28,4 +30,5 @@ namespace ClashRoyale.Files.CsvLogic
 	public string PrincessSkin { get; set; }
 	public string KingSkin { get; set; }
 	public bool GivesClanScore { get; set; }
+	}
 }

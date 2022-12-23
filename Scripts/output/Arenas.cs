@@ -2,7 +2,9 @@ using ClashRoyale.Files.CsvHelpers;
 using ClashRoyale.Files.CsvReader;
 
 namespace ClashRoyale.Files.CsvLogic
-	{
+{
+public class Arenas : Data
+{
 	public Arenas(Row row, DataTable datatable) : base(row, datatable)
 	{
 		LoadData(this, GetType(), row);
@@ -38,4 +40,5 @@ namespace ClashRoyale.Files.CsvLogic
 	public int BattleRewardGold { get; set; }
 	public string ReleaseDate { get; set; }
 	public string SeasonRewardChest { get; set; }
+	}
 }

@@ -2,7 +2,9 @@ using ClashRoyale.Files.CsvHelpers;
 using ClashRoyale.Files.CsvReader;
 
 namespace ClashRoyale.Files.CsvLogic
-	{
+{
+public class CharacterBuffs : Data
+{
 	public CharacterBuffs(Row row, DataTable datatable) : base(row, datatable)
 	{
 		LoadData(this, GetType(), row);
@@ -46,4 +48,5 @@ namespace ClashRoyale.Files.CsvLogic
 	public bool Clone { get; set; }
 	public int Scale { get; set; }
 	public bool EnableStacking { get; set; }
+	}
 }

@@ -2,7 +2,9 @@ using ClashRoyale.Files.CsvHelpers;
 using ClashRoyale.Files.CsvReader;
 
 namespace ClashRoyale.Files.CsvLogic
-	{
+{
+public class Locations : Data
+{
 	public Locations(Row row, DataTable datatable) : base(row, datatable)
 	{
 		LoadData(this, GetType(), row);
@@ -46,4 +48,5 @@ namespace ClashRoyale.Files.CsvLogic
 	public int ReflectionRed { get; set; }
 	public int ReflectionGreen { get; set; }
 	public int ReflectionBlue { get; set; }
+	}
 }

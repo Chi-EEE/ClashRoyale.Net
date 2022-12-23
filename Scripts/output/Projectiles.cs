@@ -2,7 +2,9 @@ using ClashRoyale.Files.CsvHelpers;
 using ClashRoyale.Files.CsvReader;
 
 namespace ClashRoyale.Files.CsvLogic
-	{
+{
+public class Projectiles : Data
+{
 	public Projectiles(Row row, DataTable datatable) : base(row, datatable)
 	{
 		LoadData(this, GetType(), row);
@@ -66,4 +68,5 @@ namespace ClashRoyale.Files.CsvLogic
 	public int DragBackSpeed { get; set; }
 	public int DragMargin { get; set; }
 	public string TargettedEffect { get; set; }
+	}
 }

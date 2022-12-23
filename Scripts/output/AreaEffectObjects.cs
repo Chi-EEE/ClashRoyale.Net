@@ -2,7 +2,9 @@ using ClashRoyale.Files.CsvHelpers;
 using ClashRoyale.Files.CsvReader;
 
 namespace ClashRoyale.Files.CsvLogic
-	{
+{
+public class AreaEffectObjects : Data
+{
 	public AreaEffectObjects(Row row, DataTable datatable) : base(row, datatable)
 	{
 		LoadData(this, GetType(), row);
@@ -51,4 +53,5 @@ namespace ClashRoyale.Files.CsvLogic
 	public bool ControlsBuff { get; set; }
 	public bool Clone { get; set; }
 	public int AttractPercentage { get; set; }
+	}
 }

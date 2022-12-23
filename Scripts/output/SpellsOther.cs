@@ -2,7 +2,9 @@ using ClashRoyale.Files.CsvHelpers;
 using ClashRoyale.Files.CsvReader;
 
 namespace ClashRoyale.Files.CsvLogic
-	{
+{
+public class SpellsOther : Data
+{
 	public SpellsOther(Row row, DataTable datatable) : base(row, datatable)
 	{
 		LoadData(this, GetType(), row);
@@ -54,4 +56,5 @@ namespace ClashRoyale.Files.CsvLogic
 	public int ElixirProductionStopTime { get; set; }
 	public bool DarkMirror { get; set; }
 	public bool StatsUnderInfo { get; set; }
+	}
 }

@@ -9,9 +9,10 @@ namespace ClashRoyale.Files.CsvLogic
         {
             LoadData(this, GetType(), row);
         }
-
         public string Name { get; set; }
         public string Rarity { get; set; }
+        public string Flags { get; set; }
+        public string Tribe { get; set; }
         public int SightRange { get; set; }
         public int DeployTime { get; set; }
         public int ChargeRange { get; set; }
@@ -23,6 +24,7 @@ namespace ClashRoyale.Files.CsvLogic
         public int DamageSpecial { get; set; }
         public int CrownTowerDamagePercent { get; set; }
         public bool LoadFirstHit { get; set; }
+        public bool LoadAfterRetarget { get; set; }
         public int StopTimeAfterAttack { get; set; }
         public int StopTimeAfterSpecialAttack { get; set; }
         public string Projectile { get; set; }
@@ -36,28 +38,43 @@ namespace ClashRoyale.Files.CsvLogic
         public int SpecialRange { get; set; }
         public int SpecialLoadTime { get; set; }
         public string SpecialReadyEffect { get; set; }
+        public bool SpecialIgnoreBuildings { get; set; }
+        public bool SpecialAttacksToIgnoreList { get; set; }
         public bool AttacksGround { get; set; }
         public bool AttacksAir { get; set; }
         public int DeathDamageRadius { get; set; }
         public int DeathDamage { get; set; }
         public int DeathPushBack { get; set; }
         public int AttackPushBack { get; set; }
+        public int MeleePushback { get; set; }
+        public bool IsMeleePushbackAll { get; set; }
         public int LifeTime { get; set; }
         public string ProjectileSpecial { get; set; }
         public string ProjectileEffect { get; set; }
         public string ProjectileEffectSpecial { get; set; }
         public int AreaDamageRadius { get; set; }
         public bool TargetOnlyBuildings { get; set; }
+        public bool TargetOnlyTroops { get; set; }
+        public bool TargetOnlyTowers { get; set; }
+        public bool TargetOnlyKingTower { get; set; }
         public int SpecialAttackInterval { get; set; }
         public string BuffOnDamage { get; set; }
         public int BuffOnDamageTime { get; set; }
         public string StartingBuff { get; set; }
         public int StartingBuffTime { get; set; }
+        public string Mesh { get; set; }
         public string FileName { get; set; }
         public string BlueExportName { get; set; }
         public string BlueTopExportName { get; set; }
         public string RedExportName { get; set; }
         public string RedTopExportName { get; set; }
+        public string PrestigeSWF { get; set; }
+        public string PrestigeExportName { get; set; }
+        public string PrestigeExportName2 { get; set; }
+        public string PrestigeExportName3 { get; set; }
+        public string PrestigeRedExportName { get; set; }
+        public string PrestigeRedExportName2 { get; set; }
+        public string PrestigeRedExportName3 { get; set; }
         public bool UseAnimator { get; set; }
         public string AttachedCharacter { get; set; }
         public int AttachedCharacterHeight { get; set; }
@@ -67,6 +84,7 @@ namespace ClashRoyale.Files.CsvLogic
         public string MoveEffect { get; set; }
         public bool LoopMoveEffect { get; set; }
         public string SpawnEffect { get; set; }
+        public bool SpawnEffectOnce { get; set; }
         public bool CrowdEffects { get; set; }
         public int ShadowScaleX { get; set; }
         public int ShadowScaleY { get; set; }
@@ -90,6 +108,7 @@ namespace ClashRoyale.Files.CsvLogic
         public int FlyingHeight { get; set; }
         public bool FlyDirectPaths { get; set; }
         public bool FlyFromGround { get; set; }
+        public bool Hovering { get; set; }
         public string DamageExportName { get; set; }
         public int GrowTime { get; set; }
         public int GrowSize { get; set; }
@@ -113,27 +132,51 @@ namespace ClashRoyale.Files.CsvLogic
         public int DashConstantTime { get; set; }
         public int DashLandingTime { get; set; }
         public string LandingEffect { get; set; }
+        public string DashHitEffect { get; set; }
         public int DashMinRange { get; set; }
         public int DashMaxRange { get; set; }
+        public int DashDistance { get; set; }
+        public int DashCount { get; set; }
+        public int DashSecondaryRange { get; set; }
+        public int DashingDamage { get; set; }
+        public int DashingPushback { get; set; }
+        public bool DashToTargetRadius { get; set; }
         public int JumpSpeed { get; set; }
         public string ContinuousEffect { get; set; }
         public int SpawnStartTime { get; set; }
         public int SpawnInterval { get; set; }
         public int SpawnNumber { get; set; }
         public int SpawnLimit { get; set; }
+        public bool DestroyAtLimit { get; set; }
+        public string DestroyAtLimitEffect { get; set; }
         public int SpawnPauseTime { get; set; }
         public int SpawnCharacterLevelIndex { get; set; }
         public string SpawnCharacter { get; set; }
+        public bool SpawnCharacterWithDeploy { get; set; }
+        public int SpawnCharacterLevelIndex2 { get; set; }
+        public string SpawnCharacter2 { get; set; }
+        public int SpawnCharacterLevelIndex3 { get; set; }
+        public string SpawnCharacter3 { get; set; }
         public string SpawnProjectile { get; set; }
         public string SpawnCharacterEffect { get; set; }
         public string SpawnDeployBaseAnim { get; set; }
         public int SpawnRadius { get; set; }
+        public bool SpawnAttach { get; set; }
+        public int SpawnAttachMaxRotation { get; set; }
+        public string DeathSpawnDeployBaseAnim { get; set; }
         public int DeathSpawnCount { get; set; }
         public string DeathSpawnCharacter { get; set; }
+        public int DeathSpawnCount2 { get; set; }
+        public string DeathSpawnCharacter2 { get; set; }
+        public string DeathSpawnCharacter3 { get; set; }
+        public bool DeathSpawnIsSameUnit { get; set; }
+        public bool RandomizeDeathSpawn { get; set; }
         public string DeathSpawnProjectile { get; set; }
         public int DeathSpawnRadius { get; set; }
         public int DeathSpawnMinRadius { get; set; }
+        public bool DeathSpawnAllowOverRiver { get; set; }
         public int SpawnAngleShift { get; set; }
+        public int SpawnMaxAngle { get; set; }
         public int DeathSpawnDeployTime { get; set; }
         public bool DeathSpawnPushback { get; set; }
         public string DeathAreaEffect { get; set; }
@@ -148,6 +191,11 @@ namespace ClashRoyale.Files.CsvLogic
         public int SpawnPushbackRadius { get; set; }
         public string SpawnAreaObject { get; set; }
         public int SpawnAreaObjectLevelIndex { get; set; }
+        public int IngamePathfindSpeed { get; set; }
+        public string IngamePathfindEffect { get; set; }
+        public string IngamePathfindStartEffect { get; set; }
+        public string IngamePathfindStopEffect { get; set; }
+        public string IngamePathfindStopDeployBaseAnim { get; set; }
         public string ChargeEffect { get; set; }
         public string TakeDamageEffect { get; set; }
         public int ProjectileStartRadius { get; set; }
@@ -159,12 +207,18 @@ namespace ClashRoyale.Files.CsvLogic
         public int NoDeploySizeW { get; set; }
         public int NoDeploySizeH { get; set; }
         public string TID { get; set; }
-        public bool VariableDamageLifeTime { get; set; }
-        public int VariableDamageTransitionTime { get; set; }
-        public int VariableDamage2 { get; set; }
+        public int AttackSequence { get; set; }
+        public string AttackSeqStateEffect1 { get; set; }
+        public string AttackSeqStateEffect2 { get; set; }
+        public string AttackSeqStateEffect3 { get; set; }
         public int VariableDamageTime1 { get; set; }
-        public int VariableDamage3 { get; set; }
+        public int VariableDamage2 { get; set; }
+        public int MeleePushback2 { get; set; }
+        public bool IsMeleePushbackAll2 { get; set; }
         public int VariableDamageTime2 { get; set; }
+        public int VariableDamage3 { get; set; }
+        public int MeleePushback3 { get; set; }
+        public bool IsMeleePushbackAll3 { get; set; }
         public string TargettedDamageEffect1 { get; set; }
         public string TargettedDamageEffect2 { get; set; }
         public string TargettedDamageEffect3 { get; set; }
@@ -181,6 +235,7 @@ namespace ClashRoyale.Files.CsvLogic
         public bool SpecialAttackWhenHidden { get; set; }
         public string TargetedHitEffect { get; set; }
         public string TargetedHitEffectSpecial { get; set; }
+        public int TargetedEffectVisualPushback { get; set; }
         public int UpTimeMs { get; set; }
         public string HideEffect { get; set; }
         public string AppearEffect { get; set; }
@@ -190,12 +245,15 @@ namespace ClashRoyale.Files.CsvLogic
         public int ManaCollectAmount { get; set; }
         public int ManaGenerateTimeMs { get; set; }
         public int ManaGenerateLimit { get; set; }
+        public int ManaOnDeath { get; set; }
+        public int ManaOnDeathForOpponent { get; set; }
         public bool HasRotationOnTimeline { get; set; }
         public int TurretMovement { get; set; }
         public int ProjectileYOffset { get; set; }
         public int ChargeSpeedMultiplier { get; set; }
         public int DeployDelay { get; set; }
         public string DeployBaseAnimExportName { get; set; }
+        public string DeployAnimationOverride { get; set; }
         public bool JumpEnabled { get; set; }
         public int SightClip { get; set; }
         public string AreaEffectOnDash { get; set; }
@@ -212,17 +270,72 @@ namespace ClashRoyale.Files.CsvLogic
         public string LoadAttackEffectReady { get; set; }
         public int RotateAngleSpeed { get; set; }
         public int DeployTimerDelay { get; set; }
+        public bool RetargetEachTick { get; set; }
         public bool RetargetAfterAttack { get; set; }
         public int AttackShakeTime { get; set; }
         public int VisualHitSpeed { get; set; }
-        public string Ability { get; set; }
+        public int VisualHitSpeed2 { get; set; }
+        public int VisualHitSpeed3 { get; set; }
         public int Burst { get; set; }
         public int BurstDelay { get; set; }
         public bool BurstKeepTarget { get; set; }
+        public bool BurstAffectAnimation { get; set; }
         public int ActivationTime { get; set; }
         public int AttackDashTime { get; set; }
         public string LoopingFilter { get; set; }
         public bool BuildingTarget { get; set; }
         public bool SpawnConstPriority { get; set; }
+        public string BuffWhenNotAttacking { get; set; }
+        public int BuffWhenNotAttackingTime { get; set; }
+        public string BuffWhenNotAttackingEffect { get; set; }
+        public string BuffWhenNotAttackingRemoveEffect { get; set; }
+        public string AreaEffectOnHit { get; set; }
+        public int AttackStateDamage { get; set; }
+        public string AttackStateEffect { get; set; }
+        public int SpeedBeforeAttack { get; set; }
+        public string MoveEffect2 { get; set; }
+        public string ReflectedAttackBuff { get; set; }
+        public int ReflectedAttackBuffDuration { get; set; }
+        public int ReflectedAttackRadius { get; set; }
+        public int ReflectedAttackDamage { get; set; }
+        public int ReflectAttackCrownTowerDamage { get; set; }
+        public string ReflectedAttackEffect { get; set; }
+        public string ReflectedAttackTargetedEffect { get; set; }
+        public int ReflectedAttackTargetedEffectSources { get; set; }
+        public string IgnoreTargetsWithBuff { get; set; }
+        public bool DeprioritizeTargetsWithBuff { get; set; }
+        public bool OverrideAttackFinishTime { get; set; }
+        public int AttackFinishTime { get; set; }
+        public string BuffOnKill { get; set; }
+        public int BuffOnKillTime { get; set; }
+        public string BuffOn50HP { get; set; }
+        public int BuffOn50HPTime { get; set; }
+        public string BuffOnXHP { get; set; }
+        public int BuffOnXHPPercent { get; set; }
+        public int BuffOnXHPTime { get; set; }
+        public int SuckElixirSpeed { get; set; }
+        public bool CapturableBuilding { get; set; }
+        public int SightRangeForCharacters { get; set; }
+        public int AttackStateCount { get; set; }
+        public bool NeutralObject { get; set; }
+        public int BuffAfterHitsCount { get; set; }
+        public int BuffAfterHitsTime { get; set; }
+        public string BuffAfterHits { get; set; }
+        public int MorphAfterHitsCount { get; set; }
+        public string ConvertOnKill { get; set; }
+        public string FollowingAreaEffect { get; set; }
+        public int MoveSpeedByFriendlyMass { get; set; }
+        public int MoveRadiusByFriendlyMass { get; set; }
+        public string IgnoreBuff { get; set; }
+        public bool TargetLowestHP { get; set; }
+        public string Ability { get; set; }
+        public string AbilityPendingEffect { get; set; }
+        public bool IgnoreClone { get; set; }
+        public string CustomSpawnFilter { get; set; }
+        public string CustomCloneFilter { get; set; }
+        public bool IgnoreResurrect { get; set; }
+        public bool AllowAreaDmgWhenInvisible { get; set; }
+        public bool AvoidCountingForBuffAmountStats { get; set; }
+        public bool UntargetableWhenSpawned { get; set; }
     }
 }

@@ -2,7 +2,9 @@ using ClashRoyale.Files.CsvHelpers;
 using ClashRoyale.Files.CsvReader;
 
 namespace ClashRoyale.Files.CsvLogic
-	{
+{
+public class Npcs : Data
+{
 	public Npcs(Row row, DataTable datatable) : base(row, datatable)
 	{
 		LoadData(this, GetType(), row);
@@ -27,4 +29,5 @@ namespace ClashRoyale.Files.CsvLogic
 	public string OwnTowerDestroyedTaunt { get; set; }
 	public bool HighlightTargetsOnManaFull { get; set; }
 	public bool TrainingMatchAllowed { get; set; }
+	}
 }

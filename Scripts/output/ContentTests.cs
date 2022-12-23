@@ -2,7 +2,9 @@ using ClashRoyale.Files.CsvHelpers;
 using ClashRoyale.Files.CsvReader;
 
 namespace ClashRoyale.Files.CsvLogic
-	{
+{
+public class ContentTests : Data
+{
 	public ContentTests(Row row, DataTable datatable) : base(row, datatable)
 	{
 		LoadData(this, GetType(), row);
@@ -15,4 +17,5 @@ namespace ClashRoyale.Files.CsvLogic
 	public string Stat2 { get; set; }
 	public int Result { get; set; }
 	public bool Enabled { get; set; }
+	}
 }
