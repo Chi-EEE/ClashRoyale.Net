@@ -1,23 +1,71 @@
+import csv
 import os
 
 
-game_assets_directory = "../ClashRoyale/ClashRoyale/GameAssets/csv_logic"
+game_assets_directory = "../ClashRoyale/ClashRoyale/GameAssets/csv_logic/"
 
-print("public enum Files")
-print("{")
-for i, filename in enumerate(os.listdir(game_assets_directory)):
+
+def capitalize_words(filename: str):
     filename = filename.removesuffix(".csv")
     enum_name = ""
     for word in filename.split("_"):
         enum_name += word.capitalize()
-    print(enum_name + " = " + str(i + 1) + ",")
-print("}")
-print("static Csv()")
-print("{")
-for i, filename in enumerate(os.listdir(game_assets_directory)):
-    filename = filename.removesuffix(".csv")
-    enum_name = ""
-    for word in filename.split("_"):
-        enum_name += word.capitalize()
-    print("DataTypes.Add(Files." + enum_name + ", typeof(" + enum_name + "));")
-print("}")
+    return enum_name
+
+
+def get_enum_files():
+    print("public enum Files")
+    print("{")
+    for i, filename in enumerate(os.listdir(game_assets_directory)):
+        print(capitalize_words(filename) + " = " + str(i + 1) + ",")
+    print("}")
+
+
+def get_static_csv():
+    print("static Csv()")
+    print("{")
+    for filename in os.listdir(game_assets_directory):
+        filename = filename.removesuffix(".csv")
+        capitalized_words = capitalize_words(filename)
+        print(
+            "DataTypes.Add(Files."
+            + capitalized_words
+            + ", typeof("
+            + capitalized_words
+            + "));"
+        )
+    print("}")
+
+csv_datatype_to_cs_datatype = {
+    "boolean": "bool",
+}
+def make_csv_logic_class_file(filename, headers, datatypes):
+    capitalized_words = capitalize_words(filename)
+    new_file = f"output/{capitalized_words}.cs"
+    if (os.path.exists(new_file)): os.remove(new_file)
+    f = open(new_file, "a")
+    f.write("using ClashRoyale.Files.CsvHelpers;\n")
+    f.write("using ClashRoyale.Files.CsvReader;\n")
+    f.write("\n")
+    f.write("namespace ClashRoyale.Files.CsvLogic\n")
+    f.write("\t{\n")
+    f.write(f"\tpublic {capitalized_words}(Row row, DataTable datatable) : base(row, datatable)\n")
+    f.write("\t{\n")
+    f.write("\t\tLoadData(this, GetType(), row);\n")
+    f.write("\t}\n")
+    for header, datatype in zip(headers, datatypes):
+        if csv_datatype_to_cs_datatype.get(datatype):
+            datatype = csv_datatype_to_cs_datatype.get(datatype)
+        datatype = datatype.lower()
+        f.write(f"\tpublic {datatype} {header} {{ get; set; }}\n")
+    f.write("}\n")
+
+def make_csv_logic_class_files():
+    for i, filename in enumerate(os.listdir(game_assets_directory)):
+        with open(game_assets_directory + filename) as csv_file:
+            csv_reader = csv.reader(csv_file, delimiter = ',')
+            headers = next(csv_reader)
+            datatypes = next(csv_reader)
+            make_csv_logic_class_file(filename, headers, datatypes)
+            
+make_csv_logic_class_files()
