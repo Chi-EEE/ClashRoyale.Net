@@ -28,4 +28,8 @@
     <PackageReference Include="SharpRaven.Log4Net" Version="1.5.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Files\CsvLogic\" />
+  </ItemGroup>
+
 </Project>

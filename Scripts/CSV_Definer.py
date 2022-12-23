@@ -38,6 +38,9 @@ def get_static_csv():
 
 csv_datatype_to_cs_datatype = {
     "boolean": "bool",
+    "booleanarray": "List<bool>",
+    "intarray": "List<int>",
+    "stringarray": "List<string>",
 }
 def make_csv_logic_class_file(filename, headers, datatypes):
     capitalized_words = capitalize_words(filename)
@@ -56,9 +59,9 @@ def make_csv_logic_class_file(filename, headers, datatypes):
     f.write("\t\tLoadData(this, GetType(), row);\n")
     f.write("\t}\n")
     for header, datatype in zip(headers, datatypes):
+        datatype = datatype.lower()
         if csv_datatype_to_cs_datatype.get(datatype):
             datatype = csv_datatype_to_cs_datatype.get(datatype)
-        datatype = datatype.lower()
         f.write(f"\tpublic {datatype} {header} {{ get; set; }}\n")
     f.write("\t}\n")
     f.write("}\n")
@@ -71,4 +74,6 @@ def make_csv_logic_class_files():
             datatypes = next(csv_reader)
             make_csv_logic_class_file(filename, headers, datatypes)
             
-make_csv_logic_class_files()
+get_enum_files()
+get_static_csv()
+# make_csv_logic_class_files()

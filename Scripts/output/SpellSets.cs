@@ -3,17 +3,14 @@ using ClashRoyale.Files.CsvReader;
 
 namespace ClashRoyale.Files.CsvLogic
 {
-public class PredefinedDecks : Data
+public class SpellSets : Data
 {
-	public PredefinedDecks(Row row, DataTable datatable) : base(row, datatable)
+	public SpellSets(Row row, DataTable datatable) : base(row, datatable)
 	{
 		LoadData(this, GetType(), row);
 	}
 	public string Name { get; set; }
 	public string Spells { get; set; }
-	public int SpellLevel { get; set; }
-	public string RandomSpellSets { get; set; }
-	public string Description { get; set; }
 	public string TID { get; set; }
 	}
 }

@@ -3,16 +3,14 @@ using ClashRoyale.Files.CsvReader;
 
 namespace ClashRoyale.Files.CsvLogic
 {
-public class PveWaves : Data
+public class SpellSets : Data
 {
-	public PveWaves(Row row, DataTable datatable) : base(row, datatable)
+	public SpellSets(Row row, DataTable datatable) : base(row, datatable)
 	{
 		LoadData(this, GetType(), row);
 	}
 	public string Name { get; set; }
 	public string Spells { get; set; }
-	public int PositionX { get; set; }
-	public int PositionY { get; set; }
-	public int Delay { get; set; }
+	public string TID { get; set; }
 	}
 }

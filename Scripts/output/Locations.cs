@@ -20,9 +20,7 @@ public class Locations : Data
 	public int ShadowOffsetY { get; set; }
 	public string Sound { get; set; }
 	public string ExtraTimeMusic { get; set; }
-	public int MatchLength { get; set; }
 	public string WinCondition { get; set; }
-	public int OvertimeSeconds { get; set; }
 	public int EndScreenDelay { get; set; }
 	public string FileName { get; set; }
 	public string TileDataFileName { get; set; }
@@ -32,6 +30,7 @@ public class Locations : Data
 	public bool CrowdEffects { get; set; }
 	public string CloudFileName { get; set; }
 	public string CloudExportName { get; set; }
+	public bool CloudRandomFlip { get; set; }
 	public int CloudMinScale { get; set; }
 	public int CloudMaxScale { get; set; }
 	public int CloudMinSpeed { get; set; }
@@ -42,11 +41,15 @@ public class Locations : Data
 	public string WalkEffect { get; set; }
 	public string WalkEffectOvertime { get; set; }
 	public string LoopingEffectRegularTime { get; set; }
+	public string LoopingEffectFinalMinute { get; set; }
 	public string LoopingEffectOvertime { get; set; }
 	public string LoopingEffect { get; set; }
 	public string LoopingEffectOvertimeSide { get; set; }
 	public int ReflectionRed { get; set; }
 	public int ReflectionGreen { get; set; }
 	public int ReflectionBlue { get; set; }
+	public string ChainedSWF { get; set; }
+	public string ChainedExportName { get; set; }
+	public string MusicOverride { get; set; }
 	}
 }
