@@ -7,7 +7,7 @@ namespace ClashRoyale.Files.CsvLogic
     {
         public PveGamemodes(Row row, DataTable datatable) : base(row, datatable)
         {
-            LoadData(this, GetType(), row, 79);
+            LoadData(this, GetType(), row);
         }
 
         public string Name { get; set; }

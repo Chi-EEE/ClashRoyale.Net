@@ -14,9 +14,12 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
+  
   <ItemGroup>
-    <Folder Include="GameAssets\csv_client\sorted_regions\" />
+    <Compile Remove="GameAssets\csv_client\sorted_regions\**" />
+    <Content Remove="GameAssets\csv_client\sorted_regions\**" />
+    <EmbeddedResource Remove="GameAssets\csv_client\sorted_regions\**" />
+    <None Remove="GameAssets\csv_client\sorted_regions\**" />
   </ItemGroup>
 
   <ItemGroup>

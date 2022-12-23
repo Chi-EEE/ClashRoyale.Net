@@ -36,16 +36,6 @@ namespace ClashRoyale.Files.CsvHelpers
             return Datas;
         }
 
-        public Data GetDataWithId(int id)
-        {
-            return Datas[GlobalId.GetInstanceId(id)];
-        }
-
-        public T GetDataWithId<T>(int id) where T : Data
-        {
-            return Datas[GlobalId.GetInstanceId(id)] as T;
-        }
-
         public T GetDataWithInstanceId<T>(int id) where T : Data
         {
             if (Datas.Count < id) return null;

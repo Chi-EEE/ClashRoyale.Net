@@ -7,7 +7,7 @@ namespace ClashRoyale.Files.CsvClient
     {
         public Music(Row row, DataTable datatable) : base(row, datatable)
         {
-            LoadData(this, GetType(), row, 41);
+            LoadData(this, GetType(), row);
         }
 
         public string Name { get; set; }

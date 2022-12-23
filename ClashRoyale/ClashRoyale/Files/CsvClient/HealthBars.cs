@@ -7,7 +7,7 @@ namespace ClashRoyale.Files.CsvClient
     {
         public HealthBars(Row row, DataTable datatable) : base(row, datatable)
         {
-            LoadData(this, GetType(), row, 40);
+            LoadData(this, GetType(), row);
         }
 
         public string Name { get; set; }
