@@ -12,9 +12,7 @@ namespace ClashRoyale.Files
         {
             var fileNames = Directory.GetFiles("GameAssets/csv_logic/");
             foreach (var file in fileNames)
-            {
                 Gamefiles.Add(file);
-            }
 
             Tables = new Gamefiles();
 

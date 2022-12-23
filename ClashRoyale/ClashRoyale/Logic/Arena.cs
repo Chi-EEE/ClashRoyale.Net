@@ -14,7 +14,8 @@ namespace ClashRoyale.Simulator
     {
         static readonly int WIDTH = 3375;
         static readonly int HEIGHT = 6000;
-        public List<TroopContext> Troops = new List<TroopContext>();
+        private List<TroopContext> Troops = new List<TroopContext>();
+        private Grid
         public Arena()
         {
         }

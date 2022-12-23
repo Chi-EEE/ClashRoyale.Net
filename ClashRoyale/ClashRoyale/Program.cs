@@ -7,13 +7,13 @@ namespace ClashRoyale
     {
         public static Csv Csv { get; set; }
 
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             Console.WriteLine("Hello, World!");
             Csv = new Csv();
 
             Battle battle = new Battle();
-            battle.Start();
+            await battle.StartBattleAsync();
             Console.WriteLine("Done!");
         }
         public static void Exit()

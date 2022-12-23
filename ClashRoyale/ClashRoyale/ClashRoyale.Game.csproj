@@ -31,4 +31,8 @@
     <Folder Include="Files\CsvLogic\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
 </Project>

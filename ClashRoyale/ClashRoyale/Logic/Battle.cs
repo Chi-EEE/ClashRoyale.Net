@@ -19,7 +19,7 @@ namespace ClashRoyale.Simulator
             Arena = new Arena();
         }
 
-        public void Start()
+        public async Task StartBattleAsync()
         {
             Arena.Start();
             while (BattleState == BattleState.InProgress) {
