@@ -1,10 +1,15 @@
-﻿namespace ClashRoyale.Graphics
+﻿using ClashRoyale.Files;
+
+namespace ClashRoyale.Graphics
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static Csv csv;
+        static async Task Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            csv = new Csv();
+            TrainingGame trainingGame = new();
+            await trainingGame.PlayAsync();
         }
     }
 }

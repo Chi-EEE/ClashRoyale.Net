@@ -3,7 +3,7 @@ using System.Numerics;
 using System.Xml.Linq;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace ClashRoyale
+namespace ClashRoyale.Game
 {
     public class Grid
     {
