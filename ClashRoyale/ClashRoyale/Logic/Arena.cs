@@ -14,18 +14,18 @@ namespace ClashRoyale.Simulator
     {
         static readonly int WIDTH = 3375;
         static readonly int HEIGHT = 6000;
-        private List<TroopContext> Troops = new List<TroopContext>();
-        private Grid
+        public List<EntityContext> Entities = new List<EntityContext>();
+        private Grid grid = new(36, 64);
         public Arena()
         {
         }
         public void Start()
         {
-            Troops.Add(new TroopContext(this, Csv.Tables.Get(Csv.Files.Characters).GetDataWithInstanceId<Characters>(0), new Vector2(0, 0)));
+            Entities.Add(new TroopContext(this, Csv.Tables.Get(Csv.Files.Characters).GetDataWithInstanceId<Characters>(0), new Vector2(0, 0)));
         }
         public void Tick()
         {
-            foreach (var ctx in Troops)
+            foreach (var ctx in Entities)
             {
                 ctx.Tick();
             }

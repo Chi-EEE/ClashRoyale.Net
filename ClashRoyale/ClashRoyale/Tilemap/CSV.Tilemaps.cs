@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClashRoyale.Game.Tilemap
+namespace ClashRoyale.Game
 {
     class CSV
     {

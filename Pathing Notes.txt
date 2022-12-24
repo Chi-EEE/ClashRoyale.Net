@@ -1,0 +1,3 @@
+Pathing Algorithm is probably A*
+Use the tilemap provided as a grid
+Nodes are connected adjacent and diagonally

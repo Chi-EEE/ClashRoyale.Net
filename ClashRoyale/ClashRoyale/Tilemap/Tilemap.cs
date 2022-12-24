@@ -12,9 +12,9 @@ namespace ClashRoyale.Game
     {
         public Tilemap()
         {
-            using (TextFieldParser csvParser = new TextFieldParser(path))
-            {
-            }
+            //using (TextFieldParser csvParser = new TextFieldParser(path))
+            //{
+            //}
         }
     }
 }

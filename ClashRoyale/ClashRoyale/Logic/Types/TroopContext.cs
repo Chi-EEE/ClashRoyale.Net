@@ -5,7 +5,7 @@ using System.Numerics;
 
 namespace ClashRoyale.Simulator.Types
 {
-    public class TroopContext
+    public class TroopContext : EntityContext
     {
         public Arena Arena { get; set; }
         public Troop Troop { get; set; }
@@ -13,22 +13,28 @@ namespace ClashRoyale.Simulator.Types
         public Vector2 Position { get; set; }
         public Troop? Target { get; set; }
 
-        public TroopContext(Arena arena, Characters character, Vector2 position)
+        public TroopContext(Arena arena, Characters character, Vector2 position) : base(arena)
         {
-            Arena = arena;
             Troop = new Troop(0, character.Hitpoints, character.DeployTime);
             Character = character;
             Position = position;
         }
 
-        public void Tick()
+        public override void Tick()
         {
             if (Troop == null)
             {
                 Console.WriteLine("TROOP NULL!");
                 return;
             }
-
+            //foreach (var entity in Arena.Entities)
+            //{
+            //    if (entity != this)
+            //    {
+            //        //this.Character.CollisionRadius;
+            //        //if (entity.Character.CollisionRadius) ;
+            //    }
+            //}
             Move(0, Character.Speed);
         }
 
