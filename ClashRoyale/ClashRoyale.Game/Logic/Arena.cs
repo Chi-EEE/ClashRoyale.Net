@@ -8,6 +8,7 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using ClashRoyale.Game.GameLoop;
+using ClashRoyale.Game.Logic.Pathing;
 
 namespace ClashRoyale.Game
 {
@@ -16,7 +17,7 @@ namespace ClashRoyale.Game
         public const uint REAL_ARENA_WIDTH = 18000;
         public const uint REAL_ARENA_HEIGHT = 32000;
         public List<EntityContext> Entities = new List<EntityContext>();
-        private Grid grid = new(36, 64);
+        public Grid Grid = new(36, 64);
         public Arena()
         {
         }

@@ -33,7 +33,7 @@ namespace ClashRoyale.Graphics
         }
         public void Initalize()
         {
-            View view = new(new FloatRect(0, 0, Convert.ToSingle(this.RenderWindow.Size.X), Convert.ToSingle(this.RenderWindow.Size.Y)));
+            View view = new(new FloatRect(0, 0, this.RenderWindow.Size.X, this.RenderWindow.Size.Y));
             view.Zoom(this.ZOOM);
             this.RenderWindow.SetView(view);
             this.RenderWindow.MouseButtonPressed += MouseButtonPressed;
@@ -78,10 +78,28 @@ namespace ClashRoyale.Graphics
             {
                 var radius = entityContext.EntityInformation.CollisionRadius;
                 CircleShape circle = new CircleShape(radius);
-                circle.Position = new Vector2f(entityContext.Position.X - radius, entityContext.Position.Y - radius);
+                circle.Origin = new Vector2f(radius, radius);
+                circle.Position = new Vector2f(entityContext.Position.X, entityContext.Position.Y);
                 circle.FillColor = Color.Black;
                 this.RenderWindow.Draw(circle);
             }
+            var cellSize = new Vector2f(Arena.REAL_ARENA_WIDTH / this.PlayBattle.Arena.Grid.Width, Arena.REAL_ARENA_HEIGHT / this.PlayBattle.Arena.Grid.Height);
+            var centerOfArena = new Vector2f(Arena.REAL_ARENA_WIDTH, Arena.REAL_ARENA_HEIGHT) / 2.0375f;
+            for (int x = 0; x <= this.PlayBattle.Arena.Grid.Width; x++)
+            {
+                Vertex[] vertices = new Vertex[2];
+                vertices[0] = new Vertex(new Vector2f(x * cellSize.X, 0) - centerOfArena, Color.Black);
+                vertices[1] = new Vertex(new Vector2f(x * cellSize.X, Arena.REAL_ARENA_HEIGHT) - centerOfArena, Color.Black);
+                this.RenderWindow.Draw(vertices, PrimitiveType.Lines);
+            }
+            for (int y = 0; y <= this.PlayBattle.Arena.Grid.Height; y++)
+            {
+                Vertex[] vertices = new Vertex[2];
+                vertices[0] = new Vertex(new Vector2f(0, y * cellSize.Y) - centerOfArena, Color.Black);
+                vertices[1] = new Vertex(new Vector2f(Arena.REAL_ARENA_WIDTH, y * cellSize.Y) - centerOfArena, Color.Black);
+                this.RenderWindow.Draw(vertices, PrimitiveType.Lines);
+            }
+
             this.RenderWindow.Display();
         }
     }

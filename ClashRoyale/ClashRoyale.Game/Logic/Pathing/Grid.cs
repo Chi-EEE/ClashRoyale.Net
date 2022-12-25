@@ -1,18 +1,15 @@
-using ClashRoyale.Files.CsvReader;
 using System.Numerics;
-using System.Xml.Linq;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace ClashRoyale.Game
+namespace ClashRoyale.Game.Logic.Pathing
 {
     public class Grid
     {
         public Node[,] grid { get; set; }
-        int Width { get; set; }
-        int Height { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
         public Grid(int width, int height)
         {
-            Width = width; 
+            Width = width;
             Height = height;
             Construct();
             Connect();
@@ -78,25 +75,5 @@ namespace ClashRoyale.Game
             return grid[Math.Clamp(Convert.ToInt32(vector2.X), 0, Width), Math.Clamp(Convert.ToInt32(vector2.Y), 0, Height)];
         }
     }
-    public class Node
-    {
-        public int X { get; }
-        public int Y { get; }
-        /// <summary>
-        /// X | X | X
-        /// X | H | X
-        /// X | X | X
-        /// 
-        /// 0 | 1 | 2
-        /// 3 | H | 4
-        /// 5 | 6 | 7
-        /// </summary>
-        public Node[] Neighbours = new Node[8];
-
-        public Node(int x, int y)
-        {
-            X = x;
-            Y = y;
-        }
-    }
+  
 }
