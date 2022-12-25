@@ -35,7 +35,9 @@ namespace ClashRoyale.Graphics
         }
         public void Initalize()
         {
-            View view = new(new FloatRect(0, 0, this.RenderWindow.Size.X, this.RenderWindow.Size.Y));
+            View view = new();
+            view.Size = (Vector2f)this.RenderWindow.Size;
+            view.Center = new Vector2f(0, 0);
             view.Zoom(this.ZOOM);
             this.RenderWindow.SetView(view);
             this.RenderWindow.MouseButtonPressed += MouseButtonPressed;
