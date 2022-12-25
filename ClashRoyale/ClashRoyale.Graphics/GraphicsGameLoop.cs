@@ -1,4 +1,5 @@
-﻿using ClashRoyale.Files.CsvLogic;
+﻿
+using ClashRoyale.Files.CsvLogic;
 using ClashRoyale.Files;
 using ClashRoyale.Game;
 using ClashRoyale.Game.GameLoop;
@@ -21,19 +22,19 @@ namespace ClashRoyale.Graphics
             this.PlayBattle = playBattle;
             this.RenderWindow = renderWindow;
             this.GameTime = new();
-            this.ZOOM = Arena.REAL_ARENA_HEIGHT / this.RenderWindow.Size.Y;
+            this.ZOOM = 1.0f; //Arena.REAL_ARENA_HEIGHT / this.RenderWindow.Size.Y * 1.0f;
             Initalize();
         }
         private void MouseButtonPressed(object sender, MouseButtonEventArgs e)
         {
             if (e.Button == Mouse.Button.Left)
             {
-                this.PlayBattle.Arena.Entities.Add(new EntityContext(this.PlayBattle.Arena, Csv.Tables.Get(Csv.Files.Characters).GetDataWithInstanceId<Characters>(0), new Vector2((e.X - (this.RenderWindow.Size.X / 2)) * this.ZOOM, (e.Y - (this.RenderWindow.Size.Y / 2)) * this.ZOOM)));
+                this.PlayBattle.Arena.Entities.Add(new EntityContext(this.PlayBattle.Arena, Csv.Tables.Get(Csv.Files.Characters).GetDataWithInstanceId<Characters>(0), new Vector2((e.X + (this.RenderWindow.Size.X / 2) - this.RenderWindow.DefaultView.Center.X) * this.ZOOM, (e.Y + (this.RenderWindow.Size.Y / 2) - this.RenderWindow.DefaultView.Center.Y) * this.ZOOM)));
             }
         }
         public void Initalize()
         {
-            View view = new(new FloatRect(0, 0, this.RenderWindow.Size.X, this.RenderWindow.Size.Y));
+            View view = this.RenderWindow.DefaultView;
             view.Zoom(this.ZOOM);
             this.RenderWindow.SetView(view);
             this.RenderWindow.MouseButtonPressed += MouseButtonPressed;
@@ -84,7 +85,7 @@ namespace ClashRoyale.Graphics
                 this.RenderWindow.Draw(circle);
             }
             var cellSize = new Vector2f(Arena.REAL_ARENA_WIDTH / this.PlayBattle.Arena.Grid.Width, Arena.REAL_ARENA_HEIGHT / this.PlayBattle.Arena.Grid.Height);
-            var centerOfArena = new Vector2f(Arena.REAL_ARENA_WIDTH, Arena.REAL_ARENA_HEIGHT) / 2.0375f;
+            var centerOfArena = new Vector2f(Arena.REAL_ARENA_WIDTH, Arena.REAL_ARENA_HEIGHT) / 2.0f;
             for (int x = 0; x <= this.PlayBattle.Arena.Grid.Width; x++)
             {
                 Vertex[] vertices = new Vertex[2];

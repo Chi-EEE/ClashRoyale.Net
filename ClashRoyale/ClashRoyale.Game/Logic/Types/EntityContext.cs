@@ -29,14 +29,14 @@ namespace ClashRoyale.Game.Types
         public void Tick(GameTime gameTime)
         {
             var thisPosition = this.Position;
-            Console.WriteLine(this.EntityInformation.Speed);
+            //Console.WriteLine(this.EntityInformation.Speed);
             thisPosition.Y += this.EntityInformation.Speed * ENTITY_MOVE_SCALE * gameTime.DeltaTime;
             //var collisionRadius = this.EntityInformation.CollisionRadius;
             foreach (var entity in Arena.Entities)
             {
                 if (entity != this)
                 {
-                    Console.WriteLine(AreCirclesOverlapping(this.Position.X, this.Position.Y, entity.Position.X, entity.Position.Y, this.EntityInformation.CollisionRadius, entity.EntityInformation.CollisionRadius));
+                    //Console.WriteLine(AreCirclesOverlapping(this.Position.X, this.Position.Y, entity.Position.X, entity.Position.Y, this.EntityInformation.CollisionRadius, entity.EntityInformation.CollisionRadius));
                     //        var entityPosition = entity.Position;
                     //        if (AreCirclesOverlapping(thisPosition.X, entityPosition.X, thisPosition.Y, entityPosition.Y, collisionRadius, entity.EntityInformation.CollisionRadius))
                     //        {
