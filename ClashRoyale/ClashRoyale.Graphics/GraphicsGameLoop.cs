@@ -22,19 +22,20 @@ namespace ClashRoyale.Graphics
             this.PlayBattle = playBattle;
             this.RenderWindow = renderWindow;
             this.GameTime = new();
-            this.ZOOM = 1.0f; //Arena.REAL_ARENA_HEIGHT / this.RenderWindow.Size.Y * 1.0f;
+            this.ZOOM = Arena.REAL_ARENA_HEIGHT / this.RenderWindow.Size.Y;
             Initalize();
         }
         private void MouseButtonPressed(object sender, MouseButtonEventArgs e)
         {
             if (e.Button == Mouse.Button.Left)
             {
-                this.PlayBattle.Arena.Entities.Add(new EntityContext(this.PlayBattle.Arena, Csv.Tables.Get(Csv.Files.Characters).GetDataWithInstanceId<Characters>(0), new Vector2((e.X + (this.RenderWindow.Size.X / 2) - this.RenderWindow.DefaultView.Center.X) * this.ZOOM, (e.Y + (this.RenderWindow.Size.Y / 2) - this.RenderWindow.DefaultView.Center.Y) * this.ZOOM)));
+                Vector2f mousePosition = this.RenderWindow.MapPixelToCoords(new Vector2i(e.X, e.Y));
+                this.PlayBattle.Arena.Entities.Add(new EntityContext(this.PlayBattle.Arena, Csv.Tables.Get(Csv.Files.Characters).GetDataWithInstanceId<Characters>(0), new Vector2(mousePosition.X, mousePosition.Y)));
             }
         }
         public void Initalize()
         {
-            View view = this.RenderWindow.DefaultView;
+            View view = new(new FloatRect(0, 0, this.RenderWindow.Size.X, this.RenderWindow.Size.Y));
             view.Zoom(this.ZOOM);
             this.RenderWindow.SetView(view);
             this.RenderWindow.MouseButtonPressed += MouseButtonPressed;
