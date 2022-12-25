@@ -5,6 +5,7 @@ using ClashRoyale.Files.CsvLogic;
 using ClashRoyale.Files;
 using ClashRoyale.Game.Types;
 using System.Numerics;
+using ClashRoyale.Game.GameLoop;
 
 namespace ClashRoyale.Game
 {
@@ -22,9 +23,7 @@ namespace ClashRoyale.Game
         public async Task StartBattleAsync()
         {
             Arena.Start();
-            this.GameLoop();
         }
-        protected abstract void GameLoop();
         public void Update(GameTime gameTime)
         {
             Arena.Tick(gameTime);

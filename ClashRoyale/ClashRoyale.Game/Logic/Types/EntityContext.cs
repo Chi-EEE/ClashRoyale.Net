@@ -1,5 +1,6 @@
 ﻿using ClashRoyale.Files;
 using ClashRoyale.Files.CsvLogic;
+using ClashRoyale.Game.GameLoop;
 using System;
 using System.Numerics;
 using System.Text.RegularExpressions;
