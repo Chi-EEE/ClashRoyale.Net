@@ -12,12 +12,12 @@ namespace ClashRoyale.Game
     {
         static CSV()
         {
-            var fileNames = Directory.GetFiles("GameAssets/csv_logic/");
+            var fileNames = Directory.GetFiles("GameAssets/tilemaps/");
             foreach (var file in fileNames)
             {
                 using (TextFieldParser csvParser = new TextFieldParser(file))
                 {
-                    //csvParser.Parse(file);
+                    csvParser.ReadFields();
                 }
             }
         }

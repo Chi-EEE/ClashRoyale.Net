@@ -27,11 +27,12 @@ namespace ClashRoyale.Game
         {
             return (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2) <= (r1 + r2) * (r1 + r2);
         }
-        public void Tick(float dt)
+        public void Tick(GameTime gameTime)
         {
             foreach (var ctx in Entities)
             {
-                ctx.Tick(dt);
+                ctx.Tick(gameTime);
+
                 //if (entity != this)
                 //{
                 //    var entityPosition = entity.Position;

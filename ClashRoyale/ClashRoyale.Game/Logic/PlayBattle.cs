@@ -10,13 +10,13 @@ namespace ClashRoyale.Game
 {
     public abstract class PlayBattle
     {
-        static private readonly int EndTick = 300000; // 5 Minutes = 300,000 milliseconds
         public Arena Arena { get; set; }
-        public int BattleTick { get; set; }
+        public float BattleTime { get; set; }
         public BattleState battleState = BattleState.InProgress;
         public PlayBattle()
         {
             Arena = new Arena();
+            BattleTime = 0.0f;
         }
 
         public async Task StartBattleAsync()
@@ -25,15 +25,16 @@ namespace ClashRoyale.Game
             this.GameLoop();
         }
         protected abstract void GameLoop();
-        public void Update(float dt)
+        public void Update(GameTime gameTime)
         {
-            Arena.Tick(dt);
+            Arena.Tick(gameTime);
 
-            BattleTick++;
-            if (BattleTick >= EndTick)
-            {
-                battleState = BattleState.Draw;
-            }
+            BattleTime += gameTime.TotalTimeElapsed;
+            //BattleTick++;
+            //if (BattleTick >= EndTick)
+            //{
+            //    battleState = BattleState.Draw;
+            //}
         }
     }
     public enum BattleState

@@ -25,33 +25,33 @@ namespace ClashRoyale.Game.Types
         {
             return (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2) <= (r1 + r2) * (r1 + r2);
         }
-        public void Tick(float dt)
+        public void Tick(GameTime gameTime)
         {
             var thisPosition = this.Position;
-            thisPosition.Y += this.EntityInformation.Speed * dt;
-            var collisionRadius = this.EntityInformation.CollisionRadius;
-            foreach (var entity in Arena.Entities)
-            {
-                if (entity != this)
-                {
-                    var entityPosition = entity.Position;
-                    if (AreCirclesOverlapping(thisPosition.X, entityPosition.X, thisPosition.Y, entityPosition.Y, collisionRadius, entity.EntityInformation.CollisionRadius))
-                    {
-                        float fDistance = MathF.Sqrt((thisPosition.X - entityPosition.X) * (thisPosition.X - entityPosition.X) + (thisPosition.Y - entityPosition.Y) * (thisPosition.Y - entityPosition.Y));
+            thisPosition.Y += this.EntityInformation.Speed * gameTime.DeltaTime;
+            //var collisionRadius = this.EntityInformation.CollisionRadius;
+            //foreach (var entity in Arena.Entities)
+            //{
+            //    if (entity != this)
+            //    {
+            //        var entityPosition = entity.Position;
+            //        if (AreCirclesOverlapping(thisPosition.X, entityPosition.X, thisPosition.Y, entityPosition.Y, collisionRadius, entity.EntityInformation.CollisionRadius))
+            //        {
+            //            float fDistance = MathF.Sqrt((thisPosition.X - entityPosition.X) * (thisPosition.X - entityPosition.X) + (thisPosition.Y - entityPosition.Y) * (thisPosition.Y - entityPosition.Y));
 
-                        float fOverlap = 0.5f * (fDistance - collisionRadius - entity.EntityInformation.CollisionRadius);
+            //            float fOverlap = 0.5f * (fDistance - collisionRadius - entity.EntityInformation.CollisionRadius);
 
-                        thisPosition.X -= fOverlap * (thisPosition.X - entityPosition.X) / fDistance;
-                        thisPosition.Y -= fOverlap * (thisPosition.Y - entityPosition.Y) / fDistance;
+            //            thisPosition.X -= fOverlap * (thisPosition.X - entityPosition.X) / fDistance;
+            //            thisPosition.Y -= fOverlap * (thisPosition.Y - entityPosition.Y) / fDistance;
 
-                        entityPosition.X += fOverlap * (thisPosition.X - entityPosition.X) / fDistance;
-                        entityPosition.Y += fOverlap * (thisPosition.Y - entityPosition.Y) / fDistance;
+            //            entityPosition.X += fOverlap * (thisPosition.X - entityPosition.X) / fDistance;
+            //            entityPosition.Y += fOverlap * (thisPosition.Y - entityPosition.Y) / fDistance;
 
-                        this.Position = thisPosition;
-                        entity.Position = entityPosition;
-                    }
-                }
-            }
+            //            this.Position = thisPosition;
+            //            entity.Position = entityPosition;
+            //        }
+            //    }
+            //}
             this.Position = thisPosition;
         }
     }
