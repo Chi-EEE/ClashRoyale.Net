@@ -10,44 +10,13 @@ using System.Numerics;
 
 namespace ClashRoyale.Graphics
 {
-    class PlayBattleGraphics : PlayBattle, GameLoop
+    class PlayBattleGraphics : PlayBattle
     {
-        GameLoop BattleGameLoop;
+        GraphicsGameLoop BattleGameLoop;
         public PlayBattleGraphics(RenderWindow renderWindow)
         {
-            BattleGameLoop = new BattleGameLoop(this, renderWindow);
-        }
-
-        RenderWindow GameLoop.RenderWindow
-        {
-            get
-            {
-                return BattleGameLoop.RenderWindow;
-            }
-            set;
-        }
-        //RenderWindow GameLoop.GameTime
-        //{
-        //    get
-        //    {
-        //        return BattleGameLoop.GameTime;
-        //    }
-        //    set;
-        //}
-
-        GameTime GameLoop.GameTime { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-        public void Run()
-        {
+            BattleGameLoop = new GraphicsGameLoop(this, renderWindow);
             BattleGameLoop.Run();
-        }
-        public void Initalize()
-        {
-            BattleGameLoop.Initalize();
-        }
-        public void Draw()
-        {
-            BattleGameLoop.Draw();
         }
     }
 }

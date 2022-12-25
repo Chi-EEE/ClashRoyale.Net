@@ -6,22 +6,17 @@ using ClashRoyale.Game.Types;
 using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ClashRoyale.Graphics
 {
-    public class BattleGameLoop : GameLoop
+    public class GraphicsGameLoop : GameLoop
     {
         private readonly PlayBattle PlayBattle;
-        public RenderWindow RenderWindow { get; set; }
-        public GameTime GameTime { get; set; }
+        public GameTime GameTime { get; }
+        private readonly RenderWindow RenderWindow;
 
-        public BattleGameLoop(PlayBattle playBattle, RenderWindow renderWindow)
+        public GraphicsGameLoop(PlayBattle playBattle, RenderWindow renderWindow)
         {
             this.PlayBattle = playBattle;
             this.RenderWindow = renderWindow;
@@ -66,6 +61,12 @@ namespace ClashRoyale.Graphics
                 }
             }
         }
+
+        public void Update(GameTime gameTime)
+        {
+            PlayBattle.Update(gameTime);
+        }
+
         public void Draw()
         {
             this.RenderWindow.Clear(Color.White);
