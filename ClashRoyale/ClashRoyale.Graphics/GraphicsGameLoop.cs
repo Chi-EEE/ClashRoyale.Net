@@ -15,23 +15,27 @@ namespace ClashRoyale.Graphics
         private readonly PlayBattle PlayBattle;
         public GameTime GameTime { get; }
         private readonly RenderWindow RenderWindow;
-
+        private readonly float ZOOM;
         public GraphicsGameLoop(PlayBattle playBattle, RenderWindow renderWindow)
         {
             this.PlayBattle = playBattle;
             this.RenderWindow = renderWindow;
             this.GameTime = new();
+            this.ZOOM = Arena.REAL_ARENA_HEIGHT / this.RenderWindow.Size.Y;
             Initalize();
         }
         private void MouseButtonPressed(object sender, MouseButtonEventArgs e)
         {
             if (e.Button == Mouse.Button.Left)
             {
-                this.PlayBattle.Arena.Entities.Add(new EntityContext(this.PlayBattle.Arena, Csv.Tables.Get(Csv.Files.Characters).GetDataWithInstanceId<Characters>(0), new Vector2(e.X, e.Y)));
+                this.PlayBattle.Arena.Entities.Add(new EntityContext(this.PlayBattle.Arena, Csv.Tables.Get(Csv.Files.Characters).GetDataWithInstanceId<Characters>(0), new Vector2((e.X - (this.RenderWindow.Size.X / 2)) * this.ZOOM, (e.Y - (this.RenderWindow.Size.Y / 2)) * this.ZOOM)));
             }
         }
         public void Initalize()
         {
+            View view = new(new FloatRect(0, 0, Convert.ToSingle(this.RenderWindow.Size.X), Convert.ToSingle(this.RenderWindow.Size.Y)));
+            view.Zoom(this.ZOOM);
+            this.RenderWindow.SetView(view);
             this.RenderWindow.MouseButtonPressed += MouseButtonPressed;
         }
         public void Run()
@@ -72,7 +76,7 @@ namespace ClashRoyale.Graphics
             this.RenderWindow.Clear(Color.White);
             foreach (EntityContext entityContext in this.PlayBattle.Arena.Entities)
             {
-                var radius = entityContext.EntityInformation.CollisionRadius / 20;
+                var radius = entityContext.EntityInformation.CollisionRadius;
                 CircleShape circle = new CircleShape(radius);
                 circle.Position = new Vector2f(entityContext.Position.X - radius, entityContext.Position.Y - radius);
                 circle.FillColor = Color.Black;

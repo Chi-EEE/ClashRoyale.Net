@@ -17,7 +17,7 @@ namespace ClashRoyale.Graphics
         public async Task PlayAsync()
         {
             // Create the main window
-            RenderWindow window = new RenderWindow(new VideoMode(Arena.WIDTH/ 10, Arena.HEIGHT / 10), "SFML Game", Styles.Titlebar);
+            RenderWindow window = new RenderWindow(new VideoMode(Arena.REAL_ARENA_WIDTH / 50, Arena.REAL_ARENA_HEIGHT / 50), "SFML Game", Styles.Titlebar);
             window.Closed += OnClose;
             PlayBattleGraphics playBattleGraphics = new(window);
             await playBattleGraphics.StartBattleAsync();

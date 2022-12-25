@@ -16,6 +16,10 @@ namespace ClashRoyale.Graphics
         public PlayBattleGraphics(RenderWindow renderWindow)
         {
             BattleGameLoop = new GraphicsGameLoop(this, renderWindow);
+        }
+        public new async Task StartBattleAsync()
+        {
+            await base.StartBattleAsync();
             BattleGameLoop.Run();
         }
     }

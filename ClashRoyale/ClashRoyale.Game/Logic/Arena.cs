@@ -13,8 +13,8 @@ namespace ClashRoyale.Game
 {
     public class Arena
     {
-        public static readonly uint WIDTH = 3375;
-        public static readonly uint HEIGHT = 6000;
+        public const uint REAL_ARENA_WIDTH = 18000;
+        public const uint REAL_ARENA_HEIGHT = 32000;
         public List<EntityContext> Entities = new List<EntityContext>();
         private Grid grid = new(36, 64);
         public Arena()
