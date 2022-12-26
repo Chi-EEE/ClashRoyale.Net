@@ -19,7 +19,7 @@ namespace ClashRoyale.Graphics
         private readonly float ZOOM;
         private readonly Texture BackgroundTexture;
         private readonly RectangleShape BackgroundRectangleShape;
-        private readonly List<Vertex[]> VertexList = new();
+        private readonly VertexArray VertexArray = new(PrimitiveType.Lines);
         public GraphicsGameLoop(PlayBattle playBattle, RenderWindow renderWindow)
         {
             this.PlayBattle = playBattle;
@@ -54,17 +54,13 @@ namespace ClashRoyale.Graphics
             var centerOfArena = new Vector2f(Arena.REAL_ARENA_WIDTH, Arena.REAL_ARENA_HEIGHT) / 2.0f;
             for (int x = 0; x <= this.PlayBattle.Arena.Grid.Width; x++)
             {
-                Vertex[] vertices = new Vertex[2];
-                vertices[0] = new Vertex(new Vector2f(x * cellSize.X, 0) - centerOfArena, Color.Black);
-                vertices[1] = new Vertex(new Vector2f(x * cellSize.X, Arena.REAL_ARENA_HEIGHT) - centerOfArena, Color.Black);
-                this.VertexList.Add(vertices);
+                this.VertexArray.Append(new Vertex(new Vector2f(x * cellSize.X, 0) - centerOfArena, Color.Black));
+                this.VertexArray.Append(new Vertex(new Vector2f(x * cellSize.X, Arena.REAL_ARENA_HEIGHT) - centerOfArena, Color.Black));
             }
             for (int y = 0; y <= this.PlayBattle.Arena.Grid.Height; y++)
             {
-                Vertex[] vertices = new Vertex[2];
-                vertices[0] = new Vertex(new Vector2f(0, y * cellSize.Y) - centerOfArena, Color.Black);
-                vertices[1] = new Vertex(new Vector2f(Arena.REAL_ARENA_WIDTH, y * cellSize.Y) - centerOfArena, Color.Black);
-                this.VertexList.Add(vertices);
+                this.VertexArray.Append(new Vertex(new Vector2f(0, y * cellSize.Y) - centerOfArena, Color.Black));
+                this.VertexArray.Append(new Vertex(new Vector2f(Arena.REAL_ARENA_WIDTH, y * cellSize.Y) - centerOfArena, Color.Black));
             }
         }
         public void Run()
@@ -113,10 +109,7 @@ namespace ClashRoyale.Graphics
                 circle.FillColor = Color.Black;
                 this.RenderWindow.Draw(circle);
             }
-            foreach (var vertexes in this.VertexList)
-            {
-                this.RenderWindow.Draw(vertexes, PrimitiveType.Lines);
-            }
+            this.RenderWindow.Draw(this.VertexArray);
 
             this.RenderWindow.Display();
         }
