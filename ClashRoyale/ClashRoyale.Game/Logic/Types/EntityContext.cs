@@ -12,23 +12,25 @@ namespace ClashRoyale.Game.Types
         public Arena Arena { get; set; }
         public Entity Entity { get; set; }
         public Entities EntityInformation { get; set; }
-        public Vector2 Position { get; set; }
+        public int Level { get; set; }
+        public float DeployTime { get; set; }
         public Entity? Target { get; set; }
         private const float ENTITY_MOVE_SCALE = 21.333333333333333333333333333333f;
-        public EntityContext(Arena arena, Entities entityInformation, Vector2 position)
+        public EntityContext(Arena arena, Entities entityInformation, Vector2 position, int level = 0)
         {
             Arena = arena;
-            Entity = new Entity(0, entityInformation.Hitpoints, entityInformation.DeployTime);
+            Entity = new Entity(EntityInformation, entityInformation.Hitpoints, position);
             EntityInformation = entityInformation;
-            Position = position;
+            Level = level;
+            DeployTime = entityInformation.DeployTime;
         }
-        private bool AreCirclesOverlapping(float x1, float y1, float x2, float y2, int r1, int r2)
-        {
-            return (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2) <= (r1 + r2) * (r1 + r2);
-        }
+        //private bool AreCirclesOverlapping(float x1, float y1, float x2, float y2, int r1, int r2)
+        //{
+        //    return (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2) <= (r1 + r2) * (r1 + r2);
+        //}
         public void Tick(GameTime gameTime)
         {
-            var thisPosition = this.Position;
+            var thisPosition = this.Entity.Position;
             //Console.WriteLine(this.EntityInformation.Speed);
             thisPosition.Y += this.EntityInformation.Speed * ENTITY_MOVE_SCALE * gameTime.DeltaTime;
             //var collisionRadius = this.EntityInformation.CollisionRadius;
@@ -55,7 +57,7 @@ namespace ClashRoyale.Game.Types
                     //        }
                 }
             }
-            this.Position = thisPosition;
+            this.Entity.Position = thisPosition;
         }
     }
 }

@@ -1,6 +1,8 @@
-﻿using System;
+﻿using ClashRoyale.Files.CsvLogic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,14 +11,14 @@ namespace ClashRoyale.Game.Types
 {
     public class Entity
     {
-        public int Level { get; set; }
+        public Entities EntityInformation { get; set; }
         public int Hitpoints { get; set; }
-        public float DeployTime { get; set; }
-        public Entity(int level, int hitpoints, float deployTime = 0)
+        public Vector2 Position { get; set; }
+        public Entity(Entities entityInformation, int hitpoints, Vector2 position)
         {
-            Level = level;
+            EntityInformation = entityInformation;
             Hitpoints = hitpoints;
-            DeployTime = deployTime;
+            Position = position;
         }
     }
 }

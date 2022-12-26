@@ -10,6 +10,7 @@ namespace ClashRoyale.Game.Logic.Pathing
     {
         public int X { get; }
         public int Y { get; }
+        public TileType TileType { get; set; }
         /// <summary>
         /// X | X | X
         /// X | H | X
@@ -21,10 +22,18 @@ namespace ClashRoyale.Game.Logic.Pathing
         /// </summary>
         public Node[] Neighbours = new Node[8];
 
+        public Node(int x, int y, TileType value)
+        {
+            X = x;
+            Y = y;
+            TileType = TileType.Default;
+        }
+
         public Node(int x, int y)
         {
             X = x;
             Y = y;
+            TileType = TileType.Default;
         }
     }
 }

@@ -105,7 +105,7 @@ namespace ClashRoyale.Graphics
                 var radius = entityContext.EntityInformation.CollisionRadius;
                 CircleShape circle = new CircleShape(radius);
                 circle.Origin = new Vector2f(radius, radius);
-                circle.Position = new Vector2f(entityContext.Position.X, entityContext.Position.Y);
+                circle.Position = new Vector2f(entityContext.Entity.Position.X, entityContext.Entity.Position.Y);
                 circle.FillColor = Color.Black;
                 this.RenderWindow.Draw(circle);
             }
