@@ -12,7 +12,10 @@ namespace ClashRoyale.Game.Logic
         public Card[] Deck { get; set; }
         public float Mana { get; set; }
         public float ManaDecimal { get; set; }
-        public PlayerSide() { }
+        public PlayerSide(Card[] deck)
+        {
+            Deck = deck;
+        }
         public void Tick(GameTime gameTime)
         {
             GenerateMana(gameTime);

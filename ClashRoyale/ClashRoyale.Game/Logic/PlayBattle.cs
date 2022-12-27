@@ -6,16 +6,21 @@ using ClashRoyale.Files;
 using ClashRoyale.Game.Types;
 using System.Numerics;
 using ClashRoyale.Game.GameLoop;
+using ClashRoyale.Game.Logic;
 
 namespace ClashRoyale.Game
 {
     public abstract class PlayBattle
     {
+        PlayerSide PlayerSide_1;
+        PlayerSide PlayerSide_2;
         public Arena Arena { get; set; }
         public float BattleTime { get; set; }
         public BattleState battleState = BattleState.InProgress;
-        public PlayBattle()
+        public PlayBattle(PlayerSide playerSide_1, PlayerSide playerSide_2)
         {
+            PlayerSide_1 = playerSide_1;
+            PlayerSide_2 = playerSide_2;
             Arena = new Arena();
             BattleTime = 0.0f;
         }
@@ -28,9 +33,11 @@ namespace ClashRoyale.Game
         {
             Arena.Tick(gameTime);
 
+            PlayerSide_1.Tick(gameTime);
+            PlayerSide_2.Tick(gameTime);
+
             BattleTime += gameTime.TotalTimeElapsed;
-            //BattleTick++;
-            //if (BattleTick >= EndTick)
+            //if (BattleTime >= EndTick)
             //{
             //    battleState = BattleState.Draw;
             //}

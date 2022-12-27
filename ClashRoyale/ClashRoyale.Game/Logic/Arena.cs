@@ -23,7 +23,7 @@ namespace ClashRoyale.Game
         }
         public void Start()
         {
-            Entities.Add(new EntityContext(this, Csv.Tables.Get(Csv.Files.Characters).GetDataWithInstanceId<EntityData>(0), new Vector2(0, 0)));
+            //Entities.Add(new EntityContext(this, Csv.Tables.Get(Csv.Files.Characters).GetDataWithInstanceId<EntityData>(0), new Vector2(0, 0)));
         }
         private bool AreCirclesOverlapping(float x1, float x2, float y1, float y2, int r1, int r2)
         {

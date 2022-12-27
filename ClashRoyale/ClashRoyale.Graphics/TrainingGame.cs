@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using SFML.Window;
 using SFML.Graphics;
 using ClashRoyale.Game;
+using ClashRoyale.Game.Logic;
 
 namespace ClashRoyale.Graphics
 {
@@ -21,7 +22,10 @@ namespace ClashRoyale.Graphics
             window.Closed += OnClose;
             window.SetFramerateLimit(24);
             window.SetVerticalSyncEnabled(true); // Don't want to overuse my GPU!
-            PlayBattleGraphics playBattleGraphics = new(window);
+
+            PlayerSide playerSide_1 = new(new Card[] { });
+            PlayerSide playerSide_2 = new(new Card[] { });
+            PlayBattleGraphics playBattleGraphics = new(playerSide_1, playerSide_2, window);
             await playBattleGraphics.StartBattleAsync();
         }
     }

@@ -2,6 +2,7 @@
 using ClashRoyale.Files.CsvLogic;
 using ClashRoyale.Game;
 using ClashRoyale.Game.GameLoop;
+using ClashRoyale.Game.Logic;
 using ClashRoyale.Game.Types;
 using SFML.Graphics;
 using SFML.System;
@@ -13,7 +14,7 @@ namespace ClashRoyale.Graphics
     class PlayBattleGraphics : PlayBattle
     {
         GraphicsGameLoop BattleGameLoop;
-        public PlayBattleGraphics(RenderWindow renderWindow)
+        public PlayBattleGraphics(PlayerSide playerSide_1, PlayerSide playerSide_2, RenderWindow renderWindow) : base(playerSide_1, playerSide_2)
         {
             BattleGameLoop = new GraphicsGameLoop(this, renderWindow);
         }
