@@ -12,7 +12,6 @@ namespace ClashRoyale.Game.Types
     {
         public Arena Arena { get; set; }
         public Entity Entity { get; set; }
-        public EntityData EntityData { get; set; }
         public int Level { get; set; }
         public float DeployTime { get; set; }
         public Vector2 Velocity { get; set; }
@@ -22,9 +21,15 @@ namespace ClashRoyale.Game.Types
         {
             Arena = arena;
             Entity = new Entity(entityInformation, entityInformation.Hitpoints, position);
-            EntityData = entityInformation;
             Level = level;
             DeployTime = entityInformation.DeployTime;
+            Velocity = new(0, 0);
+        }
+        public EntityContext(Arena arena, Entity entity)
+        {
+            Arena = arena;
+            Entity = entity;
+            DeployTime = 0;
             Velocity = new(0, 0);
         }
         public void Tick(GameTime gameTime)

@@ -33,7 +33,7 @@ namespace ClashRoyale.Graphics
         }
         private bool IsPointInCircle(Vector2f point, EntityContext ctx)
         {
-            return (Math.Pow(point.X - ctx.Entity.Position.X, 2) + Math.Pow(point.Y - ctx.Entity.Position.Y, 2)) < Math.Pow(ctx.EntityData.CollisionRadius, 2);
+            return (Math.Pow(point.X - ctx.Entity.Position.X, 2) + Math.Pow(point.Y - ctx.Entity.Position.Y, 2)) < Math.Pow(ctx.Entity.EntityData.CollisionRadius, 2);
         }
         private void MouseButtonPressed(object sender, MouseButtonEventArgs e)
         {
@@ -82,14 +82,14 @@ namespace ClashRoyale.Graphics
             this.BackgroundRectangleShape.Position = this.RenderWindow.MapPixelToCoords(new Vector2i(0, 0)); ;
             this.BackgroundRectangleShape.Texture = this.BackgroundTexture;
 
-            var cellSize = new Vector2f(Arena.REAL_ARENA_WIDTH / this.PlayBattle.Arena.Grid.Width, Arena.REAL_ARENA_HEIGHT / this.PlayBattle.Arena.Grid.Height);
+            var cellSize = new Vector2f(Arena.REAL_ARENA_WIDTH / this.PlayBattle.Arena.Tilemap.Grid.Width, Arena.REAL_ARENA_HEIGHT / this.PlayBattle.Arena.Tilemap.Grid.Height);
             var centerOfArena = new Vector2f(Arena.REAL_ARENA_WIDTH, Arena.REAL_ARENA_HEIGHT) / 2.0f;
-            for (int x = 0; x <= this.PlayBattle.Arena.Grid.Width; x++)
+            for (int x = 0; x <= this.PlayBattle.Arena.Tilemap.Grid.Width; x++)
             {
                 this.VertexArray.Append(new Vertex(new Vector2f(x * cellSize.X, 0) - centerOfArena, Color.Black));
                 this.VertexArray.Append(new Vertex(new Vector2f(x * cellSize.X, Arena.REAL_ARENA_HEIGHT) - centerOfArena, Color.Black));
             }
-            for (int y = 0; y <= this.PlayBattle.Arena.Grid.Height; y++)
+            for (int y = 0; y <= this.PlayBattle.Arena.Tilemap.Grid.Height; y++)
             {
                 this.VertexArray.Append(new Vertex(new Vector2f(0, y * cellSize.Y) - centerOfArena, Color.Black));
                 this.VertexArray.Append(new Vertex(new Vector2f(Arena.REAL_ARENA_WIDTH, y * cellSize.Y) - centerOfArena, Color.Black));
@@ -134,7 +134,7 @@ namespace ClashRoyale.Graphics
             this.RenderWindow.Draw(this.BackgroundRectangleShape);
             foreach (EntityContext entityContext in this.PlayBattle.Arena.Entities)
             {
-                var radius = entityContext.EntityData.CollisionRadius;
+                var radius = entityContext.Entity.EntityData.CollisionRadius;
                 CircleShape circle = new CircleShape(radius);
                 circle.Origin = new Vector2f(radius, radius);
                 circle.Position = new Vector2f(entityContext.Entity.Position.X, entityContext.Entity.Position.Y);

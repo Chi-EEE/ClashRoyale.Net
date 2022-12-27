@@ -84,16 +84,18 @@ namespace ClashRoyale.Game.Files.CsvTilemap
                         tileType = (TileType)uint.Parse(tileTypeString);
                     }
                     Grid.GetNode(x, y).TileType = tileType;
-                    x++;
+                    x = (uint)((x + 1) % Grid.Width);
                 }
-                y++;
+                y = (uint)((y + 1) % Grid.Height);
+                row = reader.ReadFields();
             }
-            while (!reader.EndOfData) ;
+            while (!reader.EndOfData);
             return "";
         }
         private string handleLayout(TextFieldParser reader)
         {
             var row = reader.ReadFields();
+            do
             {
                 if (row == null)
                 {
@@ -102,7 +104,8 @@ namespace ClashRoyale.Game.Files.CsvTilemap
                 string buildingName = row[1];
                 reader.ReadFields(); // Skip headers
                 reader.ReadFields(); // Skip datatypes
-                while (true)
+                var centerOfArena = new Vector2(Arena.REAL_ARENA_WIDTH, Arena.REAL_ARENA_HEIGHT) / 2.0f;
+                do
                 {
                     row = reader.ReadFields();
                     if (row == null)
@@ -115,10 +118,11 @@ namespace ClashRoyale.Game.Files.CsvTilemap
                     var x = uint.Parse(row[2]);
                     var y = uint.Parse(row[3]);
                     EntityData building = Csv.Tables.Get(Csv.Files.Buildings).GetData<EntityData>(buildingName);
-                    Buildings.Add(new(building, building.Hitpoints, new Vector2(x, y)));
+                    Buildings.Add(new(building, building.Hitpoints, new Vector2((x * 500) - centerOfArena.X, (y * 500) - centerOfArena.Y)));
                 }
+                while (!reader.EndOfData);
             }
-            while (!reader.EndOfData) ;
+            while (!reader.EndOfData);
             return "";
         }
     }

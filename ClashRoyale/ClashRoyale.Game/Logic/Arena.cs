@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ClashRoyale.Game.GameLoop;
 using ClashRoyale.Game.Logic.Pathing;
+using ClashRoyale.Game.Files.CsvTilemap;
 
 namespace ClashRoyale.Game
 {
@@ -17,13 +18,16 @@ namespace ClashRoyale.Game
         public const uint REAL_ARENA_WIDTH = 18000;
         public const uint REAL_ARENA_HEIGHT = 32000;
         public List<EntityContext> Entities = new List<EntityContext>();
-        public Grid Grid = new(36, 64);
+        public Tilemap Tilemap = new("GameAssets/tilemaps/tilemap.csv");
         public Arena()
         {
+            foreach (Entity building in Tilemap.Buildings)
+            {
+                Entities.Add(new EntityContext(this, building));
+            }
         }
         public void Start()
         {
-            Entities.Add(new EntityContext(this, Csv.Tables.Get(Csv.Files.Buildings).GetDataWithInstanceId<EntityData>(0), new Vector2(0, 0)));
         }
         private bool AreCirclesOverlapping(Vector2 firstVector, Vector2 secondVector, int r1, int r2)
         {
@@ -41,26 +45,26 @@ namespace ClashRoyale.Game
             foreach (var firstEntityCtx in Entities)
             {
                 var firstEntityPosition = firstEntityCtx.Entity.Position;
-                var firstCollisionRadius = firstEntityCtx.EntityData.CollisionRadius;
+                var firstCollisionRadius = firstEntityCtx.Entity.EntityData.CollisionRadius;
                 foreach (var secondEntityCtx in this.Entities)
                 {
                     if (firstEntityCtx != secondEntityCtx)
                     {
                         var secondEntityPosition = secondEntityCtx.Entity.Position;
-                        var secondCollisionRadius = secondEntityCtx.EntityData.CollisionRadius;
+                        var secondCollisionRadius = secondEntityCtx.Entity.EntityData.CollisionRadius;
                         if (AreCirclesOverlapping(firstEntityPosition, secondEntityPosition, firstCollisionRadius, secondCollisionRadius))
                         {
                             collidingPairs.Add(new(firstEntityCtx, secondEntityCtx));
                             float fDistance = MathF.Sqrt((firstEntityPosition.X - secondEntityPosition.X) * (firstEntityPosition.X - secondEntityPosition.X) + (firstEntityPosition.Y - secondEntityPosition.Y) * (firstEntityPosition.Y - secondEntityPosition.Y));
 
-                            float fOverlap = 0.5f * (fDistance - firstCollisionRadius - secondEntityCtx.EntityData.CollisionRadius);
-                            if (firstEntityCtx.EntityData.Mass > 0)
+                            float fOverlap = 0.5f * (fDistance - firstCollisionRadius - secondEntityCtx.Entity.EntityData.CollisionRadius);
+                            if (firstEntityCtx.Entity.EntityData.Mass > 0)
                             {
                                 firstEntityPosition.X -= (fOverlap * (firstEntityPosition.X - secondEntityPosition.X) / fDistance);// * ENTITY_MOVE_SCALE * gameTime.DeltaTime;
                                 firstEntityPosition.Y -= (fOverlap * (firstEntityPosition.Y - secondEntityPosition.Y) / fDistance);// * ENTITY_MOVE_SCALE * gameTime.DeltaTime;
                                 firstEntityCtx.Entity.Position = firstEntityPosition;
                             }
-                            if (secondEntityCtx.EntityData.Mass > 0)
+                            if (secondEntityCtx.Entity.EntityData.Mass > 0)
                             {
                                 secondEntityPosition.X += (fOverlap * (firstEntityPosition.X - secondEntityPosition.X) / fDistance);// * ENTITY_MOVE_SCALE * gameTime.DeltaTime;
                                 secondEntityPosition.Y += (fOverlap * (firstEntityPosition.Y - secondEntityPosition.Y) / fDistance); //* ENTITY_MOVE_SCALE * gameTime.DeltaTime;
@@ -81,8 +85,8 @@ namespace ClashRoyale.Game
                 var firstVelocity = firstEntity.Velocity;
                 var secondVelocity = secondEntity.Velocity;
 
-                var firstMass = firstEntity.EntityData.Mass;
-                var secondMass = secondEntity.EntityData.Mass;
+                var firstMass = firstEntity.Entity.EntityData.Mass;
+                var secondMass = secondEntity.Entity.EntityData.Mass;
                 float fDistance = MathF.Sqrt((firstPosition.X - secondPosition.X) * (firstPosition.X - secondPosition.X) + (firstPosition.Y - secondPosition.Y) * (firstPosition.Y - secondPosition.Y));
 
                 float nx = (secondPosition.X - firstPosition.X) / fDistance;
@@ -93,7 +97,7 @@ namespace ClashRoyale.Game
                 float dpNorm1 = firstVelocity.X * nx + firstVelocity.Y * ny;
                 float dpNorm2 = secondVelocity.X * nx + secondVelocity.Y * ny;
 
-                if (firstEntity.EntityData.Mass > 0)
+                if (firstEntity.Entity.EntityData.Mass > 0)
                 {
                     float m1 = (dpNorm1 * (firstMass - secondMass) + 2.0f * secondMass * dpNorm2) / (firstMass + secondMass);
                     float dpTan1 = firstVelocity.X * tx + firstVelocity.Y * ty;
@@ -101,7 +105,7 @@ namespace ClashRoyale.Game
                     firstVelocity.Y = ty * dpTan1 + ny * m1;
                     firstEntity.Velocity = firstVelocity;
                 }
-                if (secondEntity.EntityData.Mass > 0)
+                if (secondEntity.Entity.EntityData.Mass > 0)
                 {
                     float m2 = (dpNorm2 * (secondMass - firstMass) + 2.0f * firstMass * dpNorm1) / (firstMass + secondMass);
                     float dpTan2 = secondVelocity.X * tx + secondVelocity.Y * ty;

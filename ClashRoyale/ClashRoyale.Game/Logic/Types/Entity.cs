@@ -11,12 +11,12 @@ namespace ClashRoyale.Game.Types
 {
     public class Entity
     {
-        public EntityData EntityInformation { get; set; }
+        public EntityData EntityData { get; set; }
         public int Hitpoints { get; set; }
         public Vector2 Position { get; set; }
-        public Entity(EntityData entityInformation, int hitpoints, Vector2 position)
+        public Entity(EntityData entityData, int hitpoints, Vector2 position)
         {
-            EntityInformation = entityInformation;
+            EntityData = entityData;
             Hitpoints = hitpoints;
             Position = position;
         }
