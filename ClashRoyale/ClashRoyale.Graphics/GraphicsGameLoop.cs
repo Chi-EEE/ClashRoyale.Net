@@ -20,6 +20,7 @@ namespace ClashRoyale.Graphics
         private readonly Texture BackgroundTexture;
         private readonly RectangleShape BackgroundRectangleShape;
         private readonly VertexArray VertexArray = new(PrimitiveType.Lines);
+        private EntityContext? selectedEntityContext = null;
         public GraphicsGameLoop(PlayBattle playBattle, RenderWindow renderWindow)
         {
             this.PlayBattle = playBattle;
@@ -30,12 +31,42 @@ namespace ClashRoyale.Graphics
             this.BackgroundRectangleShape = new(new Vector2f(Arena.REAL_ARENA_WIDTH, Arena.REAL_ARENA_HEIGHT));
             Initalize();
         }
+        private bool IsPointInCircle(Vector2f point, EntityContext ctx)
+        {
+            return (Math.Pow(point.X - ctx.Entity.Position.X, 2) + Math.Pow(point.Y - ctx.Entity.Position.Y, 2)) < Math.Pow(ctx.EntityData.CollisionRadius, 2);
+        }
         private void MouseButtonPressed(object sender, MouseButtonEventArgs e)
         {
             if (e.Button == Mouse.Button.Left)
             {
                 Vector2f mousePosition = this.RenderWindow.MapPixelToCoords(new Vector2i(e.X, e.Y));
-                this.PlayBattle.Arena.Entities.Add(new EntityContext(this.PlayBattle.Arena, Csv.Tables.Get(Csv.Files.Characters).GetDataWithInstanceId<EntityData>(0), new Vector2(mousePosition.X, mousePosition.Y)));
+                foreach (var entityContext in this.PlayBattle.Arena.Entities)
+                {
+                    if (IsPointInCircle(mousePosition, entityContext))
+                    {
+                        selectedEntityContext = entityContext;
+                        break;
+                    }
+                }
+                if (selectedEntityContext == null)
+                {
+                    this.PlayBattle.Arena.Entities.Add(new EntityContext(this.PlayBattle.Arena, Csv.Tables.Get(Csv.Files.Characters).GetDataWithInstanceId<EntityData>(0), new Vector2(mousePosition.X, mousePosition.Y)));
+                }
+            }
+        }
+        private void MouseButtonReleased(object sender, MouseButtonEventArgs e)
+        {
+            if (e.Button == Mouse.Button.Left)
+            {
+                Vector2f mousePosition = this.RenderWindow.MapPixelToCoords(new Vector2i(e.X, e.Y));
+                if (selectedEntityContext != null)
+                {
+                    var velocity = selectedEntityContext.Velocity;
+                    velocity.X = (selectedEntityContext.Entity.Position.X - mousePosition.X);
+                    velocity.Y = (selectedEntityContext.Entity.Position.Y - mousePosition.Y);
+                    selectedEntityContext.Velocity = velocity;
+                    selectedEntityContext = null;
+                }
             }
         }
         public void Initalize()
@@ -46,6 +77,7 @@ namespace ClashRoyale.Graphics
             view.Zoom(this.ZOOM);
             this.RenderWindow.SetView(view);
             this.RenderWindow.MouseButtonPressed += MouseButtonPressed;
+            this.RenderWindow.MouseButtonReleased += MouseButtonReleased;
 
             this.BackgroundRectangleShape.Position = this.RenderWindow.MapPixelToCoords(new Vector2i(0, 0)); ;
             this.BackgroundRectangleShape.Texture = this.BackgroundTexture;
@@ -102,7 +134,7 @@ namespace ClashRoyale.Graphics
             this.RenderWindow.Draw(this.BackgroundRectangleShape);
             foreach (EntityContext entityContext in this.PlayBattle.Arena.Entities)
             {
-                var radius = entityContext.EntityInformation.CollisionRadius;
+                var radius = entityContext.EntityData.CollisionRadius;
                 CircleShape circle = new CircleShape(radius);
                 circle.Origin = new Vector2f(radius, radius);
                 circle.Position = new Vector2f(entityContext.Entity.Position.X, entityContext.Entity.Position.Y);
