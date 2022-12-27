@@ -1,11 +1,11 @@
 ﻿using ClashRoyale.Files.CsvLogic;
+using ClashRoyale.Files;
 using ClashRoyale.Game.Logic.Pathing;
 using ClashRoyale.Game.Types;
 using Microsoft.VisualBasic.FileIO;
 using System.Numerics;
-using System.Xml.Serialization;
 
-namespace ClashRoyale.Files.CsvTilemap
+namespace ClashRoyale.Game.Files.CsvTilemap
 {
     public class Tilemap
     {
@@ -63,7 +63,7 @@ namespace ClashRoyale.Files.CsvTilemap
             uint x = 0;
             uint y = 0;
             var row = reader.ReadFields();
-            while (!reader.EndOfData)
+            do
             {
                 if (row == null)
                 {
@@ -88,12 +88,12 @@ namespace ClashRoyale.Files.CsvTilemap
                 }
                 y++;
             }
+            while (!reader.EndOfData) ;
             return "";
         }
         private string handleLayout(TextFieldParser reader)
         {
             var row = reader.ReadFields();
-            while (!reader.EndOfData)
             {
                 if (row == null)
                 {
@@ -110,14 +110,15 @@ namespace ClashRoyale.Files.CsvTilemap
                         throw new Exception("Invalid Tilemap: Could get Position Data");
                     }
                     if (row[0] != "") return row[0]; // New Section
-                    if (row[1] != "") break;
+                    if (row[1] != "") break; // Must of gotten a building name
 
                     var x = uint.Parse(row[2]);
                     var y = uint.Parse(row[3]);
-                    Buildings building = Csv.Tables.Get(Csv.Files.Buildings).GetData<Buildings>(buildingName);
+                    EntityData building = Csv.Tables.Get(Csv.Files.Buildings).GetData<EntityData>(buildingName);
                     Buildings.Add(new(building, building.Hitpoints, new Vector2(x, y)));
                 }
             }
+            while (!reader.EndOfData) ;
             return "";
         }
     }

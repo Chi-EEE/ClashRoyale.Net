@@ -1,12 +1,11 @@
-# NOTE: This script is unnecessary as both the characters.csv and the buildings.csv are the exact same, though this script is helpful to keep around
-
 import csv
 import os
 
 
 game_assets_directory = "../ClashRoyale/ClashRoyale.Game/GameAssets/csv_logic/"
-characters_file = game_assets_directory + "characters.csv"
-buildings_file = game_assets_directory + "buildings.csv"
+characters_file = game_assets_directory + "spells_characters.csv"
+buildings_file = game_assets_directory + "spells_buildings.csv"
+other_file = game_assets_directory + "spells_other.csv"
 csv_datatype_to_cs_datatype = {
     "boolean": "bool",
     "booleanarray": "List<bool>",
@@ -61,24 +60,31 @@ def get_header_to_datatype(file):
 
 character_headers_to_data_type = get_header_to_datatype(characters_file)
 building_headers_to_data_type = get_header_to_datatype(buildings_file)
+other_headers_to_data_type = get_header_to_datatype(other_file)
 
 character_header_set = set(character_headers_to_data_type.keys())
 building_header_set = set(building_headers_to_data_type.keys())
+other_header_set = set(other_headers_to_data_type.keys())
 
-same_headers = character_header_set & building_header_set
+same_headers = character_header_set & building_header_set & other_header_set
 same_datatypes = [character_headers_to_data_type.get(header) for header in same_headers]
 
-make_csv_logic_class_file("Entity_Data", "Data", same_headers, same_datatypes)
+make_csv_logic_class_file("Spell_Data", "Data", same_headers, same_datatypes)
 
 # character_headers = character_header_set.difference(same_headers)
 # character_datatypes = [
 #     character_headers_to_data_type.get(header) for header in same_headers
 # ]
 # make_csv_logic_class_file(
-#     "Characters", "Entity", character_headers, character_datatypes
+#     "Characters", "Spell", character_headers, character_datatypes
 # )
 # building_headers = building_header_set.difference(same_headers)
 # building_datatypes = [
 #     building_headers_to_data_type.get(header) for header in same_headers
 # ]
-# make_csv_logic_class_file("Buildings", "Entity", building_headers, building_datatypes)
+# make_csv_logic_class_file("Buildings", "Spell", building_headers, building_datatypes)
+# other_headers = other_header_set.difference(same_headers)
+# other_datatypes = [
+#     other_headers_to_data_type.get(header) for header in same_headers
+# ]
+# make_csv_logic_class_file("Other", "Spell", other_headers, other_datatypes)

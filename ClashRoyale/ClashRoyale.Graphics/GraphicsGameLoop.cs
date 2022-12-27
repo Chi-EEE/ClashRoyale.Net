@@ -35,7 +35,7 @@ namespace ClashRoyale.Graphics
             if (e.Button == Mouse.Button.Left)
             {
                 Vector2f mousePosition = this.RenderWindow.MapPixelToCoords(new Vector2i(e.X, e.Y));
-                this.PlayBattle.Arena.Entities.Add(new EntityContext(this.PlayBattle.Arena, Csv.Tables.Get(Csv.Files.Characters).GetDataWithInstanceId<Characters>(0), new Vector2(mousePosition.X, mousePosition.Y)));
+                this.PlayBattle.Arena.Entities.Add(new EntityContext(this.PlayBattle.Arena, Csv.Tables.Get(Csv.Files.Characters).GetDataWithInstanceId<EntityData>(0), new Vector2(mousePosition.X, mousePosition.Y)));
             }
         }
         public void Initalize()

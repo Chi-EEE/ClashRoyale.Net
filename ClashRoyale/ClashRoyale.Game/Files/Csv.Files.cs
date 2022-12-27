@@ -34,8 +34,8 @@ namespace ClashRoyale.Files
             DataTypes.Add(Files.AreaEffectObjects, typeof(AreaEffectObjects));
             DataTypes.Add(Files.Arenas, typeof(Arenas));
             DataTypes.Add(Files.BattleTimelines, typeof(BattleTimelines));
-            DataTypes.Add(Files.Buildings, typeof(Buildings));
-            DataTypes.Add(Files.Characters, typeof(Characters));
+            DataTypes.Add(Files.Buildings, typeof(EntityData));
+            DataTypes.Add(Files.Characters, typeof(EntityData));
             DataTypes.Add(Files.CharacterAbilities, typeof(CharacterAbilities));
             DataTypes.Add(Files.CharacterBuffs, typeof(CharacterBuffs));
             DataTypes.Add(Files.ContentTests, typeof(ContentTests));
@@ -44,9 +44,9 @@ namespace ClashRoyale.Files
             DataTypes.Add(Files.Locations, typeof(Locations));
             DataTypes.Add(Files.Projectiles, typeof(Projectiles));
             DataTypes.Add(Files.PveGamemodes, typeof(PveGamemodes));
-            DataTypes.Add(Files.SpellsBuildings, typeof(SpellsBuildings));
-            DataTypes.Add(Files.SpellsCharacters, typeof(SpellsCharacters));
-            DataTypes.Add(Files.SpellsOther, typeof(SpellsOther));
+            DataTypes.Add(Files.SpellsBuildings, typeof(SpellData));
+            DataTypes.Add(Files.SpellsCharacters, typeof(SpellData));
+            DataTypes.Add(Files.SpellsOther, typeof(SpellData));
             DataTypes.Add(Files.SpellSets, typeof(SpellSets));
         }
         public static Data Create(Files file, Row row, DataTable dataTable)

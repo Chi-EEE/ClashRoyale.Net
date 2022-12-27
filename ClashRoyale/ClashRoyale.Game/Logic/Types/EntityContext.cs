@@ -11,12 +11,12 @@ namespace ClashRoyale.Game.Types
     {
         public Arena Arena { get; set; }
         public Entity Entity { get; set; }
-        public Entities EntityInformation { get; set; }
+        public EntityData EntityInformation { get; set; }
         public int Level { get; set; }
         public float DeployTime { get; set; }
         public Entity? Target { get; set; }
         private const float ENTITY_MOVE_SCALE = 21.333333333333333333333333333333f;
-        public EntityContext(Arena arena, Entities entityInformation, Vector2 position, int level = 0)
+        public EntityContext(Arena arena, EntityData entityInformation, Vector2 position, int level = 0)
         {
             Arena = arena;
             Entity = new Entity(EntityInformation, entityInformation.Hitpoints, position);
