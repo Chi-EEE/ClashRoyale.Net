@@ -23,7 +23,7 @@ namespace ClashRoyale.Game
         }
         public void Start()
         {
-            //Entities.Add(new EntityContext(this, Csv.Tables.Get(Csv.Files.Characters).GetDataWithInstanceId<EntityData>(0), new Vector2(0, 0)));
+            Entities.Add(new EntityContext(this, Csv.Tables.Get(Csv.Files.Buildings).GetDataWithInstanceId<EntityData>(0), new Vector2(0, 0)));
         }
         private bool AreCirclesOverlapping(Vector2 firstVector, Vector2 secondVector, int r1, int r2)
         {
@@ -40,7 +40,7 @@ namespace ClashRoyale.Game
             List<Tuple<EntityContext, EntityContext>> collidingPairs = new();
             foreach (var firstEntityCtx in Entities)
             {
-                var firstsecondEntityPosition = firstEntityCtx.Entity.Position;
+                var firstEntityPosition = firstEntityCtx.Entity.Position;
                 var firstCollisionRadius = firstEntityCtx.EntityData.CollisionRadius;
                 foreach (var secondEntityCtx in this.Entities)
                 {
@@ -48,20 +48,24 @@ namespace ClashRoyale.Game
                     {
                         var secondEntityPosition = secondEntityCtx.Entity.Position;
                         var secondCollisionRadius = secondEntityCtx.EntityData.CollisionRadius;
-                        if (AreCirclesOverlapping(firstsecondEntityPosition, secondEntityPosition, firstCollisionRadius, secondCollisionRadius))
+                        if (AreCirclesOverlapping(firstEntityPosition, secondEntityPosition, firstCollisionRadius, secondCollisionRadius))
                         {
                             collidingPairs.Add(new(firstEntityCtx, secondEntityCtx));
-                            float fDistance = MathF.Sqrt((firstsecondEntityPosition.X - secondEntityPosition.X) * (firstsecondEntityPosition.X - secondEntityPosition.X) + (firstsecondEntityPosition.Y - secondEntityPosition.Y) * (firstsecondEntityPosition.Y - secondEntityPosition.Y));
+                            float fDistance = MathF.Sqrt((firstEntityPosition.X - secondEntityPosition.X) * (firstEntityPosition.X - secondEntityPosition.X) + (firstEntityPosition.Y - secondEntityPosition.Y) * (firstEntityPosition.Y - secondEntityPosition.Y));
 
                             float fOverlap = 0.5f * (fDistance - firstCollisionRadius - secondEntityCtx.EntityData.CollisionRadius);
-                            firstsecondEntityPosition.X -= (fOverlap * (firstsecondEntityPosition.X - secondEntityPosition.X) / fDistance);// * ENTITY_MOVE_SCALE * gameTime.DeltaTime;
-                            firstsecondEntityPosition.Y -= (fOverlap * (firstsecondEntityPosition.Y - secondEntityPosition.Y) / fDistance);// * ENTITY_MOVE_SCALE * gameTime.DeltaTime;
-
-                            secondEntityPosition.X += (fOverlap * (firstsecondEntityPosition.X - secondEntityPosition.X) / fDistance);// * ENTITY_MOVE_SCALE * gameTime.DeltaTime;
-                            secondEntityPosition.Y += (fOverlap * (firstsecondEntityPosition.Y - secondEntityPosition.Y) / fDistance); //* ENTITY_MOVE_SCALE * gameTime.DeltaTime;
-
-                            firstEntityCtx.Entity.Position = firstsecondEntityPosition;
-                            secondEntityCtx.Entity.Position = secondEntityPosition;
+                            if (firstEntityCtx.EntityData.Mass > 0)
+                            {
+                                firstEntityPosition.X -= (fOverlap * (firstEntityPosition.X - secondEntityPosition.X) / fDistance);// * ENTITY_MOVE_SCALE * gameTime.DeltaTime;
+                                firstEntityPosition.Y -= (fOverlap * (firstEntityPosition.Y - secondEntityPosition.Y) / fDistance);// * ENTITY_MOVE_SCALE * gameTime.DeltaTime;
+                                firstEntityCtx.Entity.Position = firstEntityPosition;
+                            }
+                            if (secondEntityCtx.EntityData.Mass > 0)
+                            {
+                                secondEntityPosition.X += (fOverlap * (firstEntityPosition.X - secondEntityPosition.X) / fDistance);// * ENTITY_MOVE_SCALE * gameTime.DeltaTime;
+                                secondEntityPosition.Y += (fOverlap * (firstEntityPosition.Y - secondEntityPosition.Y) / fDistance); //* ENTITY_MOVE_SCALE * gameTime.DeltaTime;
+                                secondEntityCtx.Entity.Position = secondEntityPosition;
+                            }
                         }
                     }
                 }
@@ -86,23 +90,25 @@ namespace ClashRoyale.Game
 
                 float tx = -ny;
                 float ty = nx;
-
-                float dpTan1 = firstVelocity.X * tx + firstVelocity.Y * ty;
-                float dpTan2 = secondVelocity.X * tx + secondVelocity.Y * ty;
-
                 float dpNorm1 = firstVelocity.X * nx + firstVelocity.Y * ny;
                 float dpNorm2 = secondVelocity.X * nx + secondVelocity.Y * ny;
 
-                float m1 = (dpNorm1 * (firstMass - secondMass) + 2.0f * secondMass * dpNorm2) / (firstMass + secondMass);
-                float m2 = (dpNorm1 * (secondMass - firstMass) + 2.0f * firstMass * dpNorm1) / (firstMass + secondMass);
-
-                firstVelocity.X = tx * dpTan1 + nx * m1;
-                firstVelocity.Y = ty * dpTan1 + ny * m1;
-                secondVelocity.X = tx * dpTan2 + nx * m2;
-                secondVelocity.Y = ty * dpTan2 + ny * m2;
-
-                firstEntity.Velocity = firstVelocity;
-                secondEntity.Velocity = secondVelocity;
+                if (firstEntity.EntityData.Mass > 0)
+                {
+                    float m1 = (dpNorm1 * (firstMass - secondMass) + 2.0f * secondMass * dpNorm2) / (firstMass + secondMass);
+                    float dpTan1 = firstVelocity.X * tx + firstVelocity.Y * ty;
+                    firstVelocity.X = tx * dpTan1 + nx * m1;
+                    firstVelocity.Y = ty * dpTan1 + ny * m1;
+                    firstEntity.Velocity = firstVelocity;
+                }
+                if (secondEntity.EntityData.Mass > 0)
+                {
+                    float m2 = (dpNorm2 * (secondMass - firstMass) + 2.0f * firstMass * dpNorm1) / (firstMass + secondMass);
+                    float dpTan2 = secondVelocity.X * tx + secondVelocity.Y * ty;
+                    secondVelocity.X = tx * dpTan2 + nx * m2;
+                    secondVelocity.Y = ty * dpTan2 + ny * m2;
+                    secondEntity.Velocity = secondVelocity;
+                }
             }
             foreach (var ctx in Entities)
             {
