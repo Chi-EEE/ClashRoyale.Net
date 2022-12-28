@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using ClashRoyale.Game.GameLoop;
 using ClashRoyale.Game.Logic.Pathing;
 using ClashRoyale.Game.Files.CsvTilemap;
+using SFML.System;
 
 namespace ClashRoyale.Game
 {
@@ -32,6 +33,46 @@ namespace ClashRoyale.Game
         private bool AreCirclesOverlapping(Vector2 firstVector, Vector2 secondVector, int r1, int r2)
         {
             return (firstVector.X - secondVector.X) * (firstVector.X - secondVector.X) + (firstVector.Y - secondVector.Y) * (firstVector.Y - secondVector.Y) <= (r1 + r2) * (r1 + r2);
+        }
+        private Vector2 GetInelasticCollisionVelocity(Vector2 firstVelocity, Vector2 secondVelocity, float firstMass, float secondMass)
+        {
+            return (firstMass * firstVelocity + secondMass * secondVelocity) / (firstMass + secondMass);
+        }
+        private void GetElasticCollisionVelocity(Vector2 firstPosition, Vector2 secondPosition, Vector2 firstVelocity, Vector2 secondVelocity, float firstMass, float secondMass, out Vector2 firstResultVelocity, out Vector2 secondResultVelocity)
+        {
+            float fDistance = MathF.Sqrt((firstPosition.X - secondPosition.X) * (firstPosition.X - secondPosition.X) + (firstPosition.Y - secondPosition.Y) * (firstPosition.Y - secondPosition.Y));
+
+            float nx = (secondPosition.X - firstPosition.X) / fDistance;
+            float ny = (secondPosition.Y - firstPosition.Y) / fDistance;
+
+            float tx = -ny;
+            float ty = nx;
+            float dpNorm1 = firstVelocity.X * nx + firstVelocity.Y * ny;
+            float dpNorm2 = secondVelocity.X * nx + secondVelocity.Y * ny;
+
+            if (firstMass > 0)
+            {
+                float m1 = (dpNorm1 * (firstMass - secondMass) + 2.0f * secondMass * dpNorm2) / (firstMass + secondMass);
+                float dpTan1 = firstVelocity.X * tx + firstVelocity.Y * ty;
+                firstVelocity.X = tx * dpTan1 + nx * m1;
+                firstVelocity.Y = ty * dpTan1 + ny * m1;
+                firstResultVelocity = firstVelocity;
+            } else
+            {
+                firstResultVelocity = new(0, 0);
+            }
+            if (secondMass > 0)
+            {
+                float m2 = (dpNorm2 * (secondMass - firstMass) + 2.0f * firstMass * dpNorm1) / (firstMass + secondMass);
+                float dpTan2 = secondVelocity.X * tx + secondVelocity.Y * ty;
+                secondVelocity.X = tx * dpTan2 + nx * m2;
+                secondVelocity.Y = ty * dpTan2 + ny * m2;
+                secondResultVelocity = secondVelocity;
+            }
+            else
+            {
+                secondResultVelocity = new(0, 0);
+            }
         }
         public void Tick(GameTime gameTime)
         {
@@ -79,39 +120,24 @@ namespace ClashRoyale.Game
                 var firstEntity = collidingPair.Item1;
                 var secondEntity = collidingPair.Item2;
 
-                var firstPosition = firstEntity.Entity.Position;
-                var secondPosition = secondEntity.Entity.Position;
+                //var firstPosition = firstEntity.Entity.Position;
+                //var secondPosition = secondEntity.Entity.Position;
 
                 var firstVelocity = firstEntity.Velocity;
                 var secondVelocity = secondEntity.Velocity;
 
                 var firstMass = firstEntity.Entity.EntityData.Mass;
                 var secondMass = secondEntity.Entity.EntityData.Mass;
-                float fDistance = MathF.Sqrt((firstPosition.X - secondPosition.X) * (firstPosition.X - secondPosition.X) + (firstPosition.Y - secondPosition.Y) * (firstPosition.Y - secondPosition.Y));
 
-                float nx = (secondPosition.X - firstPosition.X) / fDistance;
-                float ny = (secondPosition.Y - firstPosition.Y) / fDistance;
-
-                float tx = -ny;
-                float ty = nx;
-                float dpNorm1 = firstVelocity.X * nx + firstVelocity.Y * ny;
-                float dpNorm2 = secondVelocity.X * nx + secondVelocity.Y * ny;
+                Vector2 finalVelocity = GetInelasticCollisionVelocity(firstVelocity, secondVelocity, firstMass, secondMass);
 
                 if (firstEntity.Entity.EntityData.Mass > 0)
                 {
-                    float m1 = (dpNorm1 * (firstMass - secondMass) + 2.0f * secondMass * dpNorm2) / (firstMass + secondMass);
-                    float dpTan1 = firstVelocity.X * tx + firstVelocity.Y * ty;
-                    firstVelocity.X = tx * dpTan1 + nx * m1;
-                    firstVelocity.Y = ty * dpTan1 + ny * m1;
-                    firstEntity.Velocity = firstVelocity;
+                    firstEntity.Velocity = finalVelocity;
                 }
                 if (secondEntity.Entity.EntityData.Mass > 0)
                 {
-                    float m2 = (dpNorm2 * (secondMass - firstMass) + 2.0f * firstMass * dpNorm1) / (firstMass + secondMass);
-                    float dpTan2 = secondVelocity.X * tx + secondVelocity.Y * ty;
-                    secondVelocity.X = tx * dpTan2 + nx * m2;
-                    secondVelocity.Y = ty * dpTan2 + ny * m2;
-                    secondEntity.Velocity = secondVelocity;
+                    secondEntity.Velocity = finalVelocity;
                 }
             }
             foreach (var ctx in Entities)
