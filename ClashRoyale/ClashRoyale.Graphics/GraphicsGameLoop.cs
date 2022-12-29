@@ -35,19 +35,17 @@ namespace ClashRoyale.Graphics
         {
             return (Math.Pow(point.X - ctx.Entity.Position.X, 2) + Math.Pow(point.Y - ctx.Entity.Position.Y, 2)) < Math.Pow(ctx.Entity.EntityData.CollisionRadius, 2);
         }
+        private int RoundToNearest1000(float n)
+        {
+            return (int)Math.Round(n / 1000.0f) * 1000 + 500;
+        }
         private void MouseButtonPressed(object sender, MouseButtonEventArgs e)
         {
             if (e.Button == Mouse.Button.Left)
             {
                 Vector2f mousePosition = this.RenderWindow.MapPixelToCoords(new Vector2i(e.X, e.Y));
-                //foreach (var entityContext in this.PlayBattle.Arena.Entities)
-                //{
-                //    if (IsPointInCircle(mousePosition, entityContext))
-                //    {
-                //        selectedEntityContext = entityContext;
-                //        break;
-                //    }
-                //}
+                mousePosition.X = RoundToNearest1000(mousePosition.X - 500);
+                mousePosition.Y = RoundToNearest1000(mousePosition.Y - 500);
                 if (selectedEntityContext == null)
                 {
                     this.PlayBattle.Arena.Entities.Add(new EntityContext(this.PlayBattle.Arena, Csv.Tables.Get(Csv.Files.Characters).GetDataWithInstanceId<EntityData>(0), new Vector2(mousePosition.X, mousePosition.Y)));

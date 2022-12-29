@@ -110,14 +110,14 @@ namespace ClashRoyale.Game
                             }
                             if (firstEntityContext.Entity.EntityData.Mass > 0)
                             {
-                                firstEntityPosition.X += directionalVector.X * 500 * gameTime.DeltaTime;
-                                firstEntityPosition.Y += directionalVector.Y * 500 * gameTime.DeltaTime;
+                                firstEntityPosition.X += directionalVector.X * 1000 * gameTime.DeltaTime;
+                                firstEntityPosition.Y += directionalVector.Y * 1000 * gameTime.DeltaTime;
                                 firstEntityContext.Entity.Position = firstEntityPosition;
                             }
                             if (secondEntityContext.Entity.EntityData.Mass > 0)
                             {
-                                secondEntityPosition.X -= directionalVector.X * 500 * gameTime.DeltaTime;
-                                secondEntityPosition.Y -= directionalVector.Y * 500 * gameTime.DeltaTime;
+                                secondEntityPosition.X -= directionalVector.X * 1000 * gameTime.DeltaTime;
+                                secondEntityPosition.Y -= directionalVector.Y * 1000 * gameTime.DeltaTime;
                                 secondEntityContext.Entity.Position = secondEntityPosition;
                             }
                         }
