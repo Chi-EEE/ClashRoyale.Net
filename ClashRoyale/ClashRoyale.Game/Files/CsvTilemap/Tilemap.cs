@@ -4,6 +4,7 @@ using ClashRoyale.Game.Logic.Pathing;
 using ClashRoyale.Game.Types;
 using Microsoft.VisualBasic.FileIO;
 using System.Numerics;
+using ClashRoyale.Game.Logic;
 
 namespace ClashRoyale.Game.Files.CsvTilemap
 {
@@ -118,7 +119,17 @@ namespace ClashRoyale.Game.Files.CsvTilemap
                     var x = uint.Parse(row[2]);
                     var y = uint.Parse(row[3]);
                     EntityData building = Csv.Tables.Get(Csv.Files.Buildings).GetData<EntityData>(buildingName);
-                    Buildings.Add(new(building, building.Hitpoints, new Vector2((x * 500) - centerOfArena.X, (y * 500) - centerOfArena.Y)));
+                    Team team = Team.None;
+                    if (y <= 33)
+                    {
+                        team = Team.Red;
+                    }
+                    else if (y >= 34)
+                    {
+                        team = Team.Blue;
+                    }
+
+                    Buildings.Add(new(building, building.Hitpoints, new Vector2((x * 500) - centerOfArena.X, (y * 500) - centerOfArena.Y), team));
                 }
                 while (!reader.EndOfData);
             }

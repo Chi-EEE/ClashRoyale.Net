@@ -79,7 +79,13 @@ namespace ClashRoyale.Game
             // Go through all the entities and make them perform their actions
             foreach (var ctx in Entities)
             {
-                ctx.Tick(gameTime);
+                if (ctx.Entity.Hitpoints > 0)
+                {
+                    ctx.Tick(gameTime);
+                } else
+                {
+                    Entities.Remove(ctx);
+                }
             }
             // Check for collision
             List<Tuple<EntityContext, EntityContext>> collidingPairs = new();
