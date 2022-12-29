@@ -30,9 +30,9 @@ namespace ClashRoyale.Game
         public void Start()
         {
         }
-        private bool AreCirclesOverlapping(Vector2 firstVector, Vector2 secondVector, int r1, int r2)
+        private float GetDistanceBetweenPoints(Vector2 firstPoint, Vector2 secondPoint)
         {
-            return (firstVector.X - secondVector.X) * (firstVector.X - secondVector.X) + (firstVector.Y - secondVector.Y) * (firstVector.Y - secondVector.Y) <= (r1 + r2) * (r1 + r2);
+            return (firstPoint.X - secondPoint.X) * (firstPoint.X - secondPoint.X) + (firstPoint.Y - secondPoint.Y) * (firstPoint.Y - secondPoint.Y);
         }
         private Vector2 GetInelasticCollisionVelocity(Vector2 firstVelocity, Vector2 secondVelocity, float firstMass, float secondMass)
         {
@@ -93,13 +93,21 @@ namespace ClashRoyale.Game
                     {
                         var secondEntityPosition = secondEntityContext.Entity.Position;
                         var secondCollisionRadius = secondEntityContext.Entity.EntityData.CollisionRadius;
-                        if (AreCirclesOverlapping(firstEntityPosition, secondEntityPosition, firstCollisionRadius, secondCollisionRadius))
+
+                        float distance = GetDistanceBetweenPoints(firstEntityPosition, secondEntityPosition);
+                        if (distance <= (firstCollisionRadius + secondCollisionRadius) *(firstCollisionRadius + secondCollisionRadius))
                         {
                             collidingPairs.Add(new(firstEntityContext, secondEntityContext));
 
-                            float fDistance = MathF.Sqrt((firstEntityPosition.X - secondEntityPosition.X) * (firstEntityPosition.X - secondEntityPosition.X) + (firstEntityPosition.Y - secondEntityPosition.Y) * (firstEntityPosition.Y - secondEntityPosition.Y));
-
-                            var directionalVector = (firstEntityPosition - secondEntityPosition) / fDistance;
+                            Vector2 directionalVector;
+                            if (distance == 0)
+                            {
+                                directionalVector = Vector2.UnitY;
+                            } else
+                            {
+                                float fDistance = MathF.Sqrt((firstEntityPosition.X - secondEntityPosition.X) * (firstEntityPosition.X - secondEntityPosition.X) + (firstEntityPosition.Y - secondEntityPosition.Y) * (firstEntityPosition.Y - secondEntityPosition.Y));
+                                directionalVector = (firstEntityPosition - secondEntityPosition) / fDistance;
+                            }
                             if (firstEntityContext.Entity.EntityData.Mass > 0)
                             {
                                 firstEntityPosition.X += directionalVector.X * 500 * gameTime.DeltaTime;
