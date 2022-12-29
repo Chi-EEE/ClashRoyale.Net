@@ -24,7 +24,10 @@ namespace ClashRoyale.Game
             Arena = new Arena();
             BattleTime = 0.0f;
         }
-
+        //public void SpawnEntity(Vector2)
+        //{
+        //    ss
+        //}
         public async Task StartBattleAsync()
         {
             Arena.Start();

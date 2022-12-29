@@ -15,6 +15,7 @@ namespace ClashRoyale.Game.Types
         public int Level { get; set; }
         public float DeployTime { get; set; }
         public Vector2 Velocity { get; set; }
+        public Vector2 Acceleration { get; set; }
         public Entity? Target { get; set; }
         private const float ENTITY_MOVE_SCALE = 21.333333333333333333333333333333f;
         public EntityContext(Arena arena, EntityData entityInformation, Vector2 position, int level = 0)
@@ -38,8 +39,14 @@ namespace ClashRoyale.Game.Types
         }
         private void Move(GameTime gameTime)
         {
+            var currentAcceleration = this.Acceleration;
             var currentVelocity = this.Velocity;
+            currentAcceleration.X = -currentVelocity.X * 0.8f;
+            currentAcceleration.Y = -currentVelocity.Y * 0.8f;
+            currentVelocity.X += currentAcceleration.X * gameTime.DeltaTime;
+            currentVelocity.Y += currentAcceleration.Y * gameTime.DeltaTime;
             //currentVelocity.Y += this.EntityInformation.Speed * ENTITY_MOVE_SCALE * gameTime.DeltaTime;
+            this.Acceleration = currentAcceleration;
             this.Velocity = currentVelocity;
         }
     }
