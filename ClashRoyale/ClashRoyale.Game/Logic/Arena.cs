@@ -79,7 +79,7 @@ namespace ClashRoyale.Game
         public void Tick(GameTime gameTime)
         {
             // Go through all the entities and make them perform their actions
-            foreach (var ctx in Entities)
+            foreach (var ctx in Entities.ToList())
             {
                 if (ctx.Entity.Hitpoints > 0)
                 {
@@ -87,10 +87,11 @@ namespace ClashRoyale.Game
                 }
                 else
                 {
+                    ctx.Destroy();
                     Entities.Remove(ctx);
                 }
             }
-            foreach (var projectile in Projectiles)
+            foreach (var projectile in Projectiles.ToList())
             {
                 projectile.Tick(gameTime);
                 if (projectile.Destroyed)

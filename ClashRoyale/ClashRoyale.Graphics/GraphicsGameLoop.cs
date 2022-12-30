@@ -143,11 +143,14 @@ namespace ClashRoyale.Graphics
             foreach (Projectile projectile in this.PlayBattle.Arena.Projectiles)
             {
                 var radius = projectile.ProjectileData.Radius;
+                if (radius == 0)
+                {
+                    radius = 50;
+                }
                 CircleShape circle = new CircleShape(radius);
                 circle.Origin = new Vector2f(radius, radius);
                 circle.Position = new Vector2f(projectile.CurrentPosition.X, projectile.CurrentPosition.Y);
                 circle.FillColor = Color.Blue;
-                Console.WriteLine(circle.Position);
                 this.RenderWindow.Draw(circle);
             }
             this.RenderWindow.Draw(this.VertexArray);

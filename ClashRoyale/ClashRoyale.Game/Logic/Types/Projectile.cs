@@ -21,8 +21,9 @@ namespace ClashRoyale.Game.Logic.Types
         private EntityContext Target { get; set; }
         private Vector2 TargetPosition { get; set; }
         private Vector2 DirectionVector { get; set; }
-        private Dictionary<EntityContext, bool> IndirectHitEntities { get; set; }
+        private Dictionary<EntityContext, bool> AlreadyHitEntities { get; set; }
         public bool Destroyed { get; set; }
+        private const float ENTITY_MOVE_SCALE = 21.333333333333333333333333333333f;
         public Projectile(Arena arena, Vector2 spawnPosition, ProjectileData projectileData, EntityContext target)
         {
             Arena = arena;
@@ -39,8 +40,13 @@ namespace ClashRoyale.Game.Logic.Types
             {
                 TargetPosition = target.Entity.Position;
             }
-            DirectionVector = Vector2.Normalize(CurrentPosition - TargetPosition) * this.ProjectileData.Speed;
-            IndirectHitEntities = new();
+            DirectionVector = Vector2.Normalize(TargetPosition - CurrentPosition);
+            AlreadyHitEntities = new();
+            if (this.ProjectileData.Homing)
+            {
+                target.EstimatedHitpoints -= this.ProjectileData.Damage;
+                Console.WriteLine("Estimated Health: " + target.EstimatedHitpoints);
+            }
         }
         private double GetDistanceBetweenTwoPoints(Vector2 point1, Vector2 point2)
         {
@@ -65,7 +71,6 @@ namespace ClashRoyale.Game.Logic.Types
                 }
             }
             DistanceTravelled += Math.Sqrt(GetDistanceBetweenTwoPoints(this.CurrentPosition, this.PreviousPosition));
-            Console.WriteLine(this.CurrentPosition);
             Move(gameTime);
             // OnlyEnemies is not used
 
@@ -74,7 +79,8 @@ namespace ClashRoyale.Game.Logic.Types
         private void Move(GameTime gameTime)
         {
             this.PreviousPosition = this.CurrentPosition;
-            this.CurrentPosition += this.DirectionVector * this.ProjectileData.Speed * gameTime.DeltaTime;
+            this.CurrentPosition += this.DirectionVector * this.ProjectileData.Speed * ENTITY_MOVE_SCALE * gameTime.DeltaTime;
+            Console.WriteLine(this.CurrentPosition);
         }
         private void HitEntity(GameTime gameTime, EntityContext entityContext)
         {
@@ -84,7 +90,7 @@ namespace ClashRoyale.Game.Logic.Types
         private void CheckAndDamageEntities(GameTime gameTime)
         {
             // Is far enough to be valid
-            if (DistanceTravelled <= this.ProjectileData.MinDistance) // MaxDistance is not used
+            if (DistanceTravelled >= this.ProjectileData.MinDistance) // MaxDistance is not used
             {
                 if (this.ProjectileData.Homing)
                 {
@@ -94,6 +100,7 @@ namespace ClashRoyale.Game.Logic.Types
                         // To check if crown tower
                         //Target.Entity.EntityData.CrownTowerDamagePercent
                         Target.Entity.Hitpoints -= this.ProjectileData.Damage;
+                        Console.WriteLine("Health: " + Target.Entity.Hitpoints);
                         Destroyed = true;
                     }
                 }
@@ -164,9 +171,9 @@ namespace ClashRoyale.Game.Logic.Types
             {
                 foreach (EntityContext entityContext in this.Arena.Entities)
                 {
-                    if (!this.IndirectHitEntities.ContainsKey(entityContext) && CheckDistanceFromProjectileAndEntity(this.CurrentPosition, entityContext.Entity.Position, this.ProjectileData.ProjectileRadius, entityContext.Entity.EntityData.CollisionRadius))
+                    if (!this.AlreadyHitEntities.ContainsKey(entityContext) && CheckDistanceFromProjectileAndEntity(this.CurrentPosition, entityContext.Entity.Position, this.ProjectileData.ProjectileRadius, entityContext.Entity.EntityData.CollisionRadius))
                     {
-                        this.IndirectHitEntities.Add(entityContext, true);
+                        this.AlreadyHitEntities.Add(entityContext, true);
                         HitEntity(gameTime, entityContext);
                     }
                 }
@@ -177,9 +184,9 @@ namespace ClashRoyale.Game.Logic.Types
                 {
                     if (entityContext.Entity.EntityData.FlyingHeight > 0)
                     {
-                        if (!this.IndirectHitEntities.ContainsKey(entityContext) && CheckDistanceFromProjectileAndEntity(this.CurrentPosition, entityContext.Entity.Position, this.ProjectileData.ProjectileRadius, entityContext.Entity.EntityData.CollisionRadius))
+                        if (!this.AlreadyHitEntities.ContainsKey(entityContext) && CheckDistanceFromProjectileAndEntity(this.CurrentPosition, entityContext.Entity.Position, this.ProjectileData.ProjectileRadius, entityContext.Entity.EntityData.CollisionRadius))
                         {
-                            this.IndirectHitEntities.Add(entityContext, true);
+                            this.AlreadyHitEntities.Add(entityContext, true);
                             HitEntity(gameTime, entityContext);
                         }
                     }
@@ -191,9 +198,9 @@ namespace ClashRoyale.Game.Logic.Types
                 {
                     if (entityContext.Entity.EntityData.FlyingHeight == 0)
                     {
-                        if (!this.IndirectHitEntities.ContainsKey(entityContext) && CheckDistanceFromProjectileAndEntity(this.CurrentPosition, entityContext.Entity.Position, this.ProjectileData.ProjectileRadius, entityContext.Entity.EntityData.CollisionRadius))
+                        if (!this.AlreadyHitEntities.ContainsKey(entityContext) && CheckDistanceFromProjectileAndEntity(this.CurrentPosition, entityContext.Entity.Position, this.ProjectileData.ProjectileRadius, entityContext.Entity.EntityData.CollisionRadius))
                         {
-                            this.IndirectHitEntities.Add(entityContext, true);
+                            this.AlreadyHitEntities.Add(entityContext, true);
                             HitEntity(gameTime, entityContext);
                         }
                     }
