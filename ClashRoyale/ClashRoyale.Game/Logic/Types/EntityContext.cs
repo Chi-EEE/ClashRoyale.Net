@@ -51,14 +51,13 @@ namespace ClashRoyale.Game.Types
             {
                 if (this.Target.EstimatedHitpoints <= 0)
                 {
-                    Console.WriteLine(this.Target.Entity.Hitpoints);
                     this.Target.TargetedBy.Remove(this);
                     this.Target = null;
                 }
                 else
                 {
                     double distance = GetDistanceBetweenPoints(this.Entity.Position, this.Target.Entity.Position);
-                    if (distance > this.Entity.EntityData.Range)
+                    if (distance > this.Entity.EntityData.Range + this.Entity.EntityData.CollisionRadius)
                     {
                         this.Target.TargetedBy.Remove(this);
                         this.Target = null;
@@ -108,7 +107,7 @@ namespace ClashRoyale.Game.Types
                     if (entityContext.EstimatedHitpoints > 0)
                     {
                         double distance = GetDistanceBetweenPoints(this.Entity.Position, entityContext.Entity.Position);
-                        if (distance <= this.Entity.EntityData.Range && distance < nearestDistance)
+                        if (distance <= this.Entity.EntityData.Range + this.Entity.EntityData.CollisionRadius && distance < nearestDistance)
                         {
                             nearestEntityContext = entityContext;
                             nearestDistance = distance;

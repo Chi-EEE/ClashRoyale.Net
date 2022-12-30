@@ -45,7 +45,6 @@ namespace ClashRoyale.Game.Logic.Types
             if (this.ProjectileData.Homing)
             {
                 target.EstimatedHitpoints -= this.ProjectileData.Damage;
-                Console.WriteLine("Estimated Health: " + target.EstimatedHitpoints);
             }
         }
         private double GetDistanceBetweenTwoPoints(Vector2 point1, Vector2 point2)
@@ -80,7 +79,6 @@ namespace ClashRoyale.Game.Logic.Types
         {
             this.PreviousPosition = this.CurrentPosition;
             this.CurrentPosition += this.DirectionVector * this.ProjectileData.Speed * ENTITY_MOVE_SCALE * gameTime.DeltaTime;
-            Console.WriteLine(this.CurrentPosition);
         }
         private void HitEntity(GameTime gameTime, EntityContext entityContext)
         {
@@ -100,7 +98,6 @@ namespace ClashRoyale.Game.Logic.Types
                         // To check if crown tower
                         //Target.Entity.EntityData.CrownTowerDamagePercent
                         Target.Entity.Hitpoints -= this.ProjectileData.Damage;
-                        Console.WriteLine("Health: " + Target.Entity.Hitpoints);
                         Destroyed = true;
                     }
                 }
