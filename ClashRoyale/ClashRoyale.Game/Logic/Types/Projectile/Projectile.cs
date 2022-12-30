@@ -1,6 +1,6 @@
 ﻿using ClashRoyale.Files.CsvLogic;
 using ClashRoyale.Game.GameLoop;
-using ClashRoyale.Game.Types;
+using ClashRoyale.Game.Logic.Types.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;

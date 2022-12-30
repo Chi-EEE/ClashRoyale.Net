@@ -1,6 +1,6 @@
 ﻿using ClashRoyale.Files.CsvLogic;
 using ClashRoyale.Game.GameLoop;
-using ClashRoyale.Game.Types;
+using ClashRoyale.Game.Logic.Types.Entity;
 
 namespace ClashRoyale.Game.Logic.Types
 {
@@ -21,7 +21,7 @@ namespace ClashRoyale.Game.Logic.Types
         {
             foreach (EntityContext entityContext in this.Arena.Entities)
             {
-                if (!this.AlreadyHitEntities.ContainsKey(entityContext) && entityContext.Entity.EntityData.FlyingHeight > 0)
+                if (!this.AlreadyHitEntities.ContainsKey(entityContext) && entityContext.Entity.IsAir())
                 {
                     if (CheckDistanceFromProjectileAndEntity(this.CurrentPosition, entityContext.Entity.Position, this.ProjectileData.Radius, entityContext.Entity.EntityData.CollisionRadius))
                     {
@@ -34,7 +34,7 @@ namespace ClashRoyale.Game.Logic.Types
         {
             foreach (EntityContext entityContext in this.Arena.Entities)
             {
-                if (!this.AlreadyHitEntities.ContainsKey(entityContext) && entityContext.Entity.EntityData.FlyingHeight == 0)
+                if (!this.AlreadyHitEntities.ContainsKey(entityContext) && entityContext.Entity.IsGround())
                 {
                     if (CheckDistanceFromProjectileAndEntity(this.CurrentPosition, entityContext.Entity.Position, this.ProjectileData.Radius, entityContext.Entity.EntityData.CollisionRadius))
                     {

@@ -1,6 +1,5 @@
 ﻿using ClashRoyale.Files.CsvLogic;
 using ClashRoyale.Files;
-using ClashRoyale.Game.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +11,7 @@ using ClashRoyale.Game.Logic.Pathing;
 using ClashRoyale.Game.Files.CsvTilemap;
 using SFML.System;
 using ClashRoyale.Game.Logic.Types;
+using ClashRoyale.Game.Logic.Types.Entity;
 
 namespace ClashRoyale.Game
 {

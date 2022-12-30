@@ -3,12 +3,12 @@ using ClashRoyale.Files.CsvLogic;
 using ClashRoyale.Files;
 using ClashRoyale.Game;
 using ClashRoyale.Game.GameLoop;
-using ClashRoyale.Game.Types;
 using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
 using System.Numerics;
 using ClashRoyale.Game.Logic.Types;
+using ClashRoyale.Game.Logic.Types.Entity;
 
 namespace ClashRoyale.Graphics
 {
@@ -20,6 +20,7 @@ namespace ClashRoyale.Graphics
         private readonly float ZOOM;
         private readonly Texture BackgroundTexture;
         private readonly RectangleShape BackgroundRectangleShape;
+        private readonly Texture ArrowTexture;
         private readonly VertexArray VertexArray = new(PrimitiveType.Lines);
         private EntityContext? selectedEntityContext = null;
         public GraphicsGameLoop(PlayBattle playBattle, RenderWindow renderWindow)
@@ -29,6 +30,7 @@ namespace ClashRoyale.Graphics
             this.GameTime = new();
             this.ZOOM = Arena.REAL_ARENA_HEIGHT / this.RenderWindow.Size.Y;
             this.BackgroundTexture = new("GameAssets/Map.png");
+            this.ArrowTexture = new("GameAssets/right-arrow-icon-w.png");
             this.BackgroundRectangleShape = new(new Vector2f(Arena.REAL_ARENA_WIDTH, Arena.REAL_ARENA_HEIGHT));
             Initalize();
         }
@@ -137,6 +139,8 @@ namespace ClashRoyale.Graphics
                 CircleShape circle = new CircleShape(radius);
                 circle.Origin = new Vector2f(radius, radius);
                 circle.Position = new Vector2f(entityContext.Entity.Position.X, entityContext.Entity.Position.Y);
+                circle.Texture = this.ArrowTexture;
+                circle.Rotation = entityContext.Rotation;
                 circle.FillColor = Color.Black;
                 this.RenderWindow.Draw(circle);
             }

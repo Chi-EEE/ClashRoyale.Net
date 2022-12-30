@@ -1,13 +1,6 @@
-﻿using ClashRoyale.Files;
-using ClashRoyale.Files.CsvLogic;
-using ClashRoyale.Game;
-using ClashRoyale.Game.GameLoop;
+﻿using ClashRoyale.Game;
 using ClashRoyale.Game.Logic;
-using ClashRoyale.Game.Types;
 using SFML.Graphics;
-using SFML.System;
-using SFML.Window;
-using System.Numerics;
 
 namespace ClashRoyale.Graphics
 {

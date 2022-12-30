@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using ClashRoyale.Files.CsvLogic;
-using ClashRoyale.Files;
-using ClashRoyale.Game.Types;
-using System.Numerics;
-using ClashRoyale.Game.GameLoop;
+﻿using ClashRoyale.Game.GameLoop;
 using ClashRoyale.Game.Logic;
 
 namespace ClashRoyale.Game

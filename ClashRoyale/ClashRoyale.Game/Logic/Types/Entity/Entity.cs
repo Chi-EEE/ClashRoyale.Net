@@ -2,7 +2,7 @@
 using ClashRoyale.Game.Logic;
 using System.Numerics;
 
-namespace ClashRoyale.Game.Types
+namespace ClashRoyale.Game.Logic.Types.Entity
 {
     public class Entity
     {
@@ -16,6 +16,14 @@ namespace ClashRoyale.Game.Types
             Hitpoints = hitpoints;
             Position = position;
             Team = team;
+        }
+        public bool IsGround()
+        {
+            return this.EntityData.FlyingHeight == 0;
+        }
+        public bool IsAir()
+        {
+            return this.EntityData.FlyingHeight > 0;
         }
     }
 }

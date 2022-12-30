@@ -1,10 +1,10 @@
 ﻿using ClashRoyale.Files.CsvLogic;
 using ClashRoyale.Files;
 using ClashRoyale.Game.Logic.Pathing;
-using ClashRoyale.Game.Types;
 using Microsoft.VisualBasic.FileIO;
 using System.Numerics;
 using ClashRoyale.Game.Logic;
+using ClashRoyale.Game.Logic.Types.Entity;
 
 namespace ClashRoyale.Game.Files.CsvTilemap
 {

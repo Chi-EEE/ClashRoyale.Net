@@ -1,12 +1,4 @@
-﻿using ClashRoyale.Files.CsvLogic;
-using ClashRoyale.Game.GameLoop;
-using ClashRoyale.Game.Types;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ClashRoyale.Game.GameLoop;
 
 namespace ClashRoyale.Game.Logic.Types
 {
