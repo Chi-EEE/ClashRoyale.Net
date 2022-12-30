@@ -79,6 +79,10 @@ namespace ClashRoyale.Game.Logic.Types.Entity
             Target!.TargetedBy.Remove(this);
             Target = null;
         }
+        private float GetCombinedRangeRadius(EntityContext entityContext)
+        {
+            return this.Entity.EntityData.Range + this.Entity.EntityData.CollisionRadius + entityContext.Entity.EntityData.CollisionRadius;
+        }
         public void Tick(GameTime gameTime)
         {
             if (Target != null)
@@ -102,12 +106,52 @@ namespace ClashRoyale.Game.Logic.Types.Entity
             }
             if (Target != null)
             {
-                LookAndFireAtTarget(gameTime);
+                LookAtTarget(gameTime, out float angle);
+                if (this.Rotation == angle)
+                {
+                    double distance = GetDistanceBetweenPoints(this.Entity.Position, this.Target.Entity.Position);
+                    if (distance <= GetCombinedRangeRadius(this.Target)) // Close enough to attack
+                    {
+                        if (this.LoadTime != 0) // This will be zero once it starts attacking
+                        {
+                            this.ReloadTime = (this.Entity.EntityData.HitSpeed / 1000.0f) - this.LoadTime;
+                            this.LoadTime = 0;
+                        }
+                        FireAtTarget(gameTime);
+                    }
+                    else
+                    {
+                        ApproachTarget(gameTime);
+                    }
+                }
             }
             else
             {
                 LoadTime = Math.Min(LoadTime + gameTime.DeltaTime, Entity.EntityData.LoadTime / 1000.0f);
                 Move(gameTime);
+            }
+        }
+        private void LookAtTarget(GameTime gameTime, out float angle)
+        {
+            Vector2 direction = this.Target!.Entity.Position - this.Entity.Position;
+            angle = (float)(Math.Atan2(direction.Y, direction.X) * (180.0 / Math.PI));
+            if (this.Rotation != angle)
+            {
+                if (this.Entity.EntityData.RotateAngleSpeed > 0)
+                {
+                    if (this.Rotation > angle)
+                    {
+                        this.Rotation -= this.Entity.EntityData.RotateAngleSpeed * gameTime.DeltaTime;
+                    }
+                    else if (this.Rotation < angle)
+                    {
+                        this.Rotation += this.Entity.EntityData.RotateAngleSpeed * gameTime.DeltaTime;
+                    }
+                }
+                else
+                {
+                    this.Rotation = angle;
+                }
             }
         }
         private void Move(GameTime gameTime)
@@ -135,32 +179,8 @@ namespace ClashRoyale.Game.Logic.Types.Entity
         }
         private void SetTargetEnemy(EntityContext nearestEntityContext)
         {
-            LoadTime = 0;
-            Target = nearestEntityContext;
-            Target.TargetedBy.Add(this, true);
-        }
-        private void LookAtTarget(GameTime gameTime)
-        {
-            Vector2 direction = this.Target!.Entity.Position - this.Entity.Position;
-            float angle = (float)(Math.Atan2(direction.Y, direction.X) * (180.0 / Math.PI));
-            if (this.Rotation != angle)
-            {
-                if (this.Entity.EntityData.RotateAngleSpeed > 0)
-                {
-                    if (this.Rotation > angle)
-                    {
-                        this.Rotation -= this.Entity.EntityData.RotateAngleSpeed * gameTime.DeltaTime;
-                    }
-                    else if (this.Rotation < angle)
-                    {
-                        this.Rotation += this.Entity.EntityData.RotateAngleSpeed * gameTime.DeltaTime;
-                    }
-                }
-                else
-                {
-                    this.Rotation = angle;
-                }
-            }
+            this.Target = nearestEntityContext;
+            this.Target.TargetedBy.Add(this, true);
         }
         private void FireAtTarget(GameTime gameTime)
         {
@@ -181,10 +201,9 @@ namespace ClashRoyale.Game.Logic.Types.Entity
                 ReloadTime -= gameTime.DeltaTime;
             }
         }
-        private void LookAndFireAtTarget(GameTime gameTime)
+        private void ApproachTarget(GameTime gameTime)
         {
-            LookAtTarget(gameTime);
-            FireAtTarget(gameTime);
+
         }
     }
 }
