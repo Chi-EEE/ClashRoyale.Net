@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ClashRoyale.Game.Logic.Types
 {
-    public class Projectile
+    public partial class Projectile
     {
         private Arena Arena { get; set; }
         public ProjectileData ProjectileData { get; set; }
@@ -23,6 +23,11 @@ namespace ClashRoyale.Game.Logic.Types
         private Vector2 DirectionVector { get; set; }
         private Dictionary<EntityContext, bool> AlreadyHitEntities { get; set; }
         public bool Destroyed { get; set; }
+        private Action<GameTime> ReachedTargetPositionFunction;
+        private Action<GameTime> NotHomingAoeFunction;
+        private Action<GameTime> DamageIndirectNearbyEntitiesFunction;
+        
+
         private const float ENTITY_MOVE_SCALE = 21.333333333333333333333333333333f;
         public Projectile(Arena arena, Vector2 spawnPosition, ProjectileData projectileData, EntityContext target)
         {
@@ -44,7 +49,28 @@ namespace ClashRoyale.Game.Logic.Types
             AlreadyHitEntities = new();
             if (this.ProjectileData.Homing)
             {
+                ReachedTargetPositionFunction = HomingProjectile;
                 target.EstimatedHitpoints -= this.ProjectileData.Damage;
+            }
+            else
+            {
+                ReachedTargetPositionFunction = RegularProjectile;
+                if (this.ProjectileData.AoeToAir &&
+                            this.ProjectileData.AoeToGround)
+                {
+                    NotHomingAoeFunction = AOE_Everything;
+                    DamageIndirectNearbyEntitiesFunction = Indirect_AOE_Everything;
+                }
+                else if (this.ProjectileData.AoeToAir)
+                {
+                    NotHomingAoeFunction = AOE_Air;
+                    DamageIndirectNearbyEntitiesFunction = Indirect_AOE_Air;
+                }
+                else if (this.ProjectileData.AoeToGround)
+                {
+                    NotHomingAoeFunction = AOE_Ground;
+                    DamageIndirectNearbyEntitiesFunction = Indirect_AOE_Ground;
+                }
             }
         }
         private double GetDistanceBetweenTwoPoints(Vector2 point1, Vector2 point2)
@@ -90,117 +116,12 @@ namespace ClashRoyale.Game.Logic.Types
             // Is far enough to be valid
             if (DistanceTravelled >= this.ProjectileData.MinDistance) // MaxDistance is not used
             {
-                if (this.ProjectileData.Homing)
-                {
-                    // At the target's position
-                    if (CheckDistanceFromProjectileAndEntity(this.CurrentPosition, this.TargetPosition, this.ProjectileData.Radius, Target.Entity.EntityData.CollisionRadius))
-                    {
-                        // To check if crown tower
-                        //Target.Entity.EntityData.CrownTowerDamagePercent
-                        Target.Entity.Hitpoints -= this.ProjectileData.Damage;
-                        Destroyed = true;
-                    }
-                }
-                else if (GetDistanceBetweenTwoPoints(this.CurrentPosition, this.TargetPosition) == 0)
-                {
-                    Destroyed = true;
-                    // If at the target position
-                    if (this.ProjectileData.AoeToAir ||
-                        this.ProjectileData.AoeToGround)
-                    {
-                        // Can probably store a function and call that function instead of checking every tick
-                        if (this.ProjectileData.AoeToAir &&
-                            this.ProjectileData.AoeToGround)
-                        {
-                            foreach (EntityContext entityContext in this.Arena.Entities)
-                            {
-                                // At the target's position
-                                if (CheckDistanceFromProjectileAndEntity(this.CurrentPosition, entityContext.Entity.Position, this.ProjectileData.Radius, entityContext.Entity.EntityData.CollisionRadius))
-                                {
-                                    HitEntity(gameTime, entityContext);
-                                }
-                            }
-                        }
-                        else if (this.ProjectileData.AoeToAir)
-                        {
-                            foreach (EntityContext entityContext in this.Arena.Entities)
-                            {
-                                if (entityContext.Entity.EntityData.FlyingHeight > 0)
-                                {
-                                    if (CheckDistanceFromProjectileAndEntity(this.CurrentPosition, entityContext.Entity.Position, this.ProjectileData.Radius, entityContext.Entity.EntityData.CollisionRadius))
-                                    {
-                                        HitEntity(gameTime, entityContext);
-                                    }
-                                }
-                            }
-                        }
-                        else if (this.ProjectileData.AoeToGround)
-                        {
-                            foreach (EntityContext entityContext in this.Arena.Entities)
-                            {
-                                if (entityContext.Entity.EntityData.FlyingHeight == 0)
-                                {
-                                    if (CheckDistanceFromProjectileAndEntity(this.CurrentPosition, entityContext.Entity.Position, this.ProjectileData.Radius, entityContext.Entity.EntityData.CollisionRadius))
-                                    {
-                                        HitEntity(gameTime, entityContext);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        throw new Exception("HOW? : " + ProjectileData.ToString());
-                    }
-                }
+                ReachedTargetPositionFunction.DynamicInvoke(gameTime);
                 // This will always happen if ProjectileRadius is greater than 0 (Like log or barb barrel)
                 if (this.ProjectileData.ProjectileRadius > 0)
                 {
                     // Can probably store a function and call that function instead of checking every tick
-                    DamageIndirectNearbyEntities(gameTime);
-                }
-            }
-        }
-        private void DamageIndirectNearbyEntities(GameTime gameTime)
-        {
-            if (this.ProjectileData.AoeToAir &&
-                        this.ProjectileData.AoeToGround)
-            {
-                foreach (EntityContext entityContext in this.Arena.Entities)
-                {
-                    if (!this.AlreadyHitEntities.ContainsKey(entityContext) && CheckDistanceFromProjectileAndEntity(this.CurrentPosition, entityContext.Entity.Position, this.ProjectileData.ProjectileRadius, entityContext.Entity.EntityData.CollisionRadius))
-                    {
-                        this.AlreadyHitEntities.Add(entityContext, true);
-                        HitEntity(gameTime, entityContext);
-                    }
-                }
-            }
-            else if (this.ProjectileData.AoeToAir)
-            {
-                foreach (EntityContext entityContext in this.Arena.Entities)
-                {
-                    if (entityContext.Entity.EntityData.FlyingHeight > 0)
-                    {
-                        if (!this.AlreadyHitEntities.ContainsKey(entityContext) && CheckDistanceFromProjectileAndEntity(this.CurrentPosition, entityContext.Entity.Position, this.ProjectileData.ProjectileRadius, entityContext.Entity.EntityData.CollisionRadius))
-                        {
-                            this.AlreadyHitEntities.Add(entityContext, true);
-                            HitEntity(gameTime, entityContext);
-                        }
-                    }
-                }
-            }
-            else if (this.ProjectileData.AoeToGround)
-            {
-                foreach (EntityContext entityContext in this.Arena.Entities)
-                {
-                    if (entityContext.Entity.EntityData.FlyingHeight == 0)
-                    {
-                        if (!this.AlreadyHitEntities.ContainsKey(entityContext) && CheckDistanceFromProjectileAndEntity(this.CurrentPosition, entityContext.Entity.Position, this.ProjectileData.ProjectileRadius, entityContext.Entity.EntityData.CollisionRadius))
-                        {
-                            this.AlreadyHitEntities.Add(entityContext, true);
-                            HitEntity(gameTime, entityContext);
-                        }
-                    }
+                    DamageIndirectNearbyEntitiesFunction.DynamicInvoke(gameTime);
                 }
             }
         }
