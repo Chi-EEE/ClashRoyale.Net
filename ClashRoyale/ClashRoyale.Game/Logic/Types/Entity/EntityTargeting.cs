@@ -8,7 +8,6 @@ namespace ClashRoyale.Game.Logic.Types.Entity
 {
     public partial class EntityContext
     {
-        private double ClosestDistance { get; set; }
         private float GetCombinedSightRangeRadius(EntityContext entityContext)
         {
             return this.Entity.EntityData.SightRange + this.Entity.EntityData.CollisionRadius + entityContext.Entity.EntityData.CollisionRadius;
@@ -40,7 +39,6 @@ namespace ClashRoyale.Game.Logic.Types.Entity
             if (nearestEntityContext != null)
             {
                 SetTargetEnemy(nearestEntityContext);
-                ClosestDistance = nearestDistance;
             }
         }
         private void GetNearestGroundEnemy()
@@ -60,7 +58,6 @@ namespace ClashRoyale.Game.Logic.Types.Entity
             if (nearestEntityContext != null)
             {
                 SetTargetEnemy(nearestEntityContext);
-                ClosestDistance = nearestDistance;
             }
         }
         private void GetNearestAirEnemy()
@@ -80,7 +77,6 @@ namespace ClashRoyale.Game.Logic.Types.Entity
             if (nearestEntityContext != null)
             {
                 SetTargetEnemy(nearestEntityContext);
-                ClosestDistance = nearestDistance;
             }
         }
     }

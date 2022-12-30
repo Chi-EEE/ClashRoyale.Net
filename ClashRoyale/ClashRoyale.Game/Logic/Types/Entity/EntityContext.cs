@@ -47,7 +47,8 @@ namespace ClashRoyale.Game.Logic.Types.Entity
             {
                 LoadTime = entity.EntityData.LoadTime;
             }
-            DeployTime = 0;
+            Rotation = -90;
+            DeployTime = entity.EntityData.DeployTime / 1000.0f;
             Velocity = new(0, 0);
             EstimatedHitpoints = entity.EntityData.Hitpoints;
             TargetedBy = new();
@@ -85,26 +86,31 @@ namespace ClashRoyale.Game.Logic.Types.Entity
         }
         public void Tick(GameTime gameTime)
         {
-            if (Target != null)
+            if (this.DeployTime > 0)
             {
-                if (Target.EstimatedHitpoints <= 0)
+                this.DeployTime -= gameTime.DeltaTime;
+                return;
+            }
+            if (this.Target != null)
+            {
+                if (this.Target.EstimatedHitpoints <= 0)
                 {
                     RemoveTarget();
                 }
                 else
                 {
-                    double distance = GetDistanceBetweenPoints(Entity.Position, Target.Entity.Position);
-                    if (distance > Entity.EntityData.Range + Entity.EntityData.CollisionRadius + Target.Entity.EntityData.CollisionRadius)
+                    double distance = GetDistanceBetweenPoints(this.Entity.Position, this.Target.Entity.Position);
+                    if (distance > this.Entity.EntityData.Range + this.Entity.EntityData.CollisionRadius + this.Target.Entity.EntityData.CollisionRadius)
                     {
                         RemoveTarget();
                     }
                 }
             }
-            if (Target == null)
+            if (this.Target == null)
             {
                 GetNearestEnemy.DynamicInvoke();
             }
-            if (Target != null)
+            if (this.Target != null)
             {
                 LookAtTarget(gameTime, out float angle);
                 if (this.Rotation == angle)

@@ -141,7 +141,14 @@ namespace ClashRoyale.Graphics
                 circle.Position = new Vector2f(entityContext.Entity.Position.X, entityContext.Entity.Position.Y);
                 circle.Texture = this.ArrowTexture;
                 circle.Rotation = entityContext.Rotation;
-                circle.FillColor = Color.Black;
+                if (entityContext.DeployTime > 0)
+                {
+                    circle.FillColor = Color.Blue;
+                }
+                else
+                {
+                    circle.FillColor = Color.Black;
+                }
                 this.RenderWindow.Draw(circle);
             }
             foreach (Projectile projectile in this.PlayBattle.Arena.Projectiles)
