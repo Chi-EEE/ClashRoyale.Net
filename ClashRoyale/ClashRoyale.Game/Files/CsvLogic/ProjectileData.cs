@@ -3,9 +3,9 @@ using ClashRoyale.Files.CsvReader;
 
 namespace ClashRoyale.Files.CsvLogic
 {
-public class Projectiles : Data
+public class ProjectileData : Data
 {
-	public Projectiles(Row row, DataTable datatable) : base(row, datatable)
+	public ProjectileData(Row row, DataTable datatable) : base(row, datatable)
 	{
 		LoadData(this, GetType(), row);
 	}

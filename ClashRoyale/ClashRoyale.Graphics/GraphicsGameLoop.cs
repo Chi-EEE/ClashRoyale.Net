@@ -8,6 +8,7 @@ using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
 using System.Numerics;
+using ClashRoyale.Game.Logic.Types;
 
 namespace ClashRoyale.Graphics
 {
@@ -137,6 +138,16 @@ namespace ClashRoyale.Graphics
                 circle.Origin = new Vector2f(radius, radius);
                 circle.Position = new Vector2f(entityContext.Entity.Position.X, entityContext.Entity.Position.Y);
                 circle.FillColor = Color.Black;
+                this.RenderWindow.Draw(circle);
+            }
+            foreach (Projectile projectile in this.PlayBattle.Arena.Projectiles)
+            {
+                var radius = projectile.ProjectileData.Radius;
+                CircleShape circle = new CircleShape(radius);
+                circle.Origin = new Vector2f(radius, radius);
+                circle.Position = new Vector2f(projectile.CurrentPosition.X, projectile.CurrentPosition.Y);
+                circle.FillColor = Color.Blue;
+                Console.WriteLine(circle.Position);
                 this.RenderWindow.Draw(circle);
             }
             this.RenderWindow.Draw(this.VertexArray);

@@ -11,6 +11,7 @@ using ClashRoyale.Game.GameLoop;
 using ClashRoyale.Game.Logic.Pathing;
 using ClashRoyale.Game.Files.CsvTilemap;
 using SFML.System;
+using ClashRoyale.Game.Logic.Types;
 
 namespace ClashRoyale.Game
 {
@@ -19,6 +20,7 @@ namespace ClashRoyale.Game
         public const uint REAL_ARENA_WIDTH = 18000;
         public const uint REAL_ARENA_HEIGHT = 32000;
         public List<EntityContext> Entities = new List<EntityContext>();
+        public List<Projectile> Projectiles= new List<Projectile>();
         public Tilemap Tilemap = new("GameAssets/tilemaps/tilemap.csv");
         public Arena()
         {
@@ -82,9 +84,18 @@ namespace ClashRoyale.Game
                 if (ctx.Entity.Hitpoints > 0)
                 {
                     ctx.Tick(gameTime);
-                } else
+                }
+                else
                 {
                     Entities.Remove(ctx);
+                }
+            }
+            foreach (var projectile in Projectiles)
+            {
+                projectile.Tick(gameTime);
+                if (projectile.Destroyed)
+                {
+                    Projectiles.Remove(projectile);
                 }
             }
             // Check for collision

@@ -2,6 +2,7 @@
 using ClashRoyale.Files.CsvLogic;
 using ClashRoyale.Game.GameLoop;
 using ClashRoyale.Game.Logic;
+using ClashRoyale.Game.Logic.Types;
 using System;
 using System.Numerics;
 using System.Runtime.ExceptionServices;
@@ -33,6 +34,7 @@ namespace ClashRoyale.Game.Types
         {
             Arena = arena;
             Entity = entity;
+            ReloadTime = 0;
             DeployTime = 0;
             Velocity = new(0, 0);
         }
@@ -96,6 +98,7 @@ namespace ClashRoyale.Game.Types
             if (this.ReloadTime <= 0)
             {
                 this.ReloadTime = this.Entity.EntityData.HitSpeed / 1000;
+                this.Arena.Projectiles.Add(new Projectile(this.Arena, this.Entity.Position, Csv.Tables.Get(Csv.Files.Projectiles).GetData<ProjectileData>(this.Entity.EntityData.Projectile), this.Target));
                 Console.WriteLine("Fired");
             }
         }

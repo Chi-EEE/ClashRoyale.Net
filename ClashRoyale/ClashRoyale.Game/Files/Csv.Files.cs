@@ -42,7 +42,7 @@ namespace ClashRoyale.Files
             DataTypes.Add(Files.GameModes, typeof(GameModes));
             DataTypes.Add(Files.Globals, typeof(Globals));
             DataTypes.Add(Files.Locations, typeof(Locations));
-            DataTypes.Add(Files.Projectiles, typeof(Projectiles));
+            DataTypes.Add(Files.Projectiles, typeof(ProjectileData));
             DataTypes.Add(Files.PveGamemodes, typeof(PveGamemodes));
             DataTypes.Add(Files.SpellsBuildings, typeof(SpellData));
             DataTypes.Add(Files.SpellsCharacters, typeof(SpellData));
