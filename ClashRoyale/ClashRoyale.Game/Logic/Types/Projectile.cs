@@ -12,9 +12,9 @@ namespace ClashRoyale.Game.Logic.Types
 {
     public partial class Projectile
     {
-        private Arena Arena { get; set; }
         public ProjectileData ProjectileData { get; set; }
-        private Vector2 SpawnPosition { get; set; }
+        private Arena Arena { get; set; }
+        private EntityContext EntityFired { get; set; }
         public Vector2 CurrentPosition { get; set; }
         private Vector2 PreviousPosition { get; set; }
         private double DistanceTravelled { get; set; }
@@ -29,12 +29,12 @@ namespace ClashRoyale.Game.Logic.Types
         
 
         private const float ENTITY_MOVE_SCALE = 21.333333333333333333333333333333f;
-        public Projectile(Arena arena, Vector2 spawnPosition, ProjectileData projectileData, EntityContext target)
+        public Projectile(Arena arena, EntityContext entityFired, ProjectileData projectileData, EntityContext target)
         {
             Arena = arena;
             ProjectileData = projectileData;
-            SpawnPosition = spawnPosition;
-            CurrentPosition = spawnPosition;
+            EntityFired = entityFired;
+            CurrentPosition = entityFired.Entity.Position;
             DistanceTravelled = 0;
             Target = target;
             if (this.ProjectileData.ProjectileRange > 0)
@@ -114,13 +114,11 @@ namespace ClashRoyale.Game.Logic.Types
         private void CheckAndDamageEntities(GameTime gameTime)
         {
             // Is far enough to be valid
-            if (DistanceTravelled >= this.ProjectileData.MinDistance) // MaxDistance is not used
+            if (GetDistanceBetweenTwoPoints(this.CurrentPosition, this.EntityFired.Entity.Position) >= this.ProjectileData.MinDistance) // MaxDistance is not used
             {
                 ReachedTargetPositionFunction.DynamicInvoke(gameTime);
-                // This will always happen if ProjectileRadius is greater than 0 (Like log or barb barrel)
                 if (this.ProjectileData.ProjectileRadius > 0)
                 {
-                    // Can probably store a function and call that function instead of checking every tick
                     DamageIndirectNearbyEntitiesFunction.DynamicInvoke(gameTime);
                 }
             }

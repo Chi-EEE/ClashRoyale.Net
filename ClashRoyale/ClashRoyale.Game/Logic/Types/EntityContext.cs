@@ -17,6 +17,8 @@ namespace ClashRoyale.Game.Types
         public int Level { get; set; }
         public float DeployTime { get; set; }
         public float ReloadTime { get; set; }
+        public float LoadTime { get; set; }
+        private Vector2 MoveVelocity { get; set; }
         public Vector2 Velocity { get; set; }
         public Vector2 Acceleration { get; set; }
         public float EstimatedHitpoints { get; set; }
@@ -29,6 +31,7 @@ namespace ClashRoyale.Game.Types
             Entity = new Entity(entityData, entityData.Hitpoints, position, Team.Blue);
             Level = level;
             ReloadTime = 0;
+            LoadTime = 0;
             DeployTime = entityData.DeployTime;
             Velocity = new(0, 0);
             EstimatedHitpoints = entityData.Hitpoints;
@@ -39,28 +42,32 @@ namespace ClashRoyale.Game.Types
             Arena = arena;
             Entity = entity;
             ReloadTime = 0;
+            LoadTime = 0;
             DeployTime = 0;
             Velocity = new(0, 0);
             EstimatedHitpoints = entity.EntityData.Hitpoints;
             TargetedBy = new();
         }
+        private void RemoveTarget()
+        {
+            this.LoadTime = this.Entity.EntityData.LoadTime / 1000.0f;
+            this.Target!.TargetedBy.Remove(this);
+            this.Target = null;
+        }
         public void Tick(GameTime gameTime)
         {
-            Move(gameTime);
             if (this.Target != null)
             {
                 if (this.Target.EstimatedHitpoints <= 0)
                 {
-                    this.Target.TargetedBy.Remove(this);
-                    this.Target = null;
+                    RemoveTarget();
                 }
                 else
                 {
                     double distance = GetDistanceBetweenPoints(this.Entity.Position, this.Target.Entity.Position);
-                    if (distance > this.Entity.EntityData.Range + this.Entity.EntityData.CollisionRadius)
+                    if (distance > this.Entity.EntityData.Range + this.Entity.EntityData.CollisionRadius + this.Target.Entity.EntityData.CollisionRadius)
                     {
-                        this.Target.TargetedBy.Remove(this);
-                        this.Target = null;
+                        RemoveTarget();
                     }
                 }
             }
@@ -71,6 +78,11 @@ namespace ClashRoyale.Game.Types
             if (this.Target != null)
             {
                 FireAtTarget(gameTime);
+            }
+            else
+            {
+                this.LoadTime = Math.Min(this.LoadTime + gameTime.DeltaTime, this.Entity.EntityData.LoadTime / 1000.0f);
+                Move(gameTime);
             }
         }
         private void Move(GameTime gameTime)
@@ -96,6 +108,13 @@ namespace ClashRoyale.Game.Types
         {
             return Math.Sqrt((firstPoint.X - secondPoint.X) * (firstPoint.X - secondPoint.X) + (firstPoint.Y - secondPoint.Y) * (firstPoint.Y - secondPoint.Y));
         }
+        private void SetTargetEnemy(EntityContext nearestEntityContext)
+        {
+            this.ReloadTime = (this.Entity.EntityData.HitSpeed / 1000.0f) - this.LoadTime;
+            this.LoadTime = 0;
+            this.Target = nearestEntityContext;
+            this.Target.TargetedBy.Add(this, true);
+        }
         private void GetNearestEnemy()
         {
             EntityContext? nearestEntityContext = null;
@@ -107,7 +126,7 @@ namespace ClashRoyale.Game.Types
                     if (entityContext.EstimatedHitpoints > 0)
                     {
                         double distance = GetDistanceBetweenPoints(this.Entity.Position, entityContext.Entity.Position);
-                        if (distance <= this.Entity.EntityData.Range + this.Entity.EntityData.CollisionRadius && distance < nearestDistance)
+                        if (distance <= this.Entity.EntityData.Range + this.Entity.EntityData.CollisionRadius + entityContext.Entity.EntityData.CollisionRadius && distance < nearestDistance)
                         {
                             nearestEntityContext = entityContext;
                             nearestDistance = distance;
@@ -117,17 +136,27 @@ namespace ClashRoyale.Game.Types
             }
             if (nearestEntityContext != null)
             {
-                this.Target = nearestEntityContext;
-                this.Target.TargetedBy.Add(this, true);
+                SetTargetEnemy(nearestEntityContext);
             }
         }
         private void FireAtTarget(GameTime gameTime)
         {
-            this.ReloadTime = this.ReloadTime - gameTime.DeltaTime;
-            if (this.ReloadTime <= 0)
+            // Ready to fire
+            if (this.ReloadTime <= 0.0f)
             {
                 this.ReloadTime = this.Entity.EntityData.HitSpeed / 1000.0f;
-                this.Arena.Projectiles.Add(new Projectile(this.Arena, this.Entity.Position, Csv.Tables.Get(Csv.Files.Projectiles).GetData<ProjectileData>(this.Entity.EntityData.Projectile), this.Target));
+                if (this.Entity.EntityData.Projectile == null) // Melee
+                {
+                    this.Target!.Entity.Hitpoints -= this.Entity.EntityData.Damage;
+                }
+                else
+                {
+                    this.Arena.Projectiles.Add(new Projectile(this.Arena, this, Csv.Tables.Get(Csv.Files.Projectiles).GetData<ProjectileData>(this.Entity.EntityData.Projectile), this.Target));
+                }
+            }
+            else
+            {
+                this.ReloadTime = this.ReloadTime - gameTime.DeltaTime;
             }
         }
     }
