@@ -6,6 +6,7 @@ using ClashRoyale.Game.Logic.Types;
 using SFML.System;
 using System;
 using System.Numerics;
+using System.Reflection.Metadata;
 using System.Runtime.ExceptionServices;
 using System.Text.RegularExpressions;
 
@@ -145,16 +146,18 @@ namespace ClashRoyale.Game.Logic.Types.Entity
             {
                 if (this.Entity.EntityData.RotateAngleSpeed > 0)
                 {
-                    double a = angle - this.Rotation;
-                    a = Math.Abs(Math.IEEERemainder((a + 180), 360) - 180);
-                    Console.WriteLine(a);
-                    if (a > 180)
+                    var δ = (angle - this.Rotation + 540) % 360 - 180;
+                    if (δ > 0)
                     {
-                        this.Rotation = (float)Math.IEEERemainder(this.Rotation - this.Entity.EntityData.RotateAngleSpeed * gameTime.DeltaTime, 360);
+                        this.Rotation = (this.Rotation + this.Entity.EntityData.RotateAngleSpeed * gameTime.DeltaTime) % 360;
                     }
-                    else if (a < 180)
+                    else if (δ < 0)
                     {
-                        this.Rotation = (float)Math.IEEERemainder(this.Rotation + this.Entity.EntityData.RotateAngleSpeed * gameTime.DeltaTime, 360);
+                        this.Rotation = (this.Rotation - this.Entity.EntityData.RotateAngleSpeed * gameTime.DeltaTime) % 360;
+                    }
+                    if (Math.Abs(angle - this.Rotation) % 360 <= 15)
+                    {
+                        this.Rotation = angle;
                     }
                 }
                 else
