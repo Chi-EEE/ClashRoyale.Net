@@ -20,19 +20,16 @@ namespace ClashRoyale.Game.Logic.Types.Entity
         public float DeployTime { get; set; }
         public float ReloadTime { get; set; }
         public float LoadTime { get; set; }
-
-
         public float Rotation { get; set; }
-        private Vector2 MoveVelocity { get; set; }
         public Vector2 Velocity { get; set; }
-
-
         public Vector2 Acceleration { get; set; }
         public float EstimatedHitpoints { get; set; }
         public Dictionary<EntityContext, bool> TargetedBy { get; set; }
         public EntityContext? Target { get; set; }
+        public Vector2? TargetPosition { get; set; }
         private const float ENTITY_MOVE_SCALE = 21.333333333333333333333333333333f;
 
+        private Vector2 MovementDirection { get; set; }
         private Action GetNearestEnemy { get; set; }
 
         private void Setup(Arena arena, Entity entity)
@@ -75,12 +72,6 @@ namespace ClashRoyale.Game.Logic.Types.Entity
         {
             Setup(arena, entity);
         }
-        private void RemoveTarget()
-        {
-            LoadTime = Entity.EntityData.LoadTime / 1000.0f;
-            Target!.TargetedBy.Remove(this);
-            Target = null;
-        }
         private float GetCombinedRangeRadius(EntityContext entityContext)
         {
             return this.Entity.EntityData.Range + this.Entity.EntityData.CollisionRadius + entityContext.Entity.EntityData.CollisionRadius;
@@ -119,6 +110,7 @@ namespace ClashRoyale.Game.Logic.Types.Entity
                     double distance = GetDistanceBetweenPoints(this.Entity.Position, this.Target.Entity.Position);
                     if (distance <= GetCombinedRangeRadius(this.Target)) // Close enough to attack
                     {
+                        Console.WriteLine("attack" + " " + GetCombinedRangeRadius(this.Target));
                         if (this.LoadTime != 0) // This will be zero once it starts attacking
                         {
                             this.ReloadTime = (this.Entity.EntityData.HitSpeed / 1000.0f) - this.LoadTime;
@@ -128,7 +120,7 @@ namespace ClashRoyale.Game.Logic.Types.Entity
                     }
                     else
                     {
-                        ApproachTarget(gameTime);
+                        Move(gameTime);
                     }
                 }
             }
@@ -168,15 +160,18 @@ namespace ClashRoyale.Game.Logic.Types.Entity
         }
         private void Move(GameTime gameTime)
         {
-            var currentAcceleration = Acceleration;
-            var currentVelocity = Velocity;
-            currentAcceleration.X = -currentVelocity.X * 0.8f;
-            currentAcceleration.Y = -currentVelocity.Y * 0.8f;
-            currentVelocity.X += currentAcceleration.X * gameTime.DeltaTime;
-            currentVelocity.Y += currentAcceleration.Y * gameTime.DeltaTime;
-            //currentVelocity.Y += this.entityData.Speed * ENTITY_MOVE_SCALE * gameTime.DeltaTime;
-            Acceleration = currentAcceleration;
-            Velocity = currentVelocity;
+            //var currentAcceleration = Acceleration;
+            //var currentVelocity = this.Velocity;
+            //currentAcceleration.X = -currentVelocity.X * 0.8f;
+            //currentAcceleration.Y = -currentVelocity.Y * 0.8f;
+            //currentVelocity.X += currentAcceleration.X * gameTime.DeltaTime;
+            //currentVelocity.Y += currentAcceleration.Y * gameTime.DeltaTime;
+            ////currentVelocity.Y += this.entityData.Speed * ENTITY_MOVE_SCALE * gameTime.DeltaTime;
+            //Acceleration = currentAcceleration;
+            //this.Velocity = currentVelocity;
+
+            //Console.WriteLine(this.Velocity);
+            this.Entity.Position += this.MovementDirection * this.Entity.EntityData.Speed * ENTITY_MOVE_SCALE * gameTime.DeltaTime;
         }
         public void Destroy()
         {
@@ -188,11 +183,6 @@ namespace ClashRoyale.Game.Logic.Types.Entity
         private double GetDistanceBetweenPoints(Vector2 firstPoint, Vector2 secondPoint)
         {
             return Math.Sqrt((firstPoint.X - secondPoint.X) * (firstPoint.X - secondPoint.X) + (firstPoint.Y - secondPoint.Y) * (firstPoint.Y - secondPoint.Y));
-        }
-        private void SetTargetEnemy(EntityContext nearestEntityContext)
-        {
-            this.Target = nearestEntityContext;
-            this.Target.TargetedBy.Add(this, true);
         }
         private void FireAtTarget(GameTime gameTime)
         {
@@ -212,10 +202,6 @@ namespace ClashRoyale.Game.Logic.Types.Entity
             {
                 ReloadTime -= gameTime.DeltaTime;
             }
-        }
-        private void ApproachTarget(GameTime gameTime)
-        {
-
         }
     }
 }

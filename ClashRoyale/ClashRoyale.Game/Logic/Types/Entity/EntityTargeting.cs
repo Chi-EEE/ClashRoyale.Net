@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,6 +9,21 @@ namespace ClashRoyale.Game.Logic.Types.Entity
 {
     public partial class EntityContext
     {
+        private void SetTarget(EntityContext nearestEntityContext)
+        {
+            this.Target = nearestEntityContext;
+            this.TargetPosition = nearestEntityContext.Entity.Position;
+            this.MovementDirection = Vector2.Normalize((Vector2)(this.TargetPosition - this.Entity.Position));
+            this.Target.TargetedBy.Add(this, true);
+        }
+        private void RemoveTarget()
+        {
+            this.LoadTime = Entity.EntityData.LoadTime / 1000.0f;
+            this.Target!.TargetedBy.Remove(this);
+            this.MovementDirection = Vector2.Zero;
+            this.TargetPosition = null;
+            this.Target = null;
+        }
         private float GetCombinedSightRangeRadius(EntityContext entityContext)
         {
             return this.Entity.EntityData.SightRange + this.Entity.EntityData.CollisionRadius + entityContext.Entity.EntityData.CollisionRadius;
@@ -38,7 +54,7 @@ namespace ClashRoyale.Game.Logic.Types.Entity
             }
             if (nearestEntityContext != null)
             {
-                SetTargetEnemy(nearestEntityContext);
+                SetTarget(nearestEntityContext);
             }
         }
         private void GetNearestGroundEnemy()
@@ -57,7 +73,7 @@ namespace ClashRoyale.Game.Logic.Types.Entity
             }
             if (nearestEntityContext != null)
             {
-                SetTargetEnemy(nearestEntityContext);
+                SetTarget(nearestEntityContext);
             }
         }
         private void GetNearestAirEnemy()
@@ -76,7 +92,7 @@ namespace ClashRoyale.Game.Logic.Types.Entity
             }
             if (nearestEntityContext != null)
             {
-                SetTargetEnemy(nearestEntityContext);
+                SetTarget(nearestEntityContext);
             }
         }
     }

@@ -51,7 +51,7 @@ namespace ClashRoyale.Graphics
                 mousePosition.Y = RoundToNearest1000(mousePosition.Y - 500);
                 if (selectedEntityContext == null)
                 {
-                    this.PlayBattle.Arena.Entities.Add(new EntityContext(this.PlayBattle.Arena, Csv.Tables.Get(Csv.Files.Characters).GetData<EntityData>("MovingCannon"), new Vector2(mousePosition.X, mousePosition.Y)));
+                    this.PlayBattle.Arena.Entities.Add(new EntityContext(this.PlayBattle.Arena, Csv.Tables.Get(Csv.Files.Characters).GetData<EntityData>("Knight"), new Vector2(mousePosition.X, mousePosition.Y)));
                 }
             }
         }
