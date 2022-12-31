@@ -19,8 +19,8 @@ namespace ClashRoyale.Game.Logic.Types.Entity
         public float DeployTime { get; set; }
         public float ReloadTime { get; set; }
         public float LoadTime { get; set; }
-        
-        
+
+
         public float Rotation { get; set; }
         private Vector2 MoveVelocity { get; set; }
         public Vector2 Velocity { get; set; }
@@ -145,13 +145,16 @@ namespace ClashRoyale.Game.Logic.Types.Entity
             {
                 if (this.Entity.EntityData.RotateAngleSpeed > 0)
                 {
-                    if (this.Rotation > angle)
+                    double a = angle - this.Rotation;
+                    a = Math.Abs(Math.IEEERemainder((a + 180), 360) - 180);
+                    Console.WriteLine(a);
+                    if (a > 180)
                     {
-                        this.Rotation -= this.Entity.EntityData.RotateAngleSpeed * gameTime.DeltaTime;
+                        this.Rotation = (float)Math.IEEERemainder(this.Rotation - this.Entity.EntityData.RotateAngleSpeed * gameTime.DeltaTime, 360);
                     }
-                    else if (this.Rotation < angle)
+                    else if (a < 180)
                     {
-                        this.Rotation += this.Entity.EntityData.RotateAngleSpeed * gameTime.DeltaTime;
+                        this.Rotation = (float)Math.IEEERemainder(this.Rotation + this.Entity.EntityData.RotateAngleSpeed * gameTime.DeltaTime, 360);
                     }
                 }
                 else

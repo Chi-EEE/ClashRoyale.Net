@@ -6,7 +6,7 @@ namespace ClashRoyale.Game.Logic.Types
     {
         private void HomingProjectile(GameTime gameTime)
         {
-            // At the target's position
+            // At the target's position (BUG: IF PROJECTILE MISSES THEN ENTITY IS NOT DESTROYED)
             if (CheckDistanceFromProjectileAndEntity(this.CurrentPosition, this.TargetPosition, this.ProjectileData.Radius, Target.Entity.EntityData.CollisionRadius))
             {
                 // To check if crown tower
