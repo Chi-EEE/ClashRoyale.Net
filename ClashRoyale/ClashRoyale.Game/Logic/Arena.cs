@@ -20,7 +20,7 @@ namespace ClashRoyale.Game
         public const uint REAL_ARENA_WIDTH = 18000;
         public const uint REAL_ARENA_HEIGHT = 32000;
         public List<EntityContext> Entities = new List<EntityContext>();
-        public List<Projectile> Projectiles= new List<Projectile>();
+        public List<Projectile> Projectiles = new List<Projectile>();
         public Tilemap Tilemap = new("GameAssets/tilemaps/tilemap.csv");
         public Arena()
         {
@@ -59,7 +59,8 @@ namespace ClashRoyale.Game
                 firstVelocity.X = tx * dpTan1 + nx * m1;
                 firstVelocity.Y = ty * dpTan1 + ny * m1;
                 firstResultVelocity = firstVelocity;
-            } else
+            }
+            else
             {
                 firstResultVelocity = new(0, 0);
             }
@@ -96,6 +97,7 @@ namespace ClashRoyale.Game
                 projectile.Tick(gameTime);
                 if (projectile.Destroyed)
                 {
+                    //Console.WriteLine("Destroyed");
                     Projectiles.Remove(projectile);
                 }
             }
@@ -113,7 +115,7 @@ namespace ClashRoyale.Game
                         var secondCollisionRadius = secondEntityContext.Entity.EntityData.CollisionRadius;
 
                         float distance = GetDistanceBetweenPoints(firstEntityPosition, secondEntityPosition);
-                        if (distance <= (firstCollisionRadius + secondCollisionRadius) *(firstCollisionRadius + secondCollisionRadius))
+                        if (distance <= (firstCollisionRadius + secondCollisionRadius) * (firstCollisionRadius + secondCollisionRadius))
                         {
                             collidingPairs.Add(new(firstEntityContext, secondEntityContext));
 
@@ -121,7 +123,8 @@ namespace ClashRoyale.Game
                             if (distance == 0)
                             {
                                 directionalVector = Vector2.UnitY;
-                            } else
+                            }
+                            else
                             {
                                 float fDistance = MathF.Sqrt((firstEntityPosition.X - secondEntityPosition.X) * (firstEntityPosition.X - secondEntityPosition.X) + (firstEntityPosition.Y - secondEntityPosition.Y) * (firstEntityPosition.Y - secondEntityPosition.Y));
                                 directionalVector = (firstEntityPosition - secondEntityPosition) / fDistance;

@@ -28,10 +28,13 @@ namespace ClashRoyale.Game.Logic.Types.Entity
         public EntityContext? Target { get; set; }
         public Vector2? TargetPosition { get; set; }
         private const float ENTITY_MOVE_SCALE = 21.333333333333333333333333333333f;
-
         private Vector2 MovementDirection { get; set; }
         private Action GetNearestEnemy { get; set; }
+        private List<Action<GameTime>> PassiveAbilities { get; set; }
 
+
+        public float SpeedMultipler { get; set; }
+        public int Damage { get; set; }
         private void Setup(Arena arena, Entity entity)
         {
             Arena = arena;
@@ -49,6 +52,8 @@ namespace ClashRoyale.Game.Logic.Types.Entity
             DeployTime = entity.EntityData.DeployTime / 1000.0f;
             Velocity = new(0, 0);
             EstimatedHitpoints = entity.EntityData.Hitpoints;
+            SpeedMultipler = 1.0f;
+            Damage = entity.EntityData.Damage;
             TargetedBy = new();
             if (entity.EntityData.AttacksGround && entity.EntityData.AttacksAir)
             {
@@ -61,6 +66,14 @@ namespace ClashRoyale.Game.Logic.Types.Entity
             else if (entity.EntityData.AttacksAir)
             {
                 GetNearestEnemy = GetNearestAirEnemy;
+            }
+            SetupCharge();
+        }
+        private void SetupCharge()
+        {
+            if (this.Entity.EntityData.ChargeRange > 0)
+            {
+                PassiveAbilities.Add();
             }
         }
         public EntityContext(Arena arena, EntityData entityData, Vector2 position, int level = 0)
@@ -110,7 +123,6 @@ namespace ClashRoyale.Game.Logic.Types.Entity
                     double distance = GetDistanceBetweenPoints(this.Entity.Position, this.Target.Entity.Position);
                     if (distance <= GetCombinedRangeRadius(this.Target)) // Close enough to attack
                     {
-                        Console.WriteLine("attack" + " " + GetCombinedRangeRadius(this.Target));
                         if (this.LoadTime != 0) // This will be zero once it starts attacking
                         {
                             this.ReloadTime = (this.Entity.EntityData.HitSpeed / 1000.0f) - this.LoadTime;
@@ -169,9 +181,7 @@ namespace ClashRoyale.Game.Logic.Types.Entity
             ////currentVelocity.Y += this.entityData.Speed * ENTITY_MOVE_SCALE * gameTime.DeltaTime;
             //Acceleration = currentAcceleration;
             //this.Velocity = currentVelocity;
-
-            //Console.WriteLine(this.Velocity);
-            this.Entity.Position += this.MovementDirection * this.Entity.EntityData.Speed * ENTITY_MOVE_SCALE * gameTime.DeltaTime;
+            this.Entity.Position += this.MovementDirection * this.Entity.EntityData.Speed * this.SpeedMultipler * ENTITY_MOVE_SCALE * gameTime.DeltaTime;
         }
         public void Destroy()
         {
@@ -186,22 +196,27 @@ namespace ClashRoyale.Game.Logic.Types.Entity
         }
         private void FireAtTarget(GameTime gameTime)
         {
-            if (ReloadTime <= 0.0f)
+            if (this.ReloadTime <= 0.0f)
             {
-                ReloadTime = Entity.EntityData.HitSpeed / 1000.0f;
-                if (Entity.EntityData.Projectile == null) // Melee
+                this.ReloadTime = this.Entity.EntityData.HitSpeed / 1000.0f;
+                if (this.Entity.EntityData.Projectile == null) // Melee
                 {
-                    Target!.Entity.Hitpoints -= Entity.EntityData.Damage;
+                    this.Target!.TakeMeleeDamage(this.Damage);
                 }
                 else
                 {
-                    Arena.Projectiles.Add(new Projectile(Arena, this, Csv.Tables.Get(Csv.Files.Projectiles).GetData<ProjectileData>(Entity.EntityData.Projectile), Target));
+                    this.Arena.Projectiles.Add(new Projectile(this.Arena, this, Csv.Tables.Get(Csv.Files.Projectiles).GetData<ProjectileData>(this.Entity.EntityData.Projectile), Target));
                 }
             }
             else
             {
                 ReloadTime -= gameTime.DeltaTime;
             }
+        }
+        public void TakeMeleeDamage(int damage)
+        {
+            this.EstimatedHitpoints -= damage;
+            this.Entity.Hitpoints -= damage;
         }
     }
 }

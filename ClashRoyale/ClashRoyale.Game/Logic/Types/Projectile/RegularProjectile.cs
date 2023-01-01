@@ -11,7 +11,7 @@ namespace ClashRoyale.Game.Logic.Types
             foreach (EntityContext entityContext in this.Arena.Entities)
             {
                 // At the target's position
-                if (!this.AlreadyHitEntities.ContainsKey(entityContext) && CheckDistanceFromProjectileAndEntity(this.CurrentPosition, entityContext.Entity.Position, this.ProjectileData.Radius, entityContext.Entity.EntityData.CollisionRadius))
+                if (!this.AlreadyHitEntities.ContainsKey(entityContext) && Vector2_Helper.CheckDistanceFromProjectileAndEntity(this.CurrentPosition, entityContext.Entity.Position, this.ProjectileData.Radius, entityContext.Entity.EntityData.CollisionRadius))
                 {
                     HitEntity(gameTime, entityContext);
                 }
@@ -23,7 +23,7 @@ namespace ClashRoyale.Game.Logic.Types
             {
                 if (!this.AlreadyHitEntities.ContainsKey(entityContext) && entityContext.Entity.IsAir())
                 {
-                    if (CheckDistanceFromProjectileAndEntity(this.CurrentPosition, entityContext.Entity.Position, this.ProjectileData.Radius, entityContext.Entity.EntityData.CollisionRadius))
+                    if (Vector2_Helper.CheckDistanceFromProjectileAndEntity(this.CurrentPosition, entityContext.Entity.Position, this.ProjectileData.Radius, entityContext.Entity.EntityData.CollisionRadius))
                     {
                         HitEntity(gameTime, entityContext);
                     }
@@ -36,7 +36,7 @@ namespace ClashRoyale.Game.Logic.Types
             {
                 if (!this.AlreadyHitEntities.ContainsKey(entityContext) && entityContext.Entity.IsGround())
                 {
-                    if (CheckDistanceFromProjectileAndEntity(this.CurrentPosition, entityContext.Entity.Position, this.ProjectileData.Radius, entityContext.Entity.EntityData.CollisionRadius))
+                    if (Vector2_Helper.CheckDistanceFromProjectileAndEntity(this.CurrentPosition, entityContext.Entity.Position, this.ProjectileData.Radius, entityContext.Entity.EntityData.CollisionRadius))
                     {
                         HitEntity(gameTime, entityContext);
                     }
@@ -45,7 +45,7 @@ namespace ClashRoyale.Game.Logic.Types
         }
         private void RegularProjectile(GameTime gameTime)
         {
-            if (GetDistanceBetweenTwoPoints(this.CurrentPosition, this.TargetPosition) == 0)
+            if (Vector2_Helper.GetDistanceBetweenTwoPoints(this.CurrentPosition, this.TargetPosition) == 0)
             {
                 Destroyed = true;
                 NotHomingAoeFunction.DynamicInvoke();

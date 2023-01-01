@@ -10,7 +10,7 @@ namespace ClashRoyale.Game.Logic.Types
         {
             foreach (EntityContext entityContext in this.Arena.Entities)
             {
-                if (!this.AlreadyHitEntities.ContainsKey(entityContext) && CheckDistanceFromProjectileAndEntity(this.CurrentPosition, entityContext.Entity.Position, this.ProjectileData.ProjectileRadius, entityContext.Entity.EntityData.CollisionRadius))
+                if (!this.AlreadyHitEntities.ContainsKey(entityContext) && Vector2_Helper.CheckDistanceFromProjectileAndEntity(this.CurrentPosition, entityContext.Entity.Position, this.ProjectileData.ProjectileRadius, entityContext.Entity.EntityData.CollisionRadius))
                 {
                     this.AlreadyHitEntities.Add(entityContext, true);
                     HitEntity(gameTime, entityContext);
@@ -23,7 +23,7 @@ namespace ClashRoyale.Game.Logic.Types
             {
                 if (entityContext.Entity.IsAir())
                 {
-                    if (!this.AlreadyHitEntities.ContainsKey(entityContext) && CheckDistanceFromProjectileAndEntity(this.CurrentPosition, entityContext.Entity.Position, this.ProjectileData.ProjectileRadius, entityContext.Entity.EntityData.CollisionRadius))
+                    if (!this.AlreadyHitEntities.ContainsKey(entityContext) && Vector2_Helper.CheckDistanceFromProjectileAndEntity(this.CurrentPosition, entityContext.Entity.Position, this.ProjectileData.ProjectileRadius, entityContext.Entity.EntityData.CollisionRadius))
                     {
                         this.AlreadyHitEntities.Add(entityContext, true);
                         HitEntity(gameTime, entityContext);
@@ -37,7 +37,7 @@ namespace ClashRoyale.Game.Logic.Types
             {
                 if (entityContext.Entity.IsGround())
                 {
-                    if (!this.AlreadyHitEntities.ContainsKey(entityContext) && CheckDistanceFromProjectileAndEntity(this.CurrentPosition, entityContext.Entity.Position, this.ProjectileData.ProjectileRadius, entityContext.Entity.EntityData.CollisionRadius))
+                    if (!this.AlreadyHitEntities.ContainsKey(entityContext) && Vector2_Helper.CheckDistanceFromProjectileAndEntity(this.CurrentPosition, entityContext.Entity.Position, this.ProjectileData.ProjectileRadius, entityContext.Entity.EntityData.CollisionRadius))
                     {
                         this.AlreadyHitEntities.Add(entityContext, true);
                         HitEntity(gameTime, entityContext);

@@ -51,7 +51,7 @@ namespace ClashRoyale.Graphics
                 mousePosition.Y = RoundToNearest1000(mousePosition.Y - 500);
                 if (selectedEntityContext == null)
                 {
-                    this.PlayBattle.Arena.Entities.Add(new EntityContext(this.PlayBattle.Arena, Csv.Tables.Get(Csv.Files.Characters).GetData<EntityData>("Knight"), new Vector2(mousePosition.X, mousePosition.Y)));
+                    this.PlayBattle.Arena.Entities.Add(new EntityContext(this.PlayBattle.Arena, Csv.Tables.Get(Csv.Files.Characters).GetData<EntityData>("BabyDragon"), new Vector2(mousePosition.X, mousePosition.Y)));
                 }
             }
         }
@@ -153,7 +153,7 @@ namespace ClashRoyale.Graphics
             }
             foreach (Projectile projectile in this.PlayBattle.Arena.Projectiles)
             {
-                var radius = projectile.ProjectileData.Radius;
+                var radius = projectile.ProjectileData.ProjectileRadius;
                 if (radius == 0)
                 {
                     radius = 50;

@@ -6,12 +6,22 @@ namespace ClashRoyale.Game.Logic.Types
     {
         private void HomingProjectile(GameTime gameTime)
         {
-            // At the target's position (BUG: IF PROJECTILE MISSES THEN ENTITY IS NOT DESTROYED)
             if (CheckDistanceFromProjectileAndEntity(this.CurrentPosition, this.TargetPosition, this.ProjectileData.Radius, Target.Entity.EntityData.CollisionRadius))
             {
-                // To check if crown tower
-                //Target.Entity.EntityData.CrownTowerDamagePercent
-                Target.Entity.Hitpoints -= this.ProjectileData.Damage;
+                if (this.ProjectileData.Radius > 0)
+                {
+                    foreach (var entityContext in this.Arena.Entities)
+                    {
+                        if (CheckDistanceFromProjectileAndEntity(this.CurrentPosition, entityContext.Entity.Position, this.ProjectileData.Radius, entityContext.Entity.EntityData.CollisionRadius))
+                        {
+                            entityContext.Entity.Hitpoints -= this.ProjectileData.Damage;
+                        }
+                    }
+                }
+                else
+                {
+                    Target.Entity.Hitpoints -= this.ProjectileData.Damage;
+                }
                 Destroyed = true;
             }
         }

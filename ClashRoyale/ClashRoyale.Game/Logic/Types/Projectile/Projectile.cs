@@ -26,7 +26,7 @@ namespace ClashRoyale.Game.Logic.Types
         private Action<GameTime> ReachedTargetPositionFunction;
         private Action<GameTime> NotHomingAoeFunction;
         private Action<GameTime> DamageIndirectNearbyEntitiesFunction;
-        
+
 
         private const float ENTITY_MOVE_SCALE = 21.333333333333333333333333333333f;
         public Projectile(Arena arena, EntityContext entityFired, ProjectileData projectileData, EntityContext target)
@@ -50,6 +50,7 @@ namespace ClashRoyale.Game.Logic.Types
             if (this.ProjectileData.Homing)
             {
                 ReachedTargetPositionFunction = HomingProjectile;
+                Console.WriteLine(target.EstimatedHitpoints);
                 target.EstimatedHitpoints -= this.ProjectileData.Damage;
             }
             else
@@ -73,30 +74,18 @@ namespace ClashRoyale.Game.Logic.Types
                 }
             }
         }
-        private double GetDistanceBetweenTwoPoints(Vector2 point1, Vector2 point2)
-        {
-            return Math.Pow(point1.Y - point2.Y, 2) + Math.Pow(point1.X - point2.X, 2);
-        }
-        private double GetTwoRadiusSize(int radius1, int radius2)
-        {
-            return (radius1 + radius2) * (radius1 + radius2);
-        }
-        private bool CheckDistanceFromProjectileAndEntity(Vector2 currentPosition, Vector2 entityPosition, int radius, int entityRadius)
-        {
-            return GetDistanceBetweenTwoPoints(currentPosition, entityPosition) <= GetTwoRadiusSize(radius, entityRadius);
-        }
         public void Tick(GameTime gameTime)
         {
             if (this.ProjectileData.Homing)
             {
-                if (Target.Entity.Position != TargetPosition)
+                if (this.Target.Entity.Position != TargetPosition)
                 {
-                    this.TargetPosition = Target.Entity.Position;
-                    this.DirectionVector = Vector2.Normalize(CurrentPosition - TargetPosition);
+                    this.TargetPosition = this.Target.Entity.Position;
+                    this.DirectionVector = Vector2.Normalize(TargetPosition - CurrentPosition);
                 }
             }
-            DistanceTravelled += Math.Sqrt(GetDistanceBetweenTwoPoints(this.CurrentPosition, this.PreviousPosition));
             Move(gameTime);
+            DistanceTravelled += Math.Sqrt(Vector2_Helper.GetDistanceBetweenTwoPoints(this.CurrentPosition, this.PreviousPosition));
             // OnlyEnemies is not used
 
             CheckAndDamageEntities(gameTime);
@@ -114,12 +103,12 @@ namespace ClashRoyale.Game.Logic.Types
         private void CheckAndDamageEntities(GameTime gameTime)
         {
             // Is far enough to be valid
-            if (GetDistanceBetweenTwoPoints(this.CurrentPosition, this.EntityFired.Entity.Position) >= this.ProjectileData.MinDistance) // MaxDistance is not used
+            if (Vector2_Helper.GetDistanceBetweenTwoPoints(this.CurrentPosition, this.EntityFired.Entity.Position) >= this.ProjectileData.MinDistance) // MaxDistance is not used
             {
-                ReachedTargetPositionFunction.DynamicInvoke(gameTime);
+                this.ReachedTargetPositionFunction.DynamicInvoke(gameTime);
                 if (this.ProjectileData.ProjectileRadius > 0)
                 {
-                    DamageIndirectNearbyEntitiesFunction.DynamicInvoke(gameTime);
+                    this.DamageIndirectNearbyEntitiesFunction.DynamicInvoke(gameTime);
                 }
             }
         }

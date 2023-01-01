@@ -1,0 +1,337 @@
+Legend:
+!NI -- Not Included
+!NN -- Not Needed
+!N = No
+!NQ -- Maybe or not
+!Y/N -- Too add more things to
+!YQ -- Not completely sure if it is not completed
+!Y -- Yes
+
+Name !Y
+Rarity !NI
+Flags !NI
+Tribe !NI
+SightRange !Y
+DeployTime !Y
+ChargeRange !N
+Speed !Y/N -- Need it to be affected by speed multiplers
+Hitpoints !Y/N -- Heal?
+HitSpeed !Y/N -- Need it to be affected by speed multiplers
+LoadTime !YQ -- Could speed multiplers affect it?
+Damage !YQ
+DamageSpecial !N -- Linked with ChargeRange
+CrownTowerDamagePercent !N -- Nerf Miner
+LoadFirstHit !Y -- Sparky
+LoadAfterRetarget !NS - No entities have this
+StopTimeAfterAttack !NS - No entities have this
+StopTimeAfterSpecialAttack !NS - No entities have this
+Projectile !YQ
+CustomFirstProjectile !N - Only Princess / Hunter has this
+MultipleProjectiles !N - Hunter
+MultipleTargets !N - Only EWIZ
+AllTargetsHit !N - Only EWIZ
+Range !Y
+MinimumRange !N - Mortar
+SpecialMinRange !N - Only Fisherman Tool has this
+SpecialRange !N - Only Fisherman Tool has this
+SpecialLoadTime !N - Only Fisherman Tool has this
+SpecialReadyEffect !NI
+SpecialIgnoreBuildings !NI
+SpecialAttacksToIgnoreList !N - Only Fisherman Tool has this
+AttacksGround !Y
+AttacksAir !Y
+DeathDamageRadius !N - Ice golem, Golem and mite
+DeathDamage !N - Ice golem, Golem and mite
+DeathPushBack !N - Golem and mite
+AttackPushBack !N - Sparky, Firecracker
+MeleePushback !NN
+IsMeleePushbackAll !NN
+LifeTime !N - Buildings
+ProjectileSpecial !N - Fisherman
+ProjectileEffect !NN - Probably visual
+ProjectileEffectSpecial  !NN - Probably visual
+AreaDamageRadius !N - Attack Area (Dark Prince, Valk)
+TargetOnlyBuildings !N - Building Target
+TargetOnlyTroops !N - Ram Rider Character
+TargetOnlyTowers !NN - Special Mortar
+TargetOnlyKingTower !NN
+SpecialAttackInterval !NN
+BuffOnDamage !N - Mother Witch, Electro Wizard, Zappies
+BuffOnDamageTime !N - Mother Witch, Electro Wizard, Zappies
+StartingBuff !NN
+StartingBuffTime !NN
+Mesh !NI
+FileName !NI
+BlueExportName !NI
+BlueTopExportName !NI
+RedExportName !NI
+RedTopExportName !NI
+PrestigeSWF !NI
+PrestigeExportName !NI
+PrestigeExportName2 !NI
+PrestigeExportName3 !NI
+PrestigeRedExportName !NI
+PrestigeRedExportName2 !NI
+PrestigeRedExportName3 !NI
+UseAnimator !NI
+AttachedCharacter !NI
+AttachedCharacterHeight !NI
+DamageEffect !NI
+DamageEffectSpecial !NI
+DeathEffect !NI
+MoveEffect !NI
+LoopMoveEffect !NI
+SpawnEffect !NI
+SpawnEffectOnce !NI
+CrowdEffects !NI - Crowd Cheers
+ShadowScaleX !NI
+ShadowScaleY !NI
+ShadowX !NI
+ShadowY !NI
+ShadowSkew !NI
+ShadowCustom !NI
+ShadowCustomLow !NI
+Pushback !NN
+IgnorePushback !N - Heavy Troops
+Scale !NN?
+CollisionRadius !YQ - Collision Radius
+Mass !YQ - Mass
+TileSizeOverride !NN - Not Player Owned Buildings
+AreaBuff !NN
+AreaBuffTime !NN
+AreaBuffRadius !NN
+HealthBar !NI
+HealthBarOffsetY !NI
+ShowHealthNumber !NI
+FlyingHeight !NI
+FlyDirectPaths !NI
+FlyFromGround !NI
+Hovering !N - Ghost / Healer
+DamageExportName !NI - Attack Effects
+GrowTime !NI
+GrowSize !NI
+MorphCharacter !NI
+MorphEffect !NI
+HealOnMorph !N - Cannon Cart
+AreaEffectOnMorph !NI
+MorphTime !NI
+MorphKeepTarget !N - Cannon Cart
+AttackStartEffect !NI
+AttackStartEffectSpecial !NI
+DashImmuneToDamageTime !N - Bandit, Golden Knight
+DashStartEffect !N - Bandit, Mega Knight
+DashEffect !N - Bandit, Mega Knight
+DashCooldown !N - Bandit, Mega Knight
+JumpHeight !N - Maybe for speed
+DashPushBack !N - Mega Knight
+DashRadius !N - Mega Knight
+DashDamage !N
+DashFilter !NQ
+DashConstantTime !N - Mega Knight
+DashLandingTime !N
+LandingEffect !NN
+DashHitEffect !NN
+DashMinRange !N
+DashMaxRange !N
+DashDistance !NN
+DashCount !N - Golden Knight
+DashSecondaryRange !N - Golden Knight
+DashingDamage !NN
+DashingPushback !NN
+DashToTargetRadius !N - Golden Knight
+JumpSpeed !N - Jump Speed Hog Rider
+ContinuousEffect !NQ
+SpawnStartTime !N - Witch, Spawner
+SpawnInterval !N - Witch, Spawner
+SpawnNumber !N - Witch, Spawner
+SpawnLimit !N - Phoenix Egg
+DestroyAtLimit !NI
+DestroyAtLimitEffect !NI
+SpawnPauseTime !N - Witch, Spawner
+SpawnCharacterLevelIndex !N - Character Amount
+SpawnCharacter !N
+SpawnCharacterWithDeploy !NN
+SpawnCharacterLevelIndex2 !NN
+SpawnCharacter2 !N
+SpawnCharacterLevelIndex3 !NN
+SpawnCharacter3 !N
+SpawnProjectile !NN
+SpawnCharacterEffect !NN - Witch
+SpawnDeployBaseAnim !NN
+SpawnRadius !N
+SpawnAttach !N - Troop like Gob Giant and Ram Rider
+SpawnAttachMaxRotation !NN - Ram Rider
+DeathSpawnDeployBaseAnim !NI
+DeathSpawnCount !N - Golem
+DeathSpawnCharacter !N - Golem
+DeathSpawnCount2 !N
+DeathSpawnCharacter2 !N
+DeathSpawnCharacter3 !N
+DeathSpawnIsSameUnit !NN
+RandomizeDeathSpawn !NN - Special
+DeathSpawnProjectile !N - Phoenix
+DeathSpawnRadius !N - Golem, Phoenix
+DeathSpawnMinRadius !N - Drill
+DeathSpawnAllowOverRiver !NN - Special Mortar
+SpawnAngleShift !N - Battle Ram
+SpawnMaxAngle !N - Goblin Giant
+DeathSpawnDeployTime !N - Goblin Giant
+DeathSpawnPushback !N - Golem
+DeathAreaEffect !NI
+DeathInheritIgnoreList !N
+Kamikaze !N
+KamikazeTime !N
+KamikazeEffect !NI
+SpawnPathfindSpeed !N - Miner Drill
+SpawnPathfindEffect !NI
+SpawnPathfindMorph !N - Drill
+SpawnPushback !N - Mega Knight
+SpawnPushbackRadius !N - Mega Knight
+SpawnAreaObject !N - E Wiz, Ice Wiz
+SpawnAreaObjectLevelIndex !NN - E Wiz, Ice Wiz
+IngamePathfindSpeed !N - Mighty Miner
+IngamePathfindEffect !NI
+IngamePathfindStartEffect !NI
+IngamePathfindStopEffect !NI
+IngamePathfindStopDeployBaseAnim !NI
+ChargeEffect !NI
+TakeDamageEffect !NI
+ProjectileStartRadius !N - Projectiles
+ProjectileStartZ !N - Start counting the projectile after his point
+StopMovementAfterMS !N - Giant, Heavy? (Dont Move when hitting?)
+WaitMS !N - Giant, Heavy?
+DontStopMoveAnim !NN
+IsSummonerTower !N --------------------CROWN TOWER
+NoDeploySizeW !N --------- Deploy grid for not placing towers in
+NoDeploySizeH !N --------- Deploy grid for not placing towers in
+TID !NN
+AttackSequence !NI
+AttackSeqStateEffect1 !NI
+AttackSeqStateEffect2 !NI
+AttackSeqStateEffect3 !NI
+VariableDamageTime1 !N - Inferno Dragon
+VariableDamage2 !N - Inferno Dragon
+MeleePushback2 !NI
+IsMeleePushbackAll2 !NN
+VariableDamageTime2 !N - Inferno Dragon
+VariableDamage3 !N - Inferno Dragon
+MeleePushback3 !NN
+IsMeleePushbackAll3 !NN
+TargettedDamageEffect1 !NN - Inferno
+TargettedDamageEffect2 !NN - Inferno
+TargettedDamageEffect3 !NN - Inferno
+DamageLevelTransitionEffect12 !NN - Inferno
+DamageLevelTransitionEffect23 !NN - Inferno
+FlameEffect1 !NN - Inferno
+FlameEffect2 !NN - Inferno
+FlameEffect3 !NN - Inferno
+TargetEffectY !NN - Telsa
+SelfAsAoeCenter !N - Valk (Include Collision Radius aswell)
+HidesWhenNotAttacking !N - Telsa
+HideTimeMs !N - Telsa
+HideBeforeFirstHit !NN - Telsa
+SpecialAttackWhenHidden !NN
+TargetedHitEffect !NI
+TargetedHitEffectSpecial !NI
+TargetedEffectVisualPushback !NQ
+UpTimeMs !NN
+HideEffect !NI
+AppearEffect !NI
+AppearPushbackRadius !NN
+AppearPushback !NN
+AppearAreaObject !NN
+ManaCollectAmount !N - Pump
+ManaGenerateTimeMs !N - Pump
+ManaGenerateLimit !N - Pump
+ManaOnDeath !N - Pump
+ManaOnDeathForOpponent !N - EGolem
+HasRotationOnTimeline !NN - Xbow
+TurretMovement !NN
+ProjectileYOffset !NI
+ChargeSpeedMultiplier !Y/N - Prince
+DeployDelay !N - IDK
+DeployBaseAnimExportName !NI
+DeployAnimationOverride !NI
+JumpEnabled !N
+SightClip !N - IDK WHAT THIS IS FOR
+AreaEffectOnDash !NN
+SightClipSide !N - IDK WHAT THIS IS FOR
+WalkingSpeedTweakPercentage !N - IDK WHAT THIS IS FOR
+ShieldHitpoints !N - Shield Users
+ShieldDiePushback !NN - Not used
+ShieldLostEffect !NN
+BlueShieldExportName !NN
+RedShieldExportName !NN
+LoadAttackEffect1 !NI
+LoadAttackEffect2 !NI
+LoadAttackEffect3 !NI
+LoadAttackEffectReady !NI
+RotateAngleSpeed !N - Sparky
+DeployTimerDelay !NN
+RetargetEachTick !NN
+RetargetAfterAttack !N - Fisherman?
+AttackShakeTime !NQ - Battle Ram
+VisualHitSpeed !NQ - Inferno Dragon
+VisualHitSpeed2 !NQ
+VisualHitSpeed3 !NQ
+Burst !NN
+BurstDelay !NN
+BurstKeepTarget !NN
+BurstAffectAnimation !NI
+ActivationTime !NN
+AttackDashTime !NQ - Bat
+LoopingFilter !NN - Special And Bat
+BuildingTarget !NN
+SpawnConstPriority !N - Skeleton Barrel
+BuffWhenNotAttacking !N - Battle Healer, Ghost
+BuffWhenNotAttackingTime !N - Battle Healer, Ghost
+BuffWhenNotAttackingEffect !NI
+BuffWhenNotAttackingRemoveEffect !NI
+AreaEffectOnHit !N - Battle Healer
+AttackStateDamage !NI
+AttackStateEffect !NI
+SpeedBeforeAttack !NI
+MoveEffect2 !NI
+ReflectedAttackBuff !N - Electro Giant
+ReflectedAttackBuffDuration !N - Electro Giant
+ReflectedAttackRadius !N - Electro Giant
+ReflectedAttackDamage !N - Electro Giant
+ReflectAttackCrownTowerDamage !N - Electro Giant
+ReflectedAttackEffect !N - Electro Giant
+ReflectedAttackTargetedEffect !N - Electro Giant
+ReflectedAttackTargetedEffectSources !N - Electro Giant
+IgnoreTargetsWithBuff !N - Ram Rider slow
+DeprioritizeTargetsWithBuff !N - Ram Rider slow
+OverrideAttackFinishTime !N - Whether to override the finish time (If AttackFinishTime is 0 then it is zero)
+AttackFinishTime !N - How much time it would take for the entity to finish attacking
+BuffOnKill !NN
+BuffOnKillTime !NN
+BuffOn50HP !NN
+BuffOn50HPTime !NN
+BuffOnXHP !NN
+BuffOnXHPPercent !NN
+BuffOnXHPTime !NN
+SuckElixirSpeed !NN
+CapturableBuilding !NN
+SightRangeForCharacters !NN - CAN IMPLEMENT BUT IT IS CUSTOM SIGHT RANGE FOR CHARACTERS
+AttackStateCount !N - Goblin Brawler
+NeutralObject !NN - Clan Wars Thing
+BuffAfterHitsCount !NN
+BuffAfterHitsTime !NN
+BuffAfterHits !NN
+MorphAfterHitsCount !NN
+ConvertOnKill !NN
+FollowingAreaEffect !NN
+MoveSpeedByFriendlyMass !NN
+MoveRadiusByFriendlyMass !NN
+IgnoreBuff !N Ignore Mother Witch Buff
+TargetLowestHP !NN - Not used yet
+Ability !N - Hero Ability
+AbilityPendingEffect !NN - Effect for Hero
+IgnoreClone !N - Goblin Drill Ignore
+CustomSpawnFilter !N - Hero Methods
+CustomCloneFilter !N - Probably method for Skele king skeletons
+IgnoreResurrect !N - Ignore Mother Witch Spell / Maybe Skele King
+AllowAreaDmgWhenInvisible !N - When Archer Queen / Ghost is invis and can take damage
+AvoidCountingForBuffAmountStats !N - Bombs from G Skelly
+UntargetableWhenSpawned !N - Phoenix Egg
