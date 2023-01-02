@@ -253,10 +253,10 @@ DeployDelay !N - IDK
 DeployBaseAnimExportName !NI
 DeployAnimationOverride !NI
 JumpEnabled !N
-SightClip !N - IDK WHAT THIS IS FOR
+SightClip !N - IDK WHAT THIS IS FOR (This effects the troop's sight) (Make Side Closer)
 AreaEffectOnDash !NN
-SightClipSide !N - IDK WHAT THIS IS FOR
-WalkingSpeedTweakPercentage !N - IDK WHAT THIS IS FOR
+SightClipSide !N - IDK WHAT THIS IS FOR (This effects the troop's sight) (Make Front closer)
+WalkingSpeedTweakPercentage !N - Positive = Reduce Rage Percentage, Negetive = Increase Rage Percentage
 ShieldHitpoints !N - Shield Users
 ShieldDiePushback !NN - Not used
 ShieldLostEffect !NN
