@@ -73,7 +73,7 @@ namespace ClashRoyale.Game.Logic.Types.Entity
         {
             if (this.Entity.EntityData.ChargeRange > 0)
             {
-                PassiveAbilities.Add();
+                //PassiveAbilities.Add();
             }
         }
         public EntityContext(Arena arena, EntityData entityData, Vector2 position, int level = 0)
